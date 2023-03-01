@@ -9,7 +9,9 @@
 
 <div class="min-h-screen">
     <Navbar />
-    <div class="flex flex-col md:flex-row">
+    <!-- Define the main section below the Navbar here -->
+    <!-- Temporarily set height to 72 -->
+    <div class="flex flex-col md:flex-row h-72">
         <Sidebar />
         <Reader>
             <slot />
