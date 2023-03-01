@@ -10,8 +10,17 @@
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.5.0",
+		"autoprefixer": "^10.4.13",
+		"postcss": "^8.4.21",
 		"svelte": "^3.54.0",
+		"svimg": "^3.1.0",
+		"tailwindcss": "^3.2.7",
 		"vite": "^4.0.0"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@fontsource/petrona": "^4.5.11",
+		"date-fns": "^2.29.3",
+		"svelte-preprocess-import-assets": "^0.2.6"
+	}
 }
