@@ -1,10 +1,10 @@
 <script>
+    import "@fontsource/petrona";
     import "../app.css";
     import Sidebar from "$lib/components/Sidebar.svelte";
     import Navbar from "$lib/components/Navbar.svelte";
     import Reader from "$lib/components/wrapper/Reader.svelte";
     import Footer from "$lib/components/Footer.svelte";
-    import "@fontsource/petrona";
 </script>
 
 <div class="min-h-screen">
