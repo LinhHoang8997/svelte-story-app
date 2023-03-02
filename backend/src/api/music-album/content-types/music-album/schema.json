@@ -1,0 +1,70 @@
+{
+  "kind": "collectionType",
+  "collectionName": "music_albums",
+  "info": {
+    "singularName": "music-album",
+    "pluralName": "music-albums",
+    "displayName": "Music Album",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "blurb": {
+      "type": "text"
+    },
+    "characters": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::character.character",
+      "mappedBy": "music_album"
+    },
+    "locations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::location.location",
+      "mappedBy": "music_album"
+    },
+    "release_date": {
+      "type": "date"
+    },
+    "audio_files": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "single",
+        "extended_play",
+        "long_play"
+      ]
+    },
+    "music_album_id": {
+      "type": "uid"
+    },
+    "cover_image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

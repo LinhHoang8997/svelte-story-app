@@ -1,0 +1,57 @@
+{
+  "kind": "collectionType",
+  "collectionName": "characters",
+  "info": {
+    "singularName": "character",
+    "pluralName": "characters",
+    "displayName": "Character"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "character_id": {
+      "type": "uid"
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "laconic_description": {
+      "type": "text"
+    },
+    "profile_images": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": true
+    },
+    "faction": {
+      "type": "enumeration",
+      "enum": [
+        "golden_palanquin",
+        "kingdom",
+        "essence",
+        "first_darkness",
+        "second_darkness",
+        "third_darkness",
+        "old_gods"
+      ],
+      "required": true
+    },
+    "biography": {
+      "type": "richtext"
+    },
+    "music_album": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::music-album.music-album",
+      "inversedBy": "characters"
+    }
+  }
+}

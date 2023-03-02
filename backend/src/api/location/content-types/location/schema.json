@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "locations",
+  "info": {
+    "singularName": "location",
+    "pluralName": "locations",
+    "displayName": "Location",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "laconic_description": {
+      "type": "text"
+    },
+    "history": {
+      "type": "richtext"
+    },
+    "geography": {
+      "type": "richtext"
+    },
+    "present_in_main_story": {
+      "type": "boolean"
+    },
+    "location_header_media": {
+      "type": "component",
+      "repeatable": false,
+      "component": "multimedia.header-media"
+    },
+    "location_id": {
+      "type": "uid"
+    },
+    "music_album": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::music-album.music-album",
+      "inversedBy": "locations"
+    }
+  }
+}

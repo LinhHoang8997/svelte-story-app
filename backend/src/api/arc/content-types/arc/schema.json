@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "arcs",
+  "info": {
+    "singularName": "arc",
+    "pluralName": "arcs",
+    "displayName": "Arc",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "chapters": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::post.post",
+      "mappedBy": "arc"
+    },
+    "arc_id": {
+      "type": "uid"
+    }
+  }
+}

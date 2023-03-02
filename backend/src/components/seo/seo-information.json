@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_seo_seo_informations",
+  "info": {
+    "displayName": "seo_information"
+  },
+  "options": {},
+  "attributes": {
+    "page_title": {
+      "type": "string"
+    },
+    "meta_description": {
+      "type": "string"
+    },
+    "og_site_name": {
+      "type": "string"
+    },
+    "og_image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "language_code": {
+      "type": "string"
+    }
+  }
+}

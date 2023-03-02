@@ -4,7 +4,8 @@
   "info": {
     "singularName": "post",
     "pluralName": "posts",
-    "displayName": "Post"
+    "displayName": "Chapter",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -12,10 +13,51 @@
   "pluginOptions": {},
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
-    "post_content": {
+    "content": {
       "type": "richtext"
+    },
+    "blurb": {
+      "type": "richtext"
+    },
+    "emblem": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "slug": {
+      "type": "uid",
+      "required": true
+    },
+    "arc": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::arc.arc",
+      "inversedBy": "chapters"
+    },
+    "chapter_header_media": {
+      "type": "component",
+      "repeatable": false,
+      "component": "multimedia.header-media"
+    },
+    "seo_information": {
+      "type": "component",
+      "repeatable": false,
+      "component": "seo.seo-information"
+    },
+    "interactive_blocks": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::interactive-block.interactive-block",
+      "inversedBy": "chapters"
     }
   }
 }
