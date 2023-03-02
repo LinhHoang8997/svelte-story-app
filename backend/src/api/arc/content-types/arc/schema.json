@@ -19,14 +19,14 @@
     "description": {
       "type": "text"
     },
+    "arc_id": {
+      "type": "uid"
+    },
     "chapters": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::post.post",
+      "target": "api::chapter.chapter",
       "mappedBy": "arc"
-    },
-    "arc_id": {
-      "type": "uid"
     }
   }
 }

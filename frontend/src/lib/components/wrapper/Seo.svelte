@@ -2,7 +2,6 @@
     import { page } from '$app/stores';
     export let title;
     export let description;
-    export let publisher;
     $: url = $page.url.href;
 </script>
 
@@ -18,11 +17,7 @@
 			"@type": "WebPage",
             "url": "${url}",
 			"name": "${title}",
-			"description": "${description}",
-			"publisher": {
-				"@type": "ProfilePage",
-				"name": "${publisher}"
-			}
+			"description": "${description}"
 		}
 	</script>`}
 </svelte:head>

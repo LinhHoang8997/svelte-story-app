@@ -1,9 +1,9 @@
 {
   "kind": "collectionType",
-  "collectionName": "posts",
+  "collectionName": "chapters",
   "info": {
-    "singularName": "post",
-    "pluralName": "posts",
+    "singularName": "chapter",
+    "pluralName": "chapters",
     "displayName": "Chapter",
     "description": ""
   },
@@ -35,7 +35,7 @@
     },
     "slug": {
       "type": "uid",
-      "required": true
+      "targetField": "title"
     },
     "arc": {
       "type": "relation",
@@ -45,7 +45,7 @@
     },
     "chapter_header_media": {
       "type": "component",
-      "repeatable": false,
+      "repeatable": true,
       "component": "multimedia.header-media"
     },
     "seo_information": {

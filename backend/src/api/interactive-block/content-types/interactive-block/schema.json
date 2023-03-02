@@ -4,7 +4,8 @@
   "info": {
     "singularName": "interactive-block",
     "pluralName": "interactive-blocks",
-    "displayName": "Interactive Block"
+    "displayName": "Interactive Block",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -12,24 +13,26 @@
   "pluginOptions": {},
   "attributes": {
     "images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     },
     "sounds": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     },
     "interactive_block_id": {
       "type": "uid"
@@ -44,7 +47,7 @@
     "chapters": {
       "type": "relation",
       "relation": "manyToMany",
-      "target": "api::post.post",
+      "target": "api::chapter.chapter",
       "mappedBy": "interactive_blocks"
     }
   }
