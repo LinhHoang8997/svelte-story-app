@@ -5,7 +5,7 @@ export async function load({params}) {
     console.log(STRAPI_GRAPHQL_API_URL);
     
     
-    // Using Houdini to fetch data from Strapi via GraphQL 
+    // URQL 
 
 
     //
