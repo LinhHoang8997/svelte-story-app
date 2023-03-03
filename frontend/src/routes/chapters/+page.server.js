@@ -16,8 +16,6 @@ export async function load({fetch}) {
             }
         }
     );
-    
-    console.log ("Here is the procesed data: ", processed_data);
 
     return {
         chapters: processed_data
