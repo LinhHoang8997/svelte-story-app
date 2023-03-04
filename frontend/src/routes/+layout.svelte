@@ -9,6 +9,8 @@
   export let data;
 
   const { APIChapterTitles } = data;
+
+  $: console.log($APIChapterTitles);
   
 </script>
 
@@ -17,7 +19,11 @@
   <!-- Define the main section below the Navbar here -->
   <!-- Temporarily set height to 72 -->
   <div class="flex flex-col md:flex-row h-72">
-    <Sidebar {$APIChapterTitles}/>
+    {#if $APIChapterTitles.fetching}
+    <p>Loading</p>
+    {:else}
+    <Sidebar chapter_data={$APIChapterTitles.data.chapters.data}/>
+    {/if}
     <Reader>
       <slot />
     </Reader>
