@@ -9,8 +9,6 @@
   export let data;
 
   const { APIChapterTitles } = data;
-
-  $: console.log($APIChapterTitles);
   
 </script>
 

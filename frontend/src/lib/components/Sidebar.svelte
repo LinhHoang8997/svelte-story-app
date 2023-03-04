@@ -10,7 +10,7 @@
         </li>
         {#each chapter_data as chapter}
             <li>
-                <a href="{chapter.attributes.url}" class="chapter_link flex text-xl p-2 border-b-2 border-double justify-center font-bold border-rose-900 text-white">{chapter.attributes.title}</a>
+                <a href="/chapters/{chapter.attributes.slug}" class="flex items-center h-12 p-2 border-b-2 border-rose-900 border-double justify-center hover:font-semibold bg-orange-400 hover:bg-orange-700  hover:text-gray-200 transition-all">{chapter.attributes.title}</a>
             </li>
         {/each}
     </ul>

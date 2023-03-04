@@ -1,5 +1,5 @@
-query KalChapter {
-  chapters(filters: { slug: { eq: "a-fake-chat-gpt-story-about-kal-tsit" }}) {
+query IndividualChapterQuery($chapter_id: String!) {
+  chapters(filters: { slug: { eq: $chapter_id }}) {
     data {
       id
       attributes {
