@@ -1,9 +1,30 @@
 import { STRAPI_GRAPHQL_API_URL } from '$env/static/private';
 
 export async function load({params}) {
+    
+    console.log(STRAPI_GRAPHQL_API_URL);
+    
+    
+    // URQL 
+
+
+    //
+
+
+  
+    const { data } = await res.json();
+    
+    const processed_data = data.map(
+        data_item => {
+            return {
+                id: data_item.id,
+                ...data_item.attributes
+            }
+        }
+    );
 
     return {
-        id: params.chapter_id
+        chapters: processed_data
     }
 
 }
