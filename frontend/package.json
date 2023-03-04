@@ -20,7 +20,9 @@
 	"type": "module",
 	"dependencies": {
 		"@fontsource/petrona": "^4.5.11",
+		"@urql/svelte": "^3.0.3",
 		"date-fns": "^2.29.3",
+		"graphql": "^16.6.0",
 		"svelte-preprocess-import-assets": "^0.2.6"
 	}
 }

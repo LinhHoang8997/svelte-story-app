@@ -1,7 +1,36 @@
+<script>
+      import { getContextClient, gql, queryStore } from "@urql/svelte";
+
+    const chapterQueryStore = queryStore({
+    client: getContextClient(),
+    query: gql`
+      query AllChapterTitles {
+        chapters {
+          data {
+            id
+            attributes {
+              title
+              slug
+            }
+          }
+        }
+      }
+    `,
+  });
+
+
+  $: console.log($chapterQueryStore);
+</script>
+
+
 <div class="sidebar_container flex flex-col md:basis-1/6 md:hover:basis-1/4 transition-all duration-500 overflow-y-auto border-double border-r-4  border-yellow-600">
     <ul>
         <li>
             <div class="flex text-xl p-2 border-b-2 border-double justify-center font-bold border-rose-900 text-white">🕮 Chapter List</div>
+            
+                {#each $chapterQueryStore.data.chapters.data as chapter}
+                    <a href="chapters/{chapter.attributes.slug}" class="chapter_link flex text-xl p-2 border-b-2 border-double justify-center font-bold border-rose-900 text-white">{chapter.attributes.title}</a>
+                {/each}
         </li>
     </ul>
 

@@ -7,7 +7,23 @@
   import Footer from "$lib/components/Footer.svelte";
 
   // Set up URQL client connecting to the Strapi GraphQL API
-  
+  import { createClient, setContextClient } from "@urql/svelte";
+
+  export let data;
+  const { api_key } = data;
+
+  const client = createClient({
+    url: `http://127.0.0.1:1337/graphql`,
+    fetchOptions: () => {
+      const token = api_key;
+      return {
+        headers: { authorization: token ? `Bearer ${token}` : "" },
+      };
+    },
+  });
+
+  setContextClient(client);
+
 </script>
 
 <div class="min-h-screen">
@@ -22,3 +38,5 @@
   </div>
   <Footer />
 </div>
+
+<!-- <pre>{JSON.stringify($chapterQueryStore.data.chapters)}</pre> -->
