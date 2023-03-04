@@ -1,8 +1,18 @@
+<script>
+    export let chapter_data;
+</script>
+
+
 <div class="sidebar_container flex flex-col md:basis-1/6 md:hover:basis-1/4 transition-all duration-500 overflow-y-auto border-double border-r-4  border-yellow-600">
     <ul>
         <li>
             <div class="flex text-xl p-2 border-b-2 border-double justify-center font-bold border-rose-900 text-white">🕮 Chapter List</div>
         </li>
+        {#each chapter_data as chapter}
+            <li>
+                <a href="{chapter.url}" class="chapter_link flex text-xl p-2 border-b-2 border-double justify-center font-bold border-rose-900 text-white">{chapter.title}</a>
+            </li>
+        {/each}
     </ul>
 
 </div>
