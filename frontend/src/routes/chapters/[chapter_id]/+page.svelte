@@ -1,10 +1,12 @@
 <script>
   import Seo from "$lib/components/wrapper/Seo.svelte";
+  import { page } from "$app/stores";
+
   // Using manual loading from
   export let data;
-  $: ({ IndividualChapter } = data)
+  $: ({ IndividualChapterQuery } = data)
 
-  $: console.log($IndividualChapter)
+  $: console.log($IndividualChapterQuery)
 
 </script>
 
@@ -13,13 +15,13 @@
   description="The Official place for Steel, Fire, and Velvet"
 />
 
-{#if $IndividualChapter.fetching}
+{#if $IndividualChapterQuery.fetching}
   <p>Loading</p>
 {:else}
   <h1 class="text-lg font-bold">
-    {$IndividualChapter.data.chapters.data[0].attributes.title}
+    {$IndividualChapterQuery.data.chapters.data[0].attributes.title}
   </h1>
   <div>
-    {@html $IndividualChapter.data.chapters.data[0].attributes.content}
+    {@html $IndividualChapterQuery.data.chapters.data[0].attributes.content}
   </div>
 {/if}

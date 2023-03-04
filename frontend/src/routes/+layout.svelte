@@ -16,7 +16,7 @@
   <Navbar />
   <!-- Define the main section below the Navbar here -->
   <!-- Temporarily set height to 72 -->
-  <div class="flex flex-col md:flex-row">
+  <div class="flex flex-col md:flex-row h-72">
     {#if $APIChapterTitles.fetching}
     <p>Loading</p>
     {:else}
