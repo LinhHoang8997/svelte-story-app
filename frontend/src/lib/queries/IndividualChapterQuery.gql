@@ -1,5 +1,5 @@
 query IndividualChapterQuery($chapter_id: String!) {
-  chapters(filters: { slug: { eq: $chapter_id }}) {
+  chapters(filters: { slug: { eq: $chapter_id } }) {
     data {
       id
       attributes {
@@ -7,10 +7,10 @@ query IndividualChapterQuery($chapter_id: String!) {
         content
         slug
         chapter_header_media {
-          id,
+          id
           hero_image {
             data {
-              id,
+              id
               attributes {
                 url
               }
