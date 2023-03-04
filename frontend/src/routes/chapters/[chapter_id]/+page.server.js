@@ -1,11 +1,8 @@
 import { STRAPI_GRAPHQL_API_URL } from '$env/static/private';
 
 export async function load({params}) {
-
-    return {
-        id: params.chapter_id
-    }
-
+    
+   
 }
 
 
