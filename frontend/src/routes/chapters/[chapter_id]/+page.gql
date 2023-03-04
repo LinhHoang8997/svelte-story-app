@@ -1,0 +1,23 @@
+query KalChapter {
+  chapters(filters: { slug: { eq: "a-fake-chat-gpt-story-about-kal-tsit" }}) {
+    data {
+      id
+      attributes {
+        title
+        content
+        slug
+        chapter_header_media {
+          id,
+          hero_image {
+            data {
+              id,
+              attributes {
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
