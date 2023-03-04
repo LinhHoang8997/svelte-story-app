@@ -6,7 +6,11 @@
   import Reader from "$lib/components/wrapper/Reader.svelte";
   import Footer from "$lib/components/Footer.svelte";
 
-  // Set up URQL client connecting to the Strapi GraphQL API
+  export let data;
+
+  const { APIChapterTitles } = data;
+
+  $: console.log($APIChapterTitles);
   
 </script>
 
@@ -15,7 +19,11 @@
   <!-- Define the main section below the Navbar here -->
   <!-- Temporarily set height to 72 -->
   <div class="flex flex-col md:flex-row h-72">
-    <Sidebar />
+    {#if $APIChapterTitles.fetching}
+    <p>Loading</p>
+    {:else}
+    <Sidebar chapter_data={$APIChapterTitles.data.chapters.data}/>
+    {/if}
     <Reader>
       <slot />
     </Reader>
