@@ -1,5 +1,5 @@
 import { IndividualChapterQueryStore } from "$houdini";
-import { json } from '@sveltejs/kit'
+import { parseDocument, DomUtils } from "htmlparser2";
 
 function getSlug({ params }) {
   return params.chapter_id
@@ -14,10 +14,18 @@ export async function load(event) {
   const result = await IndividualChapterQuery.fetch({
     event,
     variables: { chapter_id: chapter_id },
+    blocking: true // This is important to make sure the page doesn't load until the query is done
   });
 
   console.log("do something with", result);
 
-  return { IndividualChapterQuery }
-  
+  // Clean up Strapi GraphQL result to a single chapter data
+  const processed_result = result.data.chapters.data[0];
+
+  // Isolate the text content out for furhter processing
+
+  return {
+    chapter_data: processed_result
+   }
+
 };

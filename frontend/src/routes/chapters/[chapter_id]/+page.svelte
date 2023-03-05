@@ -1,12 +1,17 @@
 <script>
   import Seo from "$lib/components/wrapper/Seo.svelte";
+  import ChapterContent from "$lib/components/wrapper/ChapterContent.svelte";
   import { page } from "$app/stores";
 
-  // Using manual loading from
-  export let data;
-  $: ({ IndividualChapterQuery } = data)
+  // Using the GQL Store via manual loading from +page.js
+  // export let data;
+  // $: ({ IndividualChapterQuery } = data)
 
-  $: console.log($IndividualChapterQuery)
+  // $: console.log($IndividualChapterQuery)
+
+  // Parse the data first
+  export let data;
+  $: ({ chapter_data } = data)
 
 </script>
 
@@ -15,13 +20,13 @@
   description="The Official place for Steel, Fire, and Velvet"
 />
 
-{#if $IndividualChapterQuery.fetching}
-  <p>Loading</p>
-{:else}
+<div>
   <h1 class="text-lg font-bold">
-    {$IndividualChapterQuery.data.chapters.data[0].attributes.title}
+    {chapter_data.attributes.title}
   </h1>
   <div>
-    {@html $IndividualChapterQuery.data.chapters.data[0].attributes.content}
+    {@html chapter_data.attributes.content}
   </div>
-{/if}
+</div>
+
+<ChapterContent {chapter_data}/>
