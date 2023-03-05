@@ -19,7 +19,7 @@
   title="Chapter Individual"
   description="The Official place for Steel, Fire, and Velvet"
 />
-
+<!-- 
 <div>
   <h1 class="text-lg font-bold">
     {chapter_data.attributes.title}
@@ -27,6 +27,6 @@
   <div>
     {@html chapter_data.attributes.content}
   </div>
-</div>
+</div> -->
 
 <ChapterContent {chapter_data}/>
