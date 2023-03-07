@@ -20,7 +20,7 @@ export function filterParagraphData(chapter_data) {
 
   // Write a funciton that removes elements from an array that are empty strings or only contain whitespace
   let p_tags_text_cleaned = removeEmptyElements(p_tags_text);
-  console.log("p_tags_text", p_tags_text_cleaned);
+//   console.log("p_tags_text", p_tags_text_cleaned);
 
   return p_tags_text_cleaned;
 }

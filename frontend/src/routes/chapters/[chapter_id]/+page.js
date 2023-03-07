@@ -17,7 +17,9 @@ export async function load(event) {
     blocking: true // This is important to make sure the page doesn't load until the query is done
   });
 
-  console.log("do something with", result);
+  if (result.data) {
+    console.log("> Chapter data loaded successfully from Strapi");
+  }
 
   // Clean up Strapi GraphQL result to a single chapter data
   const processed_result = result.data.chapters.data[0];

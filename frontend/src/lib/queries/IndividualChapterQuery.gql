@@ -4,6 +4,7 @@ query IndividualChapterQuery($chapter_id: String!) {
       id
       attributes {
         title
+        blurb
         content
         slug
         chapter_header_media {

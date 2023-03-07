@@ -24,6 +24,7 @@
         "@fontsource/petrona": "^4.5.11",
         "date-fns": "^2.29.3",
         "htmlparser2": "^8.0.1",
+        "motion": "^10.15.5",
         "svelte-preprocess-import-assets": "^0.2.6"
     }
 }
