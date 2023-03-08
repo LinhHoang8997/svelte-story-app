@@ -12,7 +12,7 @@
             <slot/>
         {:else}
             <slot/>
-           <a href="/" class="text-2xl text-center text-black">Return to Home</a>
+           <a href="/" class="text-2xl text-center text-black mb-6">Return to Home</a>
         {/if}
     </main>
 </section>
