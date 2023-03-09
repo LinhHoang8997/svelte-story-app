@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import { animate, stagger } from "motion";
 
-  export let paragraph;
+  export let paragraph_content;
 
   function startTextLoadAnimation() {
     animate(
@@ -23,4 +23,4 @@
   });
 </script>
 
-<p class="chapter_paragraph">{paragraph}</p>
+<p class="chapter_paragraph">{paragraph_content}</p>

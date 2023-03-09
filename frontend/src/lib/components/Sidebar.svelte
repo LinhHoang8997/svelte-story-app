@@ -4,13 +4,14 @@
   import { scroll } from "motion";
   import { onMount } from "svelte";
 
+  let chapter_list_adjustment_box;
+
     onMount(() => {
-      const sidebar_adjustment = document.querySelector("#chapter-list-adjustment-box");
       scroll(({ y }) => {
         if (window.innerWidth > 640) {
-            sidebar_adjustment.style.height = y.current + "px";
+          chapter_list_adjustment_box.style.height = y.current + "px";
         } else {
-            sidebar_adjustment.style.height = "0px";
+          chapter_list_adjustment_box.style.height = "0px";
         }
       });
     }
@@ -22,7 +23,7 @@
   class="sidebar_container flex flex-col md:basis-1/6 md:hover:basis-1/4 transition-all duration-500 overflow-y-auto border-double border-r-4  border-yellow-600"
 >
   <ul>
-    <li
+    <li bind:this={chapter_list_adjustment_box}
       class="flex bg-transparent h-0 m-0 transition-all duration-500 ease-in-out"
       id="chapter-list-adjustment-box"
     />

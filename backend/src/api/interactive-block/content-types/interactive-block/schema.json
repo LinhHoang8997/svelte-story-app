@@ -35,20 +35,32 @@
       ]
     },
     "interactive_block_id": {
-      "type": "uid"
+      "type": "uid",
+      "targetField": "title",
+      "required": true
     },
     "rich_text_caption": {
       "type": "richtext"
-    },
-    "type": {
-      "type": "string",
-      "required": true
     },
     "chapters": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::chapter.chapter",
       "mappedBy": "interactive_blocks"
+    },
+    "title": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "interactive-with-image",
+        "interactive-with-video",
+        "interactive-split-screen"
+      ],
+      "default": "interactive-with-image"
     }
   }
 }

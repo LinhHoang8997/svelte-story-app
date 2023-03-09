@@ -18,6 +18,31 @@ query IndividualChapterQuery($chapter_id: String!) {
             }
           }
         }
+        interactive_blocks {
+          data {
+            id
+            attributes {
+              title
+              type
+              interactive_block_id
+              rich_text_caption
+              sounds {
+                data {
+                  attributes {
+                    url
+                  }
+                }
+              }
+              images {
+                data {
+                  attributes {
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

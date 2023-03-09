@@ -1,5 +1,4 @@
 import { IndividualChapterQueryStore } from "$houdini";
-import { parseDocument, DomUtils } from "htmlparser2";
 
 function getSlug({ params }) {
   return params.chapter_id

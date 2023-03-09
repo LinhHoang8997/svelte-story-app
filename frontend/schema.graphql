@@ -306,6 +306,12 @@ enum ENUM_CHARACTER_FACTION {
   third_darkness
 }
 
+enum ENUM_INTERACTIVEBLOCK_TYPE {
+  interactive_split_screen
+  interactive_with_image
+  interactive_with_video
+}
+
 enum ENUM_MUSICALBUM_TYPE {
   extended_play
   long_play
@@ -428,11 +434,12 @@ type InteractiveBlock {
   chapters(filters: ChapterFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ChapterRelationResponseCollection
   createdAt: DateTime
   images(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
-  interactive_block_id: String
+  interactive_block_id: String!
   publishedAt: DateTime
   rich_text_caption: String
   sounds(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
-  type: String!
+  title: String!
+  type: ENUM_INTERACTIVEBLOCK_TYPE
   updatedAt: DateTime
 }
 
@@ -460,6 +467,7 @@ input InteractiveBlockFiltersInput {
   or: [InteractiveBlockFiltersInput]
   publishedAt: DateTimeFilterInput
   rich_text_caption: StringFilterInput
+  title: StringFilterInput
   type: StringFilterInput
   updatedAt: DateTimeFilterInput
 }
@@ -471,7 +479,8 @@ input InteractiveBlockInput {
   publishedAt: DateTime
   rich_text_caption: String
   sounds: [ID]
-  type: String
+  title: String
+  type: ENUM_INTERACTIVEBLOCK_TYPE
 }
 
 type InteractiveBlockRelationResponseCollection {
