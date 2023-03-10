@@ -41,13 +41,28 @@ function extractInteractiveBlockContentbyId(id, chapter_data) {
 
   console.log("matched_interactive_block", matched_interactive_block)
 
+  // Sanitize, Parse, and Split rich text caption into paragraphs
+  let rich_text_caption = matched_interactive_block.attributes.rich_text_caption;
+  let purified_rich_text_caption = DOMPurify.sanitize(rich_text_caption);
+  let parsed_html_rich_text_caption = parseDocument(purified_rich_text_caption);
+  let only_p_tags_rich_text_caption = DomUtils.getElementsByTagName(
+    "p",
+    parsed_html_rich_text_caption,
+    true // this is a boolean that determines recursion (or whether to include child elements)
+  );
+  let p_tags_text_rich_text_caption = only_p_tags_rich_text_caption.map(
+    (p_tag) => DomUtils.textContent(p_tag)
+  );
+
+  let p_tags_text_rich_text_caption_cleaned = removeEmptyElements(p_tags_text_rich_text_caption);
+
   let interactive_block_content = {
     id: id,
     title: matched_interactive_block.attributes.title,
     type: matched_interactive_block.attributes.type,
     sounds: matched_interactive_block.attributes.sounds.data,
     images: matched_interactive_block.attributes.images.data,
-    rich_text_caption: matched_interactive_block.attributes.rich_text_caption,
+    rich_text_caption: p_tags_text_rich_text_caption_cleaned,
   };
 
   return interactive_block_content;
@@ -62,7 +77,7 @@ export function filterParagraphData(chapter_data) {
   let only_p_tags = DomUtils.getElementsByTagName(
     "p",
     parsed_html_chapter_content,
-    true
+    true // this is a boolean that determines recursion (or whether to include child elements)
   );
 
   let p_tags_text = only_p_tags.map((p_tag) => DomUtils.textContent(p_tag));
