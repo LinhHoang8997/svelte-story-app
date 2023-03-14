@@ -39,7 +39,7 @@ function extractInteractiveBlockContentbyId(id, chapter_data) {
       interactive_block.attributes.interactive_block_id === id
   );
 
-  console.log("matched_interactive_block", matched_interactive_block)
+  // console.log("matched_interactive_block", matched_interactive_block)
 
   // Sanitize, Parse, and Split rich text caption into paragraphs
   let rich_text_caption = matched_interactive_block.attributes.rich_text_caption;
@@ -96,6 +96,6 @@ export function filterParagraphData(chapter_data) {
     }
   });
 
-  console.log("categorized_paragraphs", categorized_paragraphs);
+  // console.log("categorized_paragraphs", categorized_paragraphs);
   return categorized_paragraphs;
 }

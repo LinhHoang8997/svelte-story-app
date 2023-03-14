@@ -18,12 +18,12 @@
   // Return data of interactive elements from special bracketed p_tags_text inside of the content returned from Strapi
   $: content = filterParagraphData(chapter_data);
 
-  // console.log(chapter_data);
-
   // Get link of Header Hero image
   $: header_hero_image_url =
     chapter_data.attributes.chapter_header_media[0].hero_image.data.attributes
       .url;
+
+  //
 
 </script>
 

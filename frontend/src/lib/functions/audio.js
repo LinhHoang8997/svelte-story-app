@@ -17,6 +17,7 @@ export function crossFadeLoop(leaving_instance = null, entering_instance = null,
     function fadeIntoFirst(entering_instance) {
         entering_instance.seek(0);
         entering_instance.play();
+        console.log("Sound should be playing soon")
         entering_instance.fade(0, default_volume, cross_fade_duration);
   }
 

@@ -6,6 +6,10 @@
   // Import audio funcitons
   import { createHowlerInstance, crossFadeLoop } from "$lib/functions/audio";
 
+  // Import the howler Svelte store to control the audio queue
+  import { howler_queue } from "$lib/stores/howlerStores.js";
+  $: console.log("For debugging purposes, the current value of the Howler queue is", $howler_queue);
+
   // Import environment variables
   import { PUBLIC_STRAPI_HOSTNAME_PORT } from "$env/static/public";
 
@@ -27,41 +31,82 @@
 
   onMount(() => {
     startTextLoadAnimation();
+
+    // Create Howler instances for all sounds in the block
+    let sounds = paragraph_content.sounds;
+    if (sounds) {
+      sounds.forEach((sound) => {
+        // Check if each of these sounds matches any of the Howler instances in the queue
+        let matched_howler_instance = $howler_queue.find(
+          (howler_instance) =>
+            howler_instance._src === `${PUBLIC_STRAPI_HOSTNAME_PORT}${sound.attributes.url}`
+        );
+
+        if (!matched_howler_instance) {
+          console.log(
+            "There exists no Howler instance in the queue with the same URL as this sound"
+          );
+          const howler_instance = createHowlerInstance(
+            `${PUBLIC_STRAPI_HOSTNAME_PORT}${sound.attributes.url}`
+          );
+          console.log(
+            "Created Howler instance for",
+            sound.attributes.url,
+            "and added it to the Howler queue"
+          );
+          $howler_queue = [...$howler_queue, howler_instance];
+        } else {
+          console.log(
+            "A Howler instance in the queue with the same URL as this sound already exists. No need to create a new Howler instance."
+          );
+        }
+      });
+    } else {
+      console.log("There are no sounds in this interactive block");
+    }
   });
 
   // Reactive variable that controls the Lightbox functionality
   let lightbox_active = false;
-  $: callSoundFunction = playInteractiveBlockSound(lightbox_active);
 
   // Function that plays if the user opens the lightbox
-  function playInteractiveBlockSound(lightbox_active) {
-    // Create a Howler instance
-    if (lightbox_active) {
-      let sounds = paragraph_content.sounds;
-    if (sounds.length > 1) {
-      console.log("There are more than one sound files");
-    } else {
-      console.log("There is only one sound file");
-      let sound = sounds[0];
-      const howlerInstance = createHowlerInstance(
-        `${PUBLIC_STRAPI_HOSTNAME_PORT}${sound.attributes.url}`
-      );
+  function handleLightbox() {
+    lightbox_active = !lightbox_active;
+    let first_sound_url = paragraph_content.sounds[0].attributes.url;
 
-      howlerInstance.once("load", () => {
-        console.log("Sound loaded");
-        crossFadeLoop(null, howlerInstance, 'fade-into-first');
-      });
+    function playInteractiveBlockSound(lightbox_active) {
+      // Create a Howler instancez
+      if (lightbox_active) {
+        if ($howler_queue.length > 0) {
+          console.log("There exists a Howler instance in the queue");
 
-      // Start playing the sound under the 'fade-into-first' type
-      return lightbox_active;
+          // Write a function to check if the sound's url matches any of the Howler instances in the queue
+          let matched_howler_instance = $howler_queue.find(
+            (howler_instance) =>
+              howler_instance._src ===
+              `${PUBLIC_STRAPI_HOSTNAME_PORT}${first_sound_url}`
+          );
+
+          if (
+            matched_howler_instance.state() === "loaded" &&
+            !matched_howler_instance.playing()
+          ) {
+            console.log("Sound loaded");
+            crossFadeLoop(null, matched_howler_instance, "fade-into-first");
+          }
+          // Start playing the sound under the 'fade-into-first' type
+          return lightbox_active;
+        }
+      }
     }
-    }
-  };
+
+    const x = playInteractiveBlockSound(lightbox_active);
+  }
 </script>
 
 <div
-  on:click={() => (lightbox_active = !lightbox_active)}
-  on:keyup={() => (lightbox_active = !lightbox_active)}
+  on:click={handleLightbox}
+  on:keyup={handleLightbox}
   class="interactive_block_wrapper"
 >
   <h3>{paragraph_content.title}</h3>
