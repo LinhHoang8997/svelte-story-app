@@ -8,7 +8,10 @@
 
   // Import the howler Svelte store to control the audio queue
   import { howler_queue } from "$lib/stores/howlerStores.js";
-  $: console.log("For debugging purposes, the current value of the Howler queue is", $howler_queue);
+  $: console.log(
+    "For debugging purposes, the current value of the Howler queue is",
+    $howler_queue
+  );
 
   // Import environment variables
   import { PUBLIC_STRAPI_HOSTNAME_PORT } from "$env/static/public";
@@ -39,7 +42,8 @@
         // Check if each of these sounds matches any of the Howler instances in the queue
         let matched_howler_instance = $howler_queue.find(
           (howler_instance) =>
-            howler_instance._src === `${PUBLIC_STRAPI_HOSTNAME_PORT}${sound.attributes.url}`
+            howler_instance._src ===
+            `${PUBLIC_STRAPI_HOSTNAME_PORT}${sound.attributes.url}`
         );
 
         if (!matched_howler_instance) {
@@ -74,33 +78,48 @@
     lightbox_active = !lightbox_active;
     let first_sound_url = paragraph_content.sounds[0].attributes.url;
 
+    console.log("The first sound URL is", first_sound_url);
+
     function playInteractiveBlockSound(lightbox_active) {
-      // Create a Howler instancez
+      // Create a Howler instance
       if (lightbox_active) {
         if ($howler_queue.length > 0) {
           console.log("There exists a Howler instance in the queue");
 
-          // Write a function to check if the sound's url matches any of the Howler instances in the queue
-          let matched_howler_instance = $howler_queue.find(
+          // Check find the first Howler instance that is  playing
+          const playing_howler_instance = $howler_queue.find((howler_instance) =>
+            howler_instance.playing()
+          );
+
+          // Write a function to find the Howler instance in the queue that matches with the Interactive Block
+          const matched_howler_instance = $howler_queue.find(
             (howler_instance) =>
               howler_instance._src ===
               `${PUBLIC_STRAPI_HOSTNAME_PORT}${first_sound_url}`
           );
 
-          if (
-            matched_howler_instance.state() === "loaded" &&
-            !matched_howler_instance.playing()
-          ) {
+          if (matched_howler_instance.state() === "loaded") {
             console.log("Sound loaded");
-            crossFadeLoop(null, matched_howler_instance, "fade-into-first");
+            if (playing_howler_instance) {
+              console.log("Something else is playing");
+              crossFadeLoop(
+                playing_howler_instance,
+                matched_howler_instance,
+                "fade-into-second"
+              );
+            } else {
+              console.log("Nothing in the queue is playing");
+              crossFadeLoop(null, matched_howler_instance, "fade-into-first");
+            }
+            // Start playing the sound under the 'fade-into-first' type
+            return lightbox_active;
           }
-          // Start playing the sound under the 'fade-into-first' type
-          return lightbox_active;
         }
       }
+
     }
 
-    const x = playInteractiveBlockSound(lightbox_active);
+    playInteractiveBlockSound(lightbox_active);
   }
 </script>
 

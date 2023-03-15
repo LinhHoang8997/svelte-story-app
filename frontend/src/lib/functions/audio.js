@@ -1,6 +1,6 @@
 import { Howl } from "howler";
 
-let cross_fade_duration = 30000;
+let cross_fade_duration = 8000;
 let default_volume = 0.7;
 
 export function createHowlerInstance(urls, onload) {
@@ -14,7 +14,7 @@ export function createHowlerInstance(urls, onload) {
 
 export function crossFadeLoop(leaving_instance = null, entering_instance = null, fade_type) {
   // If there is no leaving instance, create new Howlwer instance for the audio file and fade it in
-    function fadeIntoFirst(entering_instance) {
+  function fadeIntoFirst(leaving_instance = null, entering_instance) {
         entering_instance.seek(0);
         entering_instance.play();
         console.log("Sound should be playing soon")
@@ -23,11 +23,15 @@ export function crossFadeLoop(leaving_instance = null, entering_instance = null,
 
   // If there is a leaving instance, immediately fade out the leaving instance and fade in the entering instance
   function fadeIntoSecond(leaving_instance, entering_instance) {
-    // Fade in the entering instance by increasing volume from 0 to default volume
-    entering_instance.fade(0, default_volume, cross_fade_duration);
-
     // Fade out the leaving instance by decreasing volume from default volume to 0
     leaving_instance.fade(default_volume, 0, cross_fade_duration);
+    console.log("Sound URL: ", leaving_instance._src, " is fading out");
+
+    // Fade in the entering instance by increasing volume from 0 to default volume
+    entering_instance.seek(0);
+    entering_instance.play();
+    entering_instance.fade(0, default_volume, cross_fade_duration);
+    console.log("Sound URL: ", entering_instance._src, " is fading in");
   }
 
   // When we let the two tracks end and start naturally, use the fadeMusicPlayer function to start the crossfade when the leaving instance is about to end
@@ -62,7 +66,7 @@ export function crossFadeLoop(leaving_instance = null, entering_instance = null,
   // let entering_load_status = entering_instance.once('load', function() { return true});
   // let leaving_load_status = leaving_instance.once('load', function() { return true});
 
-  return fade_type_assignment[fade_type](entering_instance, leaving_instance);
+  return fade_type_assignment[fade_type](leaving_instance, entering_instance);
 }
 
 export function initiateMusicPlayerLoop(leaving_url, entering_url) {
