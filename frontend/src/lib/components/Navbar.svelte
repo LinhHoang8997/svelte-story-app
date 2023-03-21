@@ -1,8 +1,8 @@
 <nav class="border-gray-200 px-2 sm:px-4 py-2.5 dark:bg-gray-900">
     <div class="container flex flex-wrap items-center justify-between mx-auto">
         <a href="/" class="flex items-center">
-            <img 
-            src="$lib/assets/images/teapot.png" 
+            <img
+            src="$lib/assets/images/teapot.png"
             width="40"
             height="40"
             class="h-9 mr-2 drop-shadow-lg"
