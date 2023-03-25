@@ -22,7 +22,7 @@
         </div> -->
         <div class="dropdown dropdown-end">
             <label tabindex="-1" class="btn m-1">Menu</label>
-            <ul tabindex="-1" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+            <ul tabindex="-1" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 text-primary">
               <li><a href="/">Home</a></li>
               <li><a href="/chapters">Chapters</a></li>
               <li><a href="/characters">Characters</a></li>

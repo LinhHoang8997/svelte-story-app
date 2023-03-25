@@ -28,8 +28,8 @@
 </script>
 
 <div>
-  <h1 class="text-lg font-bold">{chapter_data.attributes.title}</h1>
-  <div>
+  <h1 class="text-lg font-bold text-primary">{chapter_data.attributes.title}</h1>
+  <div class="text-primary">
     {@html chapter_data.attributes.blurb}
   </div>
   <img src="{PUBLIC_STRAPI_HOSTNAME_PORT}{header_hero_image_url}" alt="hero" />

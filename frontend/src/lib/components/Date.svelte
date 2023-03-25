@@ -4,4 +4,4 @@
     const date = parseISO(dateString);
 </script>
 
-<time datetime={dateString}>{format(date, 'LLLL d, yyyy')}</time>
+<time  class='text-primary' datetime={dateString}>{format(date, 'LLLL d, yyyy')}</time>

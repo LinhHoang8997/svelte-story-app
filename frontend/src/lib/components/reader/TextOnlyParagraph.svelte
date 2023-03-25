@@ -23,4 +23,4 @@
   });
 </script>
 
-<p class="chapter_paragraph">{paragraph_content}</p>
+<p class="chapter_paragraph text-primary">{paragraph_content}</p>
