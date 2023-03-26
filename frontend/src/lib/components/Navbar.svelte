@@ -26,6 +26,7 @@
               <li><a href="/">Home</a></li>
               <li><a href="/chapters">Chapters</a></li>
               <li><a href="/characters">Characters</a></li>
+              <li><a href="/threejs">ThreeJS</a></li>
             </ul>
           </div>
     </div>
