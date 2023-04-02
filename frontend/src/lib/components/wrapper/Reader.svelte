@@ -7,7 +7,7 @@
 
 
 <section class="reader_wrapper flex flex-col md:basis-5/6 items-center transition-all duration-500 bg-orange-200">
-    <main class="flex flex-col items-center scroll-smooth p-6 md:p-4">
+    <main class="flex flex-col w-full items-center scroll-smooth p-6 md:p-4">
         {#if home}
             <slot/>
         {:else}
