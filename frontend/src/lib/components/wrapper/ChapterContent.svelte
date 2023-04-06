@@ -7,12 +7,12 @@
   import { filterParagraphData } from "$lib/functions/filterParagraphData";
 
   // Import modules necessary for animation
-  import { onMount, afterUpdate } from "svelte";
-  import { page } from "$app/stores";
+  // import { onMount, afterUpdate } from "svelte";
 
   // Import environment variables
   import { PUBLIC_STRAPI_HOSTNAME_PORT } from "$env/static/public";
 
+  // Get data from load function defined in +page.server.js
   export let chapter_data;
 
   // Return data of interactive elements from special bracketed p_tags_text inside of the content returned from Strapi

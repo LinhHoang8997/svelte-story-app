@@ -1,7 +1,6 @@
 <script>
   import Seo from "$lib/components/wrapper/Seo.svelte";
   import ChapterContent from "$lib/components/wrapper/ChapterContent.svelte";
-  import { page } from "$app/stores";
 
   // Using the GQL Store via manual loading from +page.js
   // export let data;

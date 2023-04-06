@@ -9,7 +9,7 @@
   export let data;
 
   const { APIChapterTitles } = data;
-  
+
 </script>
 
 <div class="min-h-screen">
@@ -20,7 +20,7 @@
     {#if $APIChapterTitles.fetching}
     <p>Loading</p>
     {:else}
-    <Sidebar chapter_data={$APIChapterTitles.data.chapters.data}/>
+    <Sidebar chapters_data={$APIChapterTitles.data.chapters.data}/>
     {/if}
     <Reader>
       <slot />
