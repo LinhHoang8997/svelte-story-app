@@ -1,19 +1,35 @@
-import { BoxGeometry, Mesh, MeshBasicMaterial, MeshStandardMaterial } from "three";
+import { BoxGeometry, Mesh, MeshBasicMaterial, MeshStandardMaterial, TextureLoader } from "three";
 import { MathUtils } from 'three';
+import texture_image from '$lib/assets/images/textures/3DLABbg_UV_Map_Checker_01_512x512.jpg';
 
 const radiansPerSecond = MathUtils.degToRad(30);
+
+function createMaterial () {
+    const textureLoader = new TextureLoader();
+    // create default specs object with named parameters for the Standard material
+
+    // load a texture
+    const texture = textureLoader.load(
+        texture_image,
+    );
+
+    const specs = {
+        color: 'purple',
+        map: texture,
+    }
+    const material = new MeshStandardMaterial(specs);
+
+    return material;
+}
+
+
 
 function createCube() {
     // create a geometry
     const geometry = new BoxGeometry(2, 2, 2);
 
-    // create default specs object with named parameters for the Standard material
-    const specs = {
-        color: 'purple',
-    }
-
     // create a default (white) Basic material
-    const material = new MeshStandardMaterial(specs); // { color: 'purple' } instead of specs is also valid
+    const material = createMaterial(); // { color: 'purple' } instead of specs is also valid
 
     // create a Mesh containing the geometry and material
     const cube = new Mesh(geometry, material);
