@@ -17,7 +17,7 @@ class Resizer {
     window.addEventListener("resize", () => {
       setSize(container, camera, renderer);
 
-      this.onResize();
+      // this.onResize();
       //placeholder function that will be overwritten when defining the World class
       // We do this because we want to call the render function of the World class
 

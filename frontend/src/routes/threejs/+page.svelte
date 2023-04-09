@@ -10,7 +10,7 @@ function main() {
   const world = new World(container);
 
   // 2. Render the scene
-  world.render();
+  world.start();
 
   // We can access member variables from the instance
 console.log(world.camera);
