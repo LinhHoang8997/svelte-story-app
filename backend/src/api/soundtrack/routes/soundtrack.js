@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * track router
+ * soundtrack router
  */
 
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
-module.exports = createCoreRouter('api::track.track');
+module.exports = createCoreRouter('api::soundtrack.soundtrack');

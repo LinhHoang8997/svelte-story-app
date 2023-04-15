@@ -16,8 +16,70 @@
   // Import environment variables
   import { PUBLIC_STRAPI_HOSTNAME_PORT } from "$env/static/public";
 
+  // Get paragraph content from the parent component
   export let paragraph_content;
+  let interactive_block_id = paragraph_content.id;
 
+  // Get data from GraphQL store for sounds to play
+  import { graphql } from "$houdini";
+  export const _SoundtracksInBlockQueryVariables = () => {
+    return { id: interactive_block_id };
+  };
+  const soundtrack_store = graphql(`
+  query SoundtracksInBlockQuery ($id: String!) {
+  interactiveBlocks (filters: { interactive_block_id: { eq: $id }}, pagination: {pageSize: 100}) {
+    data
+    {
+      id
+      attributes
+      {
+        interactive_block_id,
+        characters {
+          data {
+            id,
+            attributes {
+              name
+            }
+          }
+        }
+        soundtracks {
+          data {
+            id
+            attributes
+            {
+              soundtrack_id,
+              title,
+              track_file
+              {
+                data {
+                  attributes
+                  {
+                  	url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+  `);
+
+  // Get data from store when its "fetching" property is false
+  let soundtracks;
+  $: if (!$soundtrack_store.fetching) {
+    console.log(
+      "The soundtrack store is not fetching. The data is",
+      $soundtrack_store.data
+    );
+
+    // Get the soundtracks from the store
+    soundtracks = $soundtrack_store.data;
+  }
+
+  // Function that animates the text
   function startTextLoadAnimation() {
     animate(
       ".interactive_block_wrapper",
@@ -34,6 +96,8 @@
 
   onMount(() => {
     startTextLoadAnimation();
+
+    console.log(soundtracks);
 
     // Create Howler instances for all sounds in the block
     let sounds = paragraph_content.sounds;
@@ -86,9 +150,9 @@
         if ($howler_queue.length > 0) {
           console.log("There exists a Howler instance in the queue");
 
-          // Check find the first Howler instance that is  playing
-          const playing_howler_instance = $howler_queue.find((howler_instance) =>
-            howler_instance.playing()
+          // Check find the first Howler instance that is playing
+          const playing_howler_instance = $howler_queue.find(
+            (howler_instance) => howler_instance.playing()
           );
 
           // Write a function to find the Howler instance in the queue that matches with the Interactive Block
@@ -99,16 +163,24 @@
           );
 
           if (matched_howler_instance.state() === "loaded") {
-            console.log("Sound loaded");
+            console.log("Sound loaded. Ready to play sound.");
             if (playing_howler_instance) {
-              console.log("Something else is playing");
-              crossFadeLoop(
-                playing_howler_instance,
-                matched_howler_instance,
-                "fade-into-second"
-              );
+              if (playing_howler_instance === matched_howler_instance) {
+                console.log("The sound is already playing. Do nothing.");
+              } else {
+                console.log(
+                  "Something else is playing. Fade out the current sound and fade in the new sound."
+                );
+                crossFadeLoop(
+                  playing_howler_instance,
+                  matched_howler_instance,
+                  "fade-into-second"
+                );
+              }
             } else {
-              console.log("Nothing in the queue is playing");
+              console.log(
+                "Nothing in the queue is playing. Start playing the sound in Interactive Block."
+              );
               crossFadeLoop(null, matched_howler_instance, "fade-into-first");
             }
             // Start playing the sound under the 'fade-into-first' type
@@ -116,7 +188,6 @@
           }
         }
       }
-
     }
 
     playInteractiveBlockSound(lightbox_active);
@@ -128,7 +199,7 @@
   on:keyup={handleLightbox}
   class="interactive_block_wrapper"
 >
-  <h3>{paragraph_content.title}</h3>
+  <h3>{paragraph_content.id}</h3>
   {#each paragraph_content.images as image}
     <img
       src="{PUBLIC_STRAPI_HOSTNAME_PORT}{image.attributes.url}"
@@ -137,7 +208,7 @@
   {/each}
 </div>
 
-<!-- LAY OUT ELEMENTS OF THE LIGHTBOX -->
+<!-- LAYOUT ELEMENTS OF THE LIGHTBOX -->
 {#if lightbox_active}
   <div
     class="lightbox"
