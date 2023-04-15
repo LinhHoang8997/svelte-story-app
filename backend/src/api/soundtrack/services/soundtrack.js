@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * track service
+ * soundtrack service
  */
 
 const { createCoreService } = require('@strapi/strapi').factories;
 
-module.exports = createCoreService('api::track.track');
+module.exports = createCoreService('api::soundtrack.soundtrack');

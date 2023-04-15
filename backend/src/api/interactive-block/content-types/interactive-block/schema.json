@@ -62,10 +62,16 @@
       ],
       "default": "interactive-with-image"
     },
-    "tracks": {
+    "soundtracks": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::soundtrack.soundtrack",
+      "inversedBy": "interactive_blocks"
+    },
+    "characters": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::track.track"
+      "target": "api::character.character"
     }
   }
 }
