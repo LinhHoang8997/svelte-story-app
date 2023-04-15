@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import { animate, stagger } from "motion";
   import { fade } from "svelte/transition";
+  import { graphql } from "$houdini";
 
   // Import audio funcitons
   import { createHowlerInstance, crossFadeLoop } from "$lib/functions/audio";
@@ -19,61 +20,66 @@
   // Get paragraph content from the parent component
   export let paragraph_content;
   let interactive_block_id = paragraph_content.id;
+  // $: console.log("The interactive block ID is", interactive_block_id);
 
   // Get data from GraphQL store for sounds to play
-  import { graphql } from "$houdini";
-  export const _SoundtracksInBlockQueryVariables = () => {
+  export const _MyQueryVariables = () => {
     return { id: interactive_block_id };
   };
   const soundtrack_store = graphql(`
-  query SoundtracksInBlockQuery ($id: String!) {
-  interactiveBlocks (filters: { interactive_block_id: { eq: $id }}, pagination: {pageSize: 100}) {
-    data
-    {
-      id
-      attributes
-      {
-        interactive_block_id,
-        characters {
-          data {
-            id,
-            attributes {
-              name
+    query MyQuery($id: String!) @load {
+      interactiveBlocks(
+        filters: { interactive_block_id: { eq: $id } }
+        pagination: { page: 1, pageSize: 100 }
+      ) {
+        data {
+          id
+          attributes {
+            interactive_block_id
+            characters {
+              data {
+                attributes {
+                  name
+                }
+              }
             }
-          }
-        }
-        soundtracks {
-          data {
-            id
-            attributes
-            {
-              soundtrack_id,
-              title,
-              track_file
-              {
-                data {
-                  attributes
-                  {
-                  	url
+            soundtracks {
+              data {
+                attributes {
+                  soundtrack_id
+                  track_file {
+                    data {
+                      attributes {
+                        url
+                      }
+                    }
                   }
                 }
               }
             }
           }
         }
+        meta {
+          pagination {
+            page
+            pageSize
+          }
+        }
       }
     }
-  }
-}
   `);
 
   // Get data from store when its "fetching" property is false
   let soundtracks;
+  // $: console.log(
+  //   "For debugging purposes, the current value of the soundtrack store is",
+  //   $soundtrack_store
+  // );
   $: if (!$soundtrack_store.fetching) {
-    console.log(
-      "The soundtrack store is not fetching. The data is",
-      $soundtrack_store.data
-    );
+    // console.log(
+    //   "The soundtrack store is no longer fetching. The data is",
+    //   $soundtrack_store.data
+    // );
 
     // Get the soundtracks from the store
     soundtracks = $soundtrack_store.data;
@@ -96,9 +102,6 @@
 
   onMount(() => {
     startTextLoadAnimation();
-
-    console.log(soundtracks);
-
     // Create Howler instances for all sounds in the block
     let sounds = paragraph_content.sounds;
     if (sounds) {
