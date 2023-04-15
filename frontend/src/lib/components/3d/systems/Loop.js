@@ -21,7 +21,7 @@ class Loop {
   // Define the start method
   start() {
     this.renderer.setAnimationLoop(() => {
-      // new that we define the broad tick method that moves all objects, we call it here to update the animation at every frame
+      // now that we have defined the broader tick method that moves all objects, we call it here to update the animation at every frame
       this.tick();
       // render a frame here
       this.renderer.render(this.scene, this.camera);

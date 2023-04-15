@@ -348,7 +348,7 @@ input FloatFilterInput {
   startsWith: Float
 }
 
-union GenericMorph = Arc | Chapter | Character | ComponentMultimediaHeaderMedia | ComponentSeoSeoInformation | I18NLocale | InteractiveBlock | Location | MusicAlbum | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
+union GenericMorph = Arc | Chapter | Character | ComponentMultimediaHeaderMedia | ComponentSeoSeoInformation | I18NLocale | InteractiveBlock | Location | MusicAlbum | Track | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
 
 type I18NLocale {
   code: String
@@ -439,6 +439,7 @@ type InteractiveBlock {
   rich_text_caption: String
   sounds(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
   title: String!
+  tracks(filters: TrackFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): TrackRelationResponseCollection
   type: ENUM_INTERACTIVEBLOCK_TYPE
   updatedAt: DateTime
 }
@@ -468,6 +469,7 @@ input InteractiveBlockFiltersInput {
   publishedAt: DateTimeFilterInput
   rich_text_caption: StringFilterInput
   title: StringFilterInput
+  tracks: TrackFiltersInput
   type: StringFilterInput
   updatedAt: DateTimeFilterInput
 }
@@ -480,6 +482,7 @@ input InteractiveBlockInput {
   rich_text_caption: String
   sounds: [ID]
   title: String
+  tracks: [ID]
   type: ENUM_INTERACTIVEBLOCK_TYPE
 }
 
@@ -579,7 +582,6 @@ type LocationRelationResponseCollection {
 }
 
 type MusicAlbum {
-  audio_files(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
   blurb: String
   characters(filters: CharacterFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): CharacterRelationResponseCollection
   cover_image: UploadFileEntityResponse
@@ -589,6 +591,7 @@ type MusicAlbum {
   name: String!
   publishedAt: DateTime
   release_date: Date
+  tracks(filters: TrackFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): TrackRelationResponseCollection
   type: ENUM_MUSICALBUM_TYPE
   updatedAt: DateTime
 }
@@ -620,12 +623,12 @@ input MusicAlbumFiltersInput {
   or: [MusicAlbumFiltersInput]
   publishedAt: DateTimeFilterInput
   release_date: DateFilterInput
+  tracks: TrackFiltersInput
   type: StringFilterInput
   updatedAt: DateTimeFilterInput
 }
 
 input MusicAlbumInput {
-  audio_files: [ID]
   blurb: String
   characters: [ID]
   cover_image: ID
@@ -634,6 +637,7 @@ input MusicAlbumInput {
   name: String
   publishedAt: DateTime
   release_date: Date
+  tracks: [ID]
   type: ENUM_MUSICALBUM_TYPE
 }
 
@@ -646,6 +650,7 @@ type Mutation {
   createInteractiveBlock(data: InteractiveBlockInput!): InteractiveBlockEntityResponse
   createLocation(data: LocationInput!): LocationEntityResponse
   createMusicAlbum(data: MusicAlbumInput!): MusicAlbumEntityResponse
+  createTrack(data: TrackInput!): TrackEntityResponse
   createUploadFile(data: UploadFileInput!): UploadFileEntityResponse
   createUploadFolder(data: UploadFolderInput!): UploadFolderEntityResponse
 
@@ -660,6 +665,7 @@ type Mutation {
   deleteInteractiveBlock(id: ID!): InteractiveBlockEntityResponse
   deleteLocation(id: ID!): LocationEntityResponse
   deleteMusicAlbum(id: ID!): MusicAlbumEntityResponse
+  deleteTrack(id: ID!): TrackEntityResponse
   deleteUploadFile(id: ID!): UploadFileEntityResponse
   deleteUploadFolder(id: ID!): UploadFolderEntityResponse
 
@@ -692,6 +698,7 @@ type Mutation {
   updateInteractiveBlock(data: InteractiveBlockInput!, id: ID!): InteractiveBlockEntityResponse
   updateLocation(data: LocationInput!, id: ID!): LocationEntityResponse
   updateMusicAlbum(data: MusicAlbumInput!, id: ID!): MusicAlbumEntityResponse
+  updateTrack(data: TrackInput!, id: ID!): TrackEntityResponse
   updateUploadFile(data: UploadFileInput!, id: ID!): UploadFileEntityResponse
   updateUploadFolder(data: UploadFolderInput!, id: ID!): UploadFolderEntityResponse
 
@@ -738,6 +745,8 @@ type Query {
   me: UsersPermissionsMe
   musicAlbum(id: ID): MusicAlbumEntityResponse
   musicAlbums(filters: MusicAlbumFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): MusicAlbumEntityResponseCollection
+  track(id: ID): TrackEntityResponse
+  tracks(filters: TrackFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): TrackEntityResponseCollection
   uploadFile(id: ID): UploadFileEntityResponse
   uploadFiles(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileEntityResponseCollection
   uploadFolder(id: ID): UploadFolderEntityResponse
@@ -774,6 +783,55 @@ input StringFilterInput {
   null: Boolean
   or: [String]
   startsWith: String
+}
+
+type Track {
+  createdAt: DateTime
+  publishedAt: DateTime
+  title: String
+  track_description: String
+  track_file: UploadFileEntityResponse
+  track_id: String
+  updatedAt: DateTime
+}
+
+type TrackEntity {
+  attributes: Track
+  id: ID
+}
+
+type TrackEntityResponse {
+  data: TrackEntity
+}
+
+type TrackEntityResponseCollection {
+  data: [TrackEntity!]!
+  meta: ResponseCollectionMeta!
+}
+
+input TrackFiltersInput {
+  and: [TrackFiltersInput]
+  createdAt: DateTimeFilterInput
+  id: IDFilterInput
+  not: TrackFiltersInput
+  or: [TrackFiltersInput]
+  publishedAt: DateTimeFilterInput
+  title: StringFilterInput
+  track_description: StringFilterInput
+  track_id: StringFilterInput
+  updatedAt: DateTimeFilterInput
+}
+
+input TrackInput {
+  publishedAt: DateTime
+  title: String
+  track_description: String
+  track_file: ID
+  track_id: String
+}
+
+type TrackRelationResponseCollection {
+  data: [TrackEntity!]!
 }
 
 """The `Upload` scalar type represents a file upload."""

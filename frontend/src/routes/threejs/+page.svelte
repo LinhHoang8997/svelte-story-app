@@ -2,7 +2,7 @@
   import { World } from "$lib/components/3d/World.js"
 import { onMount } from "svelte";
 
-function main() {
+onMount(() => {
   // Get a reference to the container element that will hold our scene
   const container = document.querySelector('#canvas_wrapper');
 
@@ -11,16 +11,6 @@ function main() {
 
   // 2. Render the scene
   world.start();
-
-  // We can access member variables from the instance
-console.log(world.camera);
-console.log(world.renderer);
-console.log(world.scene);
-
-}
-
-onMount(() => {
-  main();
 });
 
 

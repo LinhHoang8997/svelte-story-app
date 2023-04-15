@@ -34,17 +34,6 @@
     "release_date": {
       "type": "date"
     },
-    "audio_files": {
-      "type": "media",
-      "multiple": true,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
     "type": {
       "type": "enumeration",
       "enum": [
@@ -57,14 +46,20 @@
       "type": "uid"
     },
     "cover_image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
+    },
+    "tracks": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::track.track"
     }
   }
 }

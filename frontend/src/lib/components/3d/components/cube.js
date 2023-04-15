@@ -6,30 +6,29 @@ const radiansPerSecond = MathUtils.degToRad(30);
 
 function createMaterial () {
     const textureLoader = new TextureLoader();
-    // create default specs object with named parameters for the Standard material
-
     // load a texture
     const texture = textureLoader.load(
         texture_image,
-    );
+        (texture) => {
+            // texture loaded
+            console.log('texture loaded');
 
-    const specs = {
-        color: 'purple',
+        }
+    )
+    // create a "standard" material using the texture we just loaded as a color map
+    const material = new MeshStandardMaterial({
         map: texture,
-    }
-    const material = new MeshStandardMaterial(specs);
+    });
 
     return material;
 }
-
-
 
 function createCube() {
     // create a geometry
     const geometry = new BoxGeometry(2, 2, 2);
 
-    // create a default (white) Basic material
-    const material = createMaterial(); // { color: 'purple' } instead of specs is also valid
+    // create a default Basic material
+    const material = createMaterial();
 
     // create a Mesh containing the geometry and material
     const cube = new Mesh(geometry, material);
