@@ -1,0 +1,17 @@
+query getAllSoundtracks @cache(policy: NetworkOnly) {
+  soundtracks
+  {
+		data {
+      attributes
+      {
+        soundtrack_id
+        track_file {
+          data {
+            attributes
+            {url}
+          }
+        }
+      }
+    }
+  }
+}

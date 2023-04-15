@@ -14,6 +14,13 @@ query SoundtracksInBlockQuery ($id: String!) {
             }
           }
         }
+        artifacts {
+          data {
+            attributes {
+              title
+            }
+          }
+        }
         soundtracks {
           data {
             id

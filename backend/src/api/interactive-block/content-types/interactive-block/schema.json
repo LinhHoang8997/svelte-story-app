@@ -72,6 +72,11 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::character.character"
+    },
+    "artifacts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::artifact.artifact"
     }
   }
 }

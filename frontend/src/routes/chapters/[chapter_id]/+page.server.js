@@ -1,5 +1,6 @@
 import { IndividualChapterQueryStore } from "$houdini";
 import { SoundtracksInBlockQueryStore } from "$houdini";
+import { getAllSoundtracksStore } from "$houdini";
 
 function getSlug({ params }) {
   return params.chapter_id
@@ -21,16 +22,16 @@ export async function load(event) {
     console.log("> Chapter data loaded successfully from Strapi");
   }
 
-  const SoundtracksInBlockQuery = new SoundtracksInBlockQueryStore();
-  const test_result = await SoundtracksInBlockQuery.fetch({
+  const getAllSoundtracks = new getAllSoundtracksStore();
+  const test_result = await getAllSoundtracks.fetch({
     event,
-    variables: { id: "kacchie-writes-a-poem" },
+    // variables: { id: "kacchie-writes-a-poem" },
     blocking: true // This is important to make sure the page doesn't load until the query is done
   });
 
   if (test_result.data) {
     console.log("> Soundtrack data loaded successfully from Strapi");
-    console.log(test_result.data.interactiveBlocks.data[0].attributes.soundtracks)
+    console.log(test_result.data)
   }
 
 

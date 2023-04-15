@@ -43,6 +43,13 @@
                 }
               }
             }
+            artifacts {
+              data {
+                attributes {
+                  title
+                }
+              }
+            }
             soundtracks {
               data {
                 attributes {
@@ -71,15 +78,11 @@
 
   // Get data from store when its "fetching" property is false
   let soundtracks;
-  // $: console.log(
-  //   "For debugging purposes, the current value of the soundtrack store is",
-  //   $soundtrack_store
-  // );
   $: if (!$soundtrack_store.fetching) {
-    // console.log(
-    //   "The soundtrack store is no longer fetching. The data is",
-    //   $soundtrack_store.data
-    // );
+    console.log(
+      "The soundtrack store is no longer fetching. The data is",
+      $soundtrack_store.data
+    );
 
     // Get the soundtracks from the store
     soundtracks = $soundtrack_store.data;
