@@ -23,37 +23,22 @@
   // $: console.log("The interactive block ID is", interactive_block_id);
 
   // Get data from GraphQL store for sounds to play
-  export const _MyQueryVariables = () => {
+  export const _SoundtracksBlockQueryVariables = () => {
     return { id: interactive_block_id };
   };
   const soundtrack_store = graphql(`
-    query MyQuery($id: String!) @load {
+    query SoundtracksBlockQuery($id: String!) @load {
       interactiveBlocks(
         filters: { interactive_block_id: { eq: $id } }
-        pagination: { page: 1, pageSize: 100 }
+        pagination: { page: 1, pageSize: 20 }
       ) {
         data {
-          id
           attributes {
-            interactive_block_id
-            characters {
-              data {
-                attributes {
-                  name
-                }
-              }
-            }
-            artifacts {
-              data {
-                attributes {
-                  title
-                }
-              }
-            }
             soundtracks {
               data {
                 attributes {
                   soundtrack_id
+                  title
                   track_file {
                     data {
                       attributes {
@@ -80,12 +65,30 @@
   let soundtracks;
   $: if (!$soundtrack_store.fetching) {
     console.log(
-      "The soundtrack store is no longer fetching. The data is",
-      $soundtrack_store.data
+      "The soundtrack store is no longer fetching for: ",
+      interactive_block_id
     );
+    if ($soundtrack_store.data) {
+      // Get the soundtracks from the store
+      let soundtracks_from_response =
+        $soundtrack_store.data.interactiveBlocks.data[0].attributes.soundtracks
+          .data;
 
-    // Get the soundtracks from the store
-    soundtracks = $soundtrack_store.data;
+      if (soundtracks_from_response.length > 0) {
+        console.log("The soundtrack store has data");
+        soundtracks = soundtracks_from_response.map((soundtrack) => {
+          return {
+            id: soundtrack.attributes.soundtrack_id,
+            title: soundtrack.attributes.title,
+            description: soundtrack.attributes.description,
+            url: soundtrack.attributes.track_file.data.attributes.url,
+          };
+        });
+        console.log(soundtracks);
+      } else {
+        console.log("The soundtrack store has no data");
+      }
+    }
   }
 
   // Function that animates the text
@@ -106,7 +109,10 @@
   onMount(() => {
     startTextLoadAnimation();
     // Create Howler instances for all sounds in the block
+
     let sounds = paragraph_content.sounds;
+    
+
     if (sounds) {
       sounds.forEach((sound) => {
         // Check if each of these sounds matches any of the Howler instances in the queue
@@ -156,7 +162,7 @@
         if ($howler_queue.length > 0) {
           console.log("There exists a Howler instance in the queue");
 
-          // Check find the first Howler instance that is playing
+          // Check to find the first Howler instance that is playing
           const playing_howler_instance = $howler_queue.find(
             (howler_instance) => howler_instance.playing()
           );
