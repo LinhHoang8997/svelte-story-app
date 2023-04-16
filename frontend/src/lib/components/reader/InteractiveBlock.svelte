@@ -20,7 +20,6 @@
   // Get paragraph content from the parent component
   export let paragraph_content;
   let interactive_block_id = paragraph_content.id;
-  // $: console.log("The interactive block ID is", interactive_block_id);
 
   // Get data from GraphQL store for sounds to play
   export const _SoundtracksBlockQueryVariables = () => {
@@ -91,6 +90,7 @@
     }
   }
 
+  // Function that animates the text
   // Function that animates the text
   function startTextLoadAnimation() {
     animate(
@@ -176,6 +176,7 @@
 
           if (matched_howler_instance.state() === "loaded") {
             console.log("Sound loaded. Ready to play sound.");
+            console.log("Sound loaded. Ready to play sound.");
             if (playing_howler_instance) {
               if (playing_howler_instance === matched_howler_instance) {
                 console.log("The sound is already playing. Do nothing.");
@@ -189,7 +190,22 @@
                   "fade-into-second"
                 );
               }
+              if (playing_howler_instance === matched_howler_instance) {
+                console.log("The sound is already playing. Do nothing.");
+              } else {
+                console.log(
+                  "Something else is playing. Fade out the current sound and fade in the new sound."
+                );
+                crossFadeLoop(
+                  playing_howler_instance,
+                  matched_howler_instance,
+                  "fade-into-second"
+                );
+              }
             } else {
+              console.log(
+                "Nothing in the queue is playing. Start playing the sound in Interactive Block."
+              );
               console.log(
                 "Nothing in the queue is playing. Start playing the sound in Interactive Block."
               );
@@ -211,6 +227,7 @@
   on:keyup={handleLightbox}
   class="interactive_block_wrapper"
 >
+  <h3>{paragraph_content.id}</h3>
   <h3>{paragraph_content.id}</h3>
   {#each paragraph_content.images as image}
     <img
