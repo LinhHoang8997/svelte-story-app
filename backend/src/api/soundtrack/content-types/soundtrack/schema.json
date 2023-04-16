@@ -35,6 +35,9 @@
       "relation": "manyToMany",
       "target": "api::interactive-block.interactive-block",
       "mappedBy": "soundtracks"
+    },
+    "description": {
+      "type": "richtext"
     }
   }
 }

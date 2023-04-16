@@ -62,6 +62,8 @@
 
   // Get data from store when its "fetching" property is false
   let soundtracks;
+  $: console.log("Watching the soundtracks variable", soundtracks);
+
   $: if (!$soundtrack_store.fetching) {
     console.log(
       "The soundtrack store is no longer fetching for: ",
@@ -80,17 +82,49 @@
             id: soundtrack.attributes.soundtrack_id,
             title: soundtrack.attributes.title,
             description: soundtrack.attributes.description,
-            url: soundtrack.attributes.track_file.data.attributes.url,
+            trackfile_url: soundtrack.attributes.track_file.data.attributes.url,
           };
         });
-        console.log(soundtracks);
       } else {
         console.log("The soundtrack store has no data");
       }
     }
   }
 
-  // Function that animates the text
+  // Create Howler instances for all sounds in the block
+  $: if (soundtracks) {
+    soundtracks.forEach((track) => {
+      console.log("Checking if a Howler instance exists for", track.title);
+      // Check if each of these tracks matches any of the Howler instances in the queue
+      let matched_howler_instance = $howler_queue.find(
+        (howler_instance) =>
+          howler_instance._src ===
+          `${PUBLIC_STRAPI_HOSTNAME_PORT}${track.trackfile_url}`
+      );
+
+      if (!matched_howler_instance) {
+        console.log(
+          "There exists no Howler instance in the queue with the same URL as this track"
+        );
+        const howler_instance = createHowlerInstance(
+          `${PUBLIC_STRAPI_HOSTNAME_PORT}${track.trackfile_url}`
+        );
+        console.log(
+          "Created Howler instance for",
+          track.trackfile_url,
+          "and added it to the Howler queue"
+        );
+        $howler_queue = [...$howler_queue, howler_instance];
+      } else {
+        console.log(
+          "A Howler instance in the queue with the same URL as this track already exists. No need to create a new Howler instance."
+        );
+      }
+    });
+  } else {
+    console.log("There are no tracks in this interactive block");
+  }
+
   // Function that animates the text
   function startTextLoadAnimation() {
     animate(
@@ -108,42 +142,6 @@
 
   onMount(() => {
     startTextLoadAnimation();
-    // Create Howler instances for all sounds in the block
-
-    let sounds = paragraph_content.sounds;
-    
-
-    if (sounds) {
-      sounds.forEach((sound) => {
-        // Check if each of these sounds matches any of the Howler instances in the queue
-        let matched_howler_instance = $howler_queue.find(
-          (howler_instance) =>
-            howler_instance._src ===
-            `${PUBLIC_STRAPI_HOSTNAME_PORT}${sound.attributes.url}`
-        );
-
-        if (!matched_howler_instance) {
-          console.log(
-            "There exists no Howler instance in the queue with the same URL as this sound"
-          );
-          const howler_instance = createHowlerInstance(
-            `${PUBLIC_STRAPI_HOSTNAME_PORT}${sound.attributes.url}`
-          );
-          console.log(
-            "Created Howler instance for",
-            sound.attributes.url,
-            "and added it to the Howler queue"
-          );
-          $howler_queue = [...$howler_queue, howler_instance];
-        } else {
-          console.log(
-            "A Howler instance in the queue with the same URL as this sound already exists. No need to create a new Howler instance."
-          );
-        }
-      });
-    } else {
-      console.log("There are no sounds in this interactive block");
-    }
   });
 
   // Reactive variable that controls the Lightbox functionality
@@ -152,9 +150,12 @@
   // Function that plays if the user opens the lightbox
   function handleLightbox() {
     lightbox_active = !lightbox_active;
-    let first_sound_url = paragraph_content.sounds[0].attributes.url;
+    let first_sound_url = soundtracks[0].trackfile_url;
 
-    console.log("The first sound URL is", first_sound_url);
+    if (first_sound_url) {
+      console.log("The first sound URL exists", first_sound_url, "and will be playing");
+      playInteractiveBlockSound(lightbox_active);
+    }
 
     function playInteractiveBlockSound(lightbox_active) {
       // Create a Howler instance
@@ -175,7 +176,6 @@
           );
 
           if (matched_howler_instance.state() === "loaded") {
-            console.log("Sound loaded. Ready to play sound.");
             console.log("Sound loaded. Ready to play sound.");
             if (playing_howler_instance) {
               if (playing_howler_instance === matched_howler_instance) {
@@ -217,8 +217,6 @@
         }
       }
     }
-
-    playInteractiveBlockSound(lightbox_active);
   }
 </script>
 

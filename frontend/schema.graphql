@@ -813,6 +813,7 @@ type ResponseCollectionMeta {
 
 type Soundtrack {
   createdAt: DateTime
+  description: String
   interactive_blocks(filters: InteractiveBlockFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): InteractiveBlockRelationResponseCollection
   publishedAt: DateTime
   soundtrack_id: String
@@ -838,6 +839,7 @@ type SoundtrackEntityResponseCollection {
 input SoundtrackFiltersInput {
   and: [SoundtrackFiltersInput]
   createdAt: DateTimeFilterInput
+  description: StringFilterInput
   id: IDFilterInput
   interactive_blocks: InteractiveBlockFiltersInput
   not: SoundtrackFiltersInput
@@ -849,6 +851,7 @@ input SoundtrackFiltersInput {
 }
 
 input SoundtrackInput {
+  description: String
   interactive_blocks: [ID]
   publishedAt: DateTime
   soundtrack_id: String

@@ -64,8 +64,9 @@
     },
     "soundtracks": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::soundtrack.soundtrack"
+      "relation": "manyToMany",
+      "target": "api::soundtrack.soundtrack",
+      "inversedBy": "interactive_blocks"
     }
   }
 }
