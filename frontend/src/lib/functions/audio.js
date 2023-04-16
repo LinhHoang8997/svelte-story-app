@@ -1,6 +1,6 @@
 import { Howl } from "howler";
 
-let cross_fade_duration = 8000;
+let cross_fade_duration = 5000;
 let default_volume = 0.7;
 
 export function createHowlerInstance(urls, onload) {
@@ -26,7 +26,12 @@ export function crossFadeLoop(leaving_instance = null, entering_instance = null,
     // Fade out the leaving instance by decreasing volume from default volume to 0
     leaving_instance.fade(default_volume, 0, cross_fade_duration);
     console.log("Sound URL: ", leaving_instance._src, " is fading out");
-
+    leaving_instance.once("fade",
+      () => {
+        leaving_instance.stop();
+        console.log("Sound URL: ", leaving_instance._src, " has stopped");
+      }
+    );
     // Fade in the entering instance by increasing volume from 0 to default volume
     entering_instance.seek(0);
     entering_instance.play();

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "character",
     "pluralName": "characters",
-    "displayName": "Character"
+    "displayName": "Character",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -12,7 +13,8 @@
   "pluginOptions": {},
   "attributes": {
     "character_id": {
-      "type": "uid"
+      "type": "uid",
+      "targetField": "name"
     },
     "name": {
       "type": "string",
@@ -22,14 +24,15 @@
       "type": "text"
     },
     "profile_images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     },
     "faction": {
       "type": "enumeration",
@@ -52,6 +55,9 @@
       "relation": "manyToOne",
       "target": "api::music-album.music-album",
       "inversedBy": "characters"
+    },
+    "character_quote": {
+      "type": "string"
     }
   }
 }

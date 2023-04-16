@@ -56,10 +56,10 @@
         "audios"
       ]
     },
-    "tracks": {
+    "soundtracks": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::track.track"
+      "target": "api::soundtrack.soundtrack"
     }
   }
 }
