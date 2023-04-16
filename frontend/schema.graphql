@@ -86,6 +86,10 @@ input ArtifactInput {
   title: String
 }
 
+type ArtifactRelationResponseCollection {
+  data: [ArtifactEntity!]!
+}
+
 input BooleanFilterInput {
   and: [Boolean]
   between: [Boolean]
@@ -178,6 +182,7 @@ type Character {
   biography: String
   character_id: String
   character_quote: String
+  character_quote: String
   createdAt: DateTime
   faction: ENUM_CHARACTER_FACTION!
   laconic_description: String
@@ -207,6 +212,7 @@ input CharacterFiltersInput {
   biography: StringFilterInput
   character_id: StringFilterInput
   character_quote: StringFilterInput
+  character_quote: StringFilterInput
   createdAt: DateTimeFilterInput
   faction: StringFilterInput
   id: IDFilterInput
@@ -222,6 +228,7 @@ input CharacterFiltersInput {
 input CharacterInput {
   biography: String
   character_id: String
+  character_quote: String
   character_quote: String
   faction: ENUM_CHARACTER_FACTION
   laconic_description: String
@@ -394,6 +401,7 @@ input FloatFilterInput {
 }
 
 union GenericMorph = Arc | Artifact | Chapter | Character | ComponentMultimediaHeaderMedia | ComponentSeoSeoInformation | I18NLocale | InteractiveBlock | Location | MusicAlbum | Soundtrack | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
+union GenericMorph = Arc | Artifact | Chapter | Character | ComponentMultimediaHeaderMedia | ComponentSeoSeoInformation | I18NLocale | InteractiveBlock | Location | MusicAlbum | Soundtrack | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
 
 type I18NLocale {
   code: String
@@ -476,7 +484,9 @@ input IntFilterInput {
 }
 
 type InteractiveBlock {
+  artifacts(filters: ArtifactFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ArtifactRelationResponseCollection
   chapters(filters: ChapterFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ChapterRelationResponseCollection
+  characters(filters: CharacterFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): CharacterRelationResponseCollection
   characters(filters: CharacterFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): CharacterRelationResponseCollection
   createdAt: DateTime
   images(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
@@ -484,6 +494,7 @@ type InteractiveBlock {
   publishedAt: DateTime
   rich_text_caption: String
   sounds(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
+  soundtracks(filters: SoundtrackFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): SoundtrackRelationResponseCollection
   soundtracks(filters: SoundtrackFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): SoundtrackRelationResponseCollection
   title: String!
   type: ENUM_INTERACTIVEBLOCK_TYPE
@@ -506,7 +517,9 @@ type InteractiveBlockEntityResponseCollection {
 
 input InteractiveBlockFiltersInput {
   and: [InteractiveBlockFiltersInput]
+  artifacts: ArtifactFiltersInput
   chapters: ChapterFiltersInput
+  characters: CharacterFiltersInput
   characters: CharacterFiltersInput
   createdAt: DateTimeFilterInput
   id: IDFilterInput
@@ -516,19 +529,23 @@ input InteractiveBlockFiltersInput {
   publishedAt: DateTimeFilterInput
   rich_text_caption: StringFilterInput
   soundtracks: SoundtrackFiltersInput
+  soundtracks: SoundtrackFiltersInput
   title: StringFilterInput
   type: StringFilterInput
   updatedAt: DateTimeFilterInput
 }
 
 input InteractiveBlockInput {
+  artifacts: [ID]
   chapters: [ID]
+  characters: [ID]
   characters: [ID]
   images: [ID]
   interactive_block_id: String
   publishedAt: DateTime
   rich_text_caption: String
   sounds: [ID]
+  soundtracks: [ID]
   soundtracks: [ID]
   title: String
   type: ENUM_INTERACTIVEBLOCK_TYPE
@@ -640,6 +657,7 @@ type MusicAlbum {
   publishedAt: DateTime
   release_date: Date
   soundtracks(filters: SoundtrackFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): SoundtrackRelationResponseCollection
+  soundtracks(filters: SoundtrackFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): SoundtrackRelationResponseCollection
   type: ENUM_MUSICALBUM_TYPE
   updatedAt: DateTime
 }
@@ -672,6 +690,7 @@ input MusicAlbumFiltersInput {
   publishedAt: DateTimeFilterInput
   release_date: DateFilterInput
   soundtracks: SoundtrackFiltersInput
+  soundtracks: SoundtrackFiltersInput
   type: StringFilterInput
   updatedAt: DateTimeFilterInput
 }
@@ -686,6 +705,7 @@ input MusicAlbumInput {
   publishedAt: DateTime
   release_date: Date
   soundtracks: [ID]
+  soundtracks: [ID]
   type: ENUM_MUSICALBUM_TYPE
 }
 
@@ -694,11 +714,13 @@ type Mutation {
   changePassword(currentPassword: String!, password: String!, passwordConfirmation: String!): UsersPermissionsLoginPayload
   createArc(data: ArcInput!): ArcEntityResponse
   createArtifact(data: ArtifactInput!): ArtifactEntityResponse
+  createArtifact(data: ArtifactInput!): ArtifactEntityResponse
   createChapter(data: ChapterInput!): ChapterEntityResponse
   createCharacter(data: CharacterInput!): CharacterEntityResponse
   createInteractiveBlock(data: InteractiveBlockInput!): InteractiveBlockEntityResponse
   createLocation(data: LocationInput!): LocationEntityResponse
   createMusicAlbum(data: MusicAlbumInput!): MusicAlbumEntityResponse
+  createSoundtrack(data: SoundtrackInput!): SoundtrackEntityResponse
   createSoundtrack(data: SoundtrackInput!): SoundtrackEntityResponse
   createUploadFile(data: UploadFileInput!): UploadFileEntityResponse
   createUploadFolder(data: UploadFolderInput!): UploadFolderEntityResponse
@@ -710,11 +732,13 @@ type Mutation {
   createUsersPermissionsUser(data: UsersPermissionsUserInput!): UsersPermissionsUserEntityResponse!
   deleteArc(id: ID!): ArcEntityResponse
   deleteArtifact(id: ID!): ArtifactEntityResponse
+  deleteArtifact(id: ID!): ArtifactEntityResponse
   deleteChapter(id: ID!): ChapterEntityResponse
   deleteCharacter(id: ID!): CharacterEntityResponse
   deleteInteractiveBlock(id: ID!): InteractiveBlockEntityResponse
   deleteLocation(id: ID!): LocationEntityResponse
   deleteMusicAlbum(id: ID!): MusicAlbumEntityResponse
+  deleteSoundtrack(id: ID!): SoundtrackEntityResponse
   deleteSoundtrack(id: ID!): SoundtrackEntityResponse
   deleteUploadFile(id: ID!): UploadFileEntityResponse
   deleteUploadFolder(id: ID!): UploadFolderEntityResponse
@@ -743,12 +767,14 @@ type Mutation {
   resetPassword(code: String!, password: String!, passwordConfirmation: String!): UsersPermissionsLoginPayload
   updateArc(data: ArcInput!, id: ID!): ArcEntityResponse
   updateArtifact(data: ArtifactInput!, id: ID!): ArtifactEntityResponse
+  updateArtifact(data: ArtifactInput!, id: ID!): ArtifactEntityResponse
   updateChapter(data: ChapterInput!, id: ID!): ChapterEntityResponse
   updateCharacter(data: CharacterInput!, id: ID!): CharacterEntityResponse
   updateFileInfo(id: ID!, info: FileInfoInput): UploadFileEntityResponse!
   updateInteractiveBlock(data: InteractiveBlockInput!, id: ID!): InteractiveBlockEntityResponse
   updateLocation(data: LocationInput!, id: ID!): LocationEntityResponse
   updateMusicAlbum(data: MusicAlbumInput!, id: ID!): MusicAlbumEntityResponse
+  updateSoundtrack(data: SoundtrackInput!, id: ID!): SoundtrackEntityResponse
   updateSoundtrack(data: SoundtrackInput!, id: ID!): SoundtrackEntityResponse
   updateUploadFile(data: UploadFileInput!, id: ID!): UploadFileEntityResponse
   updateUploadFolder(data: UploadFolderInput!, id: ID!): UploadFolderEntityResponse
@@ -785,6 +811,8 @@ type Query {
   arcs(filters: ArcFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ArcEntityResponseCollection
   artifact(id: ID): ArtifactEntityResponse
   artifacts(filters: ArtifactFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ArtifactEntityResponseCollection
+  artifact(id: ID): ArtifactEntityResponse
+  artifacts(filters: ArtifactFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ArtifactEntityResponseCollection
   chapter(id: ID): ChapterEntityResponse
   chapters(filters: ChapterFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ChapterEntityResponseCollection
   character(id: ID): CharacterEntityResponse
@@ -798,6 +826,8 @@ type Query {
   me: UsersPermissionsMe
   musicAlbum(id: ID): MusicAlbumEntityResponse
   musicAlbums(filters: MusicAlbumFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): MusicAlbumEntityResponseCollection
+  soundtrack(id: ID): SoundtrackEntityResponse
+  soundtracks(filters: SoundtrackFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): SoundtrackEntityResponseCollection
   soundtrack(id: ID): SoundtrackEntityResponse
   soundtracks(filters: SoundtrackFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): SoundtrackEntityResponseCollection
   uploadFile(id: ID): UploadFileEntityResponse
@@ -815,9 +845,12 @@ type ResponseCollectionMeta {
 }
 
 type Soundtrack {
+type Soundtrack {
   createdAt: DateTime
   interactive_blocks(filters: InteractiveBlockFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): InteractiveBlockRelationResponseCollection
+  interactive_blocks(filters: InteractiveBlockFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): InteractiveBlockRelationResponseCollection
   publishedAt: DateTime
+  soundtrack_id: String
   soundtrack_id: String
   title: String
   track_file: UploadFileEntityResponse
@@ -826,13 +859,19 @@ type Soundtrack {
 
 type SoundtrackEntity {
   attributes: Soundtrack
+type SoundtrackEntity {
+  attributes: Soundtrack
   id: ID
 }
 
 type SoundtrackEntityResponse {
   data: SoundtrackEntity
+type SoundtrackEntityResponse {
+  data: SoundtrackEntity
 }
 
+type SoundtrackEntityResponseCollection {
+  data: [SoundtrackEntity!]!
 type SoundtrackEntityResponseCollection {
   data: [SoundtrackEntity!]!
   meta: ResponseCollectionMeta!
@@ -840,12 +879,18 @@ type SoundtrackEntityResponseCollection {
 
 input SoundtrackFiltersInput {
   and: [SoundtrackFiltersInput]
+input SoundtrackFiltersInput {
+  and: [SoundtrackFiltersInput]
   createdAt: DateTimeFilterInput
   id: IDFilterInput
   interactive_blocks: InteractiveBlockFiltersInput
   not: SoundtrackFiltersInput
   or: [SoundtrackFiltersInput]
+  interactive_blocks: InteractiveBlockFiltersInput
+  not: SoundtrackFiltersInput
+  or: [SoundtrackFiltersInput]
   publishedAt: DateTimeFilterInput
+  soundtrack_id: StringFilterInput
   soundtrack_id: StringFilterInput
   title: StringFilterInput
   updatedAt: DateTimeFilterInput
@@ -853,12 +898,41 @@ input SoundtrackFiltersInput {
 
 input SoundtrackInput {
   interactive_blocks: [ID]
+input SoundtrackInput {
+  interactive_blocks: [ID]
   publishedAt: DateTime
+  soundtrack_id: String
   soundtrack_id: String
   title: String
   track_file: ID
 }
 
+type SoundtrackRelationResponseCollection {
+  data: [SoundtrackEntity!]!
+}
+
+input StringFilterInput {
+  and: [String]
+  between: [String]
+  contains: String
+  containsi: String
+  endsWith: String
+  eq: String
+  eqi: String
+  gt: String
+  gte: String
+  in: [String]
+  lt: String
+  lte: String
+  ne: String
+  not: StringFilterInput
+  notContains: String
+  notContainsi: String
+  notIn: [String]
+  notNull: Boolean
+  null: Boolean
+  or: [String]
+  startsWith: String
 type SoundtrackRelationResponseCollection {
   data: [SoundtrackEntity!]!
 }

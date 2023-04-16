@@ -20,33 +20,24 @@
   // Get paragraph content from the parent component
   export let paragraph_content;
   let interactive_block_id = paragraph_content.id;
-  // $: console.log("The interactive block ID is", interactive_block_id);
 
   // Get data from GraphQL store for sounds to play
-  export const _MyQueryVariables = () => {
+  export const _SoundtracksBlockQueryVariables = () => {
     return { id: interactive_block_id };
   };
   const soundtrack_store = graphql(`
-    query MyQuery($id: String!) @load {
+    query SoundtracksBlockQuery($id: String!) @load {
       interactiveBlocks(
         filters: { interactive_block_id: { eq: $id } }
-        pagination: { page: 1, pageSize: 100 }
+        pagination: { page: 1, pageSize: 20 }
       ) {
         data {
-          id
           attributes {
-            interactive_block_id
-            characters {
-              data {
-                attributes {
-                  name
-                }
-              }
-            }
             soundtracks {
               data {
                 attributes {
                   soundtrack_id
+                  title
                   track_file {
                     data {
                       attributes {
@@ -71,20 +62,35 @@
 
   // Get data from store when its "fetching" property is false
   let soundtracks;
-  // $: console.log(
-  //   "For debugging purposes, the current value of the soundtrack store is",
-  //   $soundtrack_store
-  // );
   $: if (!$soundtrack_store.fetching) {
-    // console.log(
-    //   "The soundtrack store is no longer fetching. The data is",
-    //   $soundtrack_store.data
-    // );
+    console.log(
+      "The soundtrack store is no longer fetching for: ",
+      interactive_block_id
+    );
+    if ($soundtrack_store.data) {
+      // Get the soundtracks from the store
+      let soundtracks_from_response =
+        $soundtrack_store.data.interactiveBlocks.data[0].attributes.soundtracks
+          .data;
 
-    // Get the soundtracks from the store
-    soundtracks = $soundtrack_store.data;
+      if (soundtracks_from_response.length > 0) {
+        console.log("The soundtrack store has data");
+        soundtracks = soundtracks_from_response.map((soundtrack) => {
+          return {
+            id: soundtrack.attributes.soundtrack_id,
+            title: soundtrack.attributes.title,
+            description: soundtrack.attributes.description,
+            url: soundtrack.attributes.track_file.data.attributes.url,
+          };
+        });
+        console.log(soundtracks);
+      } else {
+        console.log("The soundtrack store has no data");
+      }
+    }
   }
 
+  // Function that animates the text
   // Function that animates the text
   function startTextLoadAnimation() {
     animate(
@@ -103,7 +109,10 @@
   onMount(() => {
     startTextLoadAnimation();
     // Create Howler instances for all sounds in the block
+
     let sounds = paragraph_content.sounds;
+    
+
     if (sounds) {
       sounds.forEach((sound) => {
         // Check if each of these sounds matches any of the Howler instances in the queue
@@ -153,7 +162,7 @@
         if ($howler_queue.length > 0) {
           console.log("There exists a Howler instance in the queue");
 
-          // Check find the first Howler instance that is playing
+          // Check to find the first Howler instance that is playing
           const playing_howler_instance = $howler_queue.find(
             (howler_instance) => howler_instance.playing()
           );
@@ -166,6 +175,7 @@
           );
 
           if (matched_howler_instance.state() === "loaded") {
+            console.log("Sound loaded. Ready to play sound.");
             console.log("Sound loaded. Ready to play sound.");
             if (playing_howler_instance) {
               if (playing_howler_instance === matched_howler_instance) {
@@ -180,7 +190,22 @@
                   "fade-into-second"
                 );
               }
+              if (playing_howler_instance === matched_howler_instance) {
+                console.log("The sound is already playing. Do nothing.");
+              } else {
+                console.log(
+                  "Something else is playing. Fade out the current sound and fade in the new sound."
+                );
+                crossFadeLoop(
+                  playing_howler_instance,
+                  matched_howler_instance,
+                  "fade-into-second"
+                );
+              }
             } else {
+              console.log(
+                "Nothing in the queue is playing. Start playing the sound in Interactive Block."
+              );
               console.log(
                 "Nothing in the queue is playing. Start playing the sound in Interactive Block."
               );
@@ -202,6 +227,7 @@
   on:keyup={handleLightbox}
   class="interactive_block_wrapper"
 >
+  <h3>{paragraph_content.id}</h3>
   <h3>{paragraph_content.id}</h3>
   {#each paragraph_content.images as image}
     <img
