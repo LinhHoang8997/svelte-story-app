@@ -114,7 +114,14 @@
           track.trackfile_url,
           "and added it to the Howler queue"
         );
+        // Assign the Howler instance to the queue + info about the track
         $howler_queue = [...$howler_queue, howler_instance];
+
+
+
+
+
+        
       } else {
         console.log(
           "A Howler instance in the queue with the same URL as this track already exists. No need to create a new Howler instance."

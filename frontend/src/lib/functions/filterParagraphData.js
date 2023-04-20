@@ -60,7 +60,6 @@ function extractInteractiveBlockContentbyId(id, chapter_data) {
     id: id,
     title: matched_interactive_block.attributes.title,
     type: matched_interactive_block.attributes.type,
-    sounds: matched_interactive_block.attributes.sounds.data,
     images: matched_interactive_block.attributes.images.data,
     rich_text_caption: p_tags_text_rich_text_caption_cleaned,
   };

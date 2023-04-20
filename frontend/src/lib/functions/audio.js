@@ -1,24 +1,29 @@
 import { Howl } from "howler";
 
-let cross_fade_duration = 5000;
+let cross_fade_duration = 7000;
 let default_volume = 0.7;
 
 export function createHowlerInstance(urls, onload) {
   return new Howl({
     src: urls,
+    preload: true,
     loop: false,
     volume: 0,
     onload: onload,
   });
 }
 
-export function crossFadeLoop(leaving_instance = null, entering_instance = null, fade_type) {
+export function crossFadeLoop(
+  leaving_instance = null,
+  entering_instance = null,
+  fade_type
+) {
   // If there is no leaving instance, create new Howlwer instance for the audio file and fade it in
   function fadeIntoFirst(leaving_instance = null, entering_instance) {
-        entering_instance.seek(0);
-        entering_instance.play();
-        console.log("Sound should be playing soon")
-        entering_instance.fade(0, default_volume, cross_fade_duration);
+    entering_instance.seek(0);
+    entering_instance.play();
+    console.log("Sound should be playing soon");
+    entering_instance.fade(0, default_volume, cross_fade_duration);
   }
 
   // If there is a leaving instance, immediately fade out the leaving instance and fade in the entering instance
@@ -26,23 +31,31 @@ export function crossFadeLoop(leaving_instance = null, entering_instance = null,
     // Fade out the leaving instance by decreasing volume from default volume to 0
     leaving_instance.fade(default_volume, 0, cross_fade_duration);
     console.log("Sound URL: ", leaving_instance._src, " is fading out");
-    leaving_instance.once("fade",
-      () => {
-        leaving_instance.stop();
+    
+    leaving_instance.once("volume", function(){
+      if (leaving_instance.volume() == 0) {
         console.log("Sound URL: ", leaving_instance._src, " has stopped");
+        leaving_instance.stop();
       }
-    );
+    });
+
     // Fade in the entering instance by increasing volume from 0 to default volume
     entering_instance.seek(0);
     entering_instance.play();
     entering_instance.fade(0, default_volume, cross_fade_duration);
     console.log("Sound URL: ", entering_instance._src, " is fading in");
+
+    // leaving_instance.once("fade", () => {
+    //   console.log("Sound URL: ", leaving_instance._src, " has stopped");
+    //   leaving_instance.stop();
+    // });
+
   }
 
   // When we let the two tracks end and start naturally, use the fadeMusicPlayer function to start the crossfade when the leaving instance is about to end
   function fadeMusicPlayer(leaving_instance, entering_instance) {
     var leaving_instance_duration = Math.floor(
-        leaving_instance._duration * 1000
+      leaving_instance._duration * 1000
     );
     console.log(`Duration of the entering: ${leaving_instance_duration}`);
 
@@ -50,7 +63,7 @@ export function crossFadeLoop(leaving_instance = null, entering_instance = null,
     var cross_fade_starting_point =
       leaving_instance_duration - cross_fade_duration;
     console.log(
-        `Start crossfading at the ${cross_fade_starting_point}-second point of the leaving track.
+      `Start crossfading at the ${cross_fade_starting_point}-second point of the leaving track.
         A timeout was started when the first track was loaded, after which the crossfade will start.`
     );
 
