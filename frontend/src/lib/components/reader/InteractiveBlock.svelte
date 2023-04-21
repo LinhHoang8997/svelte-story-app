@@ -8,10 +8,14 @@
   import { createHowlerInstance, crossFadeLoop } from "$lib/functions/audio";
 
   // Import the howler Svelte store to control the audio queue
-  import { howler_queue } from "$lib/stores/howlerStores.js";
+  import { howler_queue, test_queue } from "$lib/stores/howlerStores.js";
   $: console.log(
     "For debugging purposes, the current value of the Howler queue is",
     $howler_queue
+  );
+  $: console.log(
+    "For debugging purposes, the current value of the test queue is",
+    $test_queue
   );
 
   // Import environment variables
@@ -102,6 +106,8 @@
           `${PUBLIC_STRAPI_HOSTNAME_PORT}${track.trackfile_url}`
       );
 
+      
+
       if (!matched_howler_instance) {
         console.log(
           "There exists no Howler instance in the queue with the same URL as this track"
@@ -109,19 +115,24 @@
         const howler_instance = createHowlerInstance(
           `${PUBLIC_STRAPI_HOSTNAME_PORT}${track.trackfile_url}`
         );
+
         console.log(
           "Created Howler instance for",
           track.trackfile_url,
           "and added it to the Howler queue"
         );
+        
+        const test_object = {
+          trackfile_url: track.trackfile_url,
+          track_title: track.title,
+          howler_instance: howler_instance
+        };
+
+
         // Assign the Howler instance to the queue + info about the track
         $howler_queue = [...$howler_queue, howler_instance];
+        $test_queue = [...$test_queue, test_object];
 
-
-
-
-
-        
       } else {
         console.log(
           "A Howler instance in the queue with the same URL as this track already exists. No need to create a new Howler instance."
@@ -160,7 +171,11 @@
     let first_sound_url = soundtracks[0].trackfile_url;
 
     if (first_sound_url) {
-      console.log("The first sound URL exists", first_sound_url, "and will be playing");
+      console.log(
+        "The first sound URL exists",
+        first_sound_url,
+        "and will be playing"
+      );
       playInteractiveBlockSound(lightbox_active);
     }
 
