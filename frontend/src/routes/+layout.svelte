@@ -5,6 +5,7 @@
   import Navbar from "$lib/components/Navbar.svelte";
   import Reader from "$lib/components/wrapper/Reader.svelte";
   import Footer from "$lib/components/Footer.svelte";
+  import MusicTrackCard from "$lib/components/wrapper/MusicTrackCard.svelte";
 
   export let data;
 
@@ -26,5 +27,6 @@
       <slot />
     </Reader>
   </div>
+  <MusicTrackCard />
   <Footer />
 </div>

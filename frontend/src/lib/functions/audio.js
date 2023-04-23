@@ -1,4 +1,5 @@
 import { Howl } from "howler";
+import { audio_player_status } from "$lib/stores/howlerStores";
 
 let cross_fade_duration = 7000;
 let default_volume = 0.7;
@@ -10,6 +11,15 @@ export function createHowlerInstance(urls, onload) {
     loop: false,
     volume: 0,
     onload: onload,
+    onplay: function () {
+      // console.log("Sound URL: ", this._src, " is playing");
+      audio_player_status.setPlaying(this._src);
+    },
+    onend: function () {
+      // console.log("Sound URL: ", this._src, " has ended");
+      audio_player_status.setEnded();
+    },
+
   });
 }
 
