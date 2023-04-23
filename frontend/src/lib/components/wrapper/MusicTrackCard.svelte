@@ -1,5 +1,6 @@
 <script>
   import { audio_player_status } from "$lib/stores/howlerStores";
+  import { fade } from "svelte/transition";
 
   $: console.log(
     "The current value of the audio player status is",
@@ -8,11 +9,10 @@
 </script>
 
 {#if $audio_player_status.playing == true}
-  <div class="bg-gray-700 pl-4 py-2 fixed bottom-6 w-full flex flex-row align-middle">
+  <div class="bg-gray-700 pl-4 py-2 fixed bottom-6 w-full flex flex-row align-middle" transition:fade>
     <div class="spinning_record w-5 sm:w-20"></div>
     <div class="player_status">
-      <h3>Playing</h3>
-      <p>Track URL: {$audio_player_status.url}</p>
+      <p>Playing: {$audio_player_status.url}</p>
     </div>
   </div>
 {/if}

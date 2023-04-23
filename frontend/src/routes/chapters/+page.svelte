@@ -15,11 +15,11 @@
 
 <Seo title="Chapter List" description="The Official place for Steel, Fire, and Velvet" />
 
-<h1 class="text-lg font-bold">All the Chapters are here</h1>
+<h1 class="text-lg font-bold text-primary">All the Chapters are here</h1>
 {#if $AllChapterTitles.fetching}
     <p>Loading</p>
 {:else}
     {#each $AllChapterTitles.data.chapters.data as chapter}
-        <a href="chapters/{chapter.attributes.slug}">{chapter.attributes.title}</a>
+        <a class="text-accent" href="chapters/{chapter.attributes.slug}">{chapter.attributes.title}</a>
     {/each}
 {/if}

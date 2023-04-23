@@ -41,9 +41,9 @@
       <li>
         <a
           href="/chapters/{chapter.attributes.slug}"
-          class="flex text-primary items-center h-12 p-2 border-b-2 border-rose-900 border-double justify-center hover:font-semibold bg-orange-400 hover:bg-orange-700  hover:text-gray-200 transition-all"
+          class="flex text-primary items-center h-8 p-2 border-b-2 border-rose-900 border-double justify-center hover:font-semibold bg-orange-400 hover:bg-orange-700  hover:text-gray-200 transition-all"
           class:bg-orange-800={chapter.attributes.slug === current_chapter_slug}
-          class:text-accent={chapter.attributes.slug === current_chapter_slug}
+          class:text-secondary={chapter.attributes.slug === current_chapter_slug}
           >{chapter.attributes.title}</a
         >
       </li>
