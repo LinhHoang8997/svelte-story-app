@@ -3,7 +3,7 @@
   import { fade } from "svelte/transition";
 
   $: console.log(
-    "The current value of the audio player status is",
+    "The audio player status is",
     $audio_player_status
   );
 </script>

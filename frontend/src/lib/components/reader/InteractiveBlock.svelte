@@ -106,8 +106,6 @@
           `${PUBLIC_STRAPI_HOSTNAME_PORT}${track.trackfile_url}`
       );
 
-      
-
       if (!matched_howler_instance) {
         console.log(
           "There exists no Howler instance in the queue with the same URL as this track"
@@ -121,18 +119,16 @@
           track.trackfile_url,
           "and added it to the Howler queue"
         );
-        
+
         const test_object = {
           trackfile_url: track.trackfile_url,
           track_title: track.title,
-          howler_instance: howler_instance
+          howler_instance: howler_instance,
         };
-
 
         // Assign the Howler instance to the queue + info about the track
         $howler_queue = [...$howler_queue, howler_instance];
         $test_queue = [...$test_queue, test_object];
-
       } else {
         console.log(
           "A Howler instance in the queue with the same URL as this track already exists. No need to create a new Howler instance."
@@ -247,8 +243,6 @@
   on:keyup={handleLightbox}
   class="interactive_block_wrapper"
 >
-  <h3>{paragraph_content.id}</h3>
-  <h3>{paragraph_content.id}</h3>
   {#each paragraph_content.images as image}
     <img
       src="{PUBLIC_STRAPI_HOSTNAME_PORT}{image.attributes.url}"

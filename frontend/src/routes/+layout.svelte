@@ -5,7 +5,8 @@
   import Navbar from "$lib/components/Navbar.svelte";
   import Reader from "$lib/components/wrapper/Reader.svelte";
   import Footer from "$lib/components/Footer.svelte";
-  import MusicTrackCard from "$lib/components/wrapper/MusicTrackCard.svelte";
+  import MusicTrackCard from "$lib/components/reader/MusicTrackCard.svelte";
+  import UtilityBar from "$lib/components/reader/UtilityBar.svelte";
 
   export let data;
 
@@ -16,7 +17,6 @@
 <div class="min-h-screen">
   <Navbar />
   <!-- Define the main section below the Navbar here -->
-  <!-- Temporarily set height to 72 -->
   <div class="flex flex-col md:flex-row">
     {#if $APIChapterTitles.fetching}
     <p>Loading</p>
@@ -28,5 +28,6 @@
     </Reader>
   </div>
   <MusicTrackCard />
+  <UtilityBar />
   <Footer />
 </div>
