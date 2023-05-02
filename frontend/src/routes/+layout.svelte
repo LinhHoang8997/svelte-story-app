@@ -29,5 +29,5 @@
   </div>
   <MusicTrackCard />
   <UtilityBar />
-  <Footer />
+  <!-- <Footer /> -->
 </div>

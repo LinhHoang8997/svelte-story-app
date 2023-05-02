@@ -8,20 +8,22 @@
 </script>
 
 <div
-  class="tab bg-gray-600 bg-opacity-75 fixed bottom-6 w-full flex flex-row align-middle"
+  class="tab bg-gray-800 rounded-box bg-opacity-80 fixed bottom-0 w-full"
 >
+  <div class="tab"><b>FONT SIZE</b></div>
   <button
     class="tab tab-lifted text-primary"
     class:tab-active={font_size_setting == "small"}
-    on:click={() => setFontSize("small")}>Small</button>
+    on:click={() => setFontSize("small")}>Small</button
+  >
   <button
     class="tab tab-lifted text-primary"
     class:tab-active={font_size_setting == "medium"}
-    on:click={() =>setFontSize("medium")}>Medium</button
+    on:click={() => setFontSize("medium")}>Medium</button
   >
   <button
     class="tab tab-lifted text-primary"
     class:tab-active={font_size_setting == "large"}
-    on:click={() =>setFontSize("large")}>Large</button
+    on:click={() => setFontSize("large")}>Large</button
   >
 </div>
