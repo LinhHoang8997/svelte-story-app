@@ -2,12 +2,6 @@
   import Seo from "$lib/components/wrapper/Seo.svelte";
   import ChapterContent from "$lib/components/wrapper/ChapterContent.svelte";
 
-  // Using the GQL Store via manual loading from +page.js
-  // export let data;
-  // $: ({ IndividualChapterQuery } = data)
-
-  // $: console.log($IndividualChapterQuery)
-
   // Parse the data first
   export let data;
   $: ({ chapter_data } = data)
@@ -15,8 +9,8 @@
 </script>
 
 <Seo
-  title="Chapter Individual"
-  description="The Official place for Steel, Fire, and Velvet"
+  title = {chapter_data.attributes.title}
+  description={chapter_data.attributes.description}
 />
 
 <ChapterContent {chapter_data}/>
