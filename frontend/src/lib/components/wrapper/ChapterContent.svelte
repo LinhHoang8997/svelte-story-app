@@ -1,4 +1,6 @@
 <script>
+  import { font_size_store } from "$lib/stores/appearanceStores";
+
   // Import Svelte components
   import TextOnlyParagraph from "$lib/components/reader/TextOnlyParagraph.svelte";
   import InteractiveBlock from "$lib/components/reader/InteractiveBlock.svelte";
@@ -24,16 +26,32 @@
       .url;
 
   //
-
 </script>
 
 <div>
-  <h1 class="text-lg font-bold text-primary">{chapter_data.attributes.title}</h1>
-  <div class="text-primary">
+  <!-- Main Headline -->
+  <h1
+    class="font-bold text-primary transition-size duration-300 ease-in-out"
+    class:text-lg={$font_size_store == "small" || $font_size_store == "medium"}
+    class:text-xl={$font_size_store == "large"}
+  >
+    {chapter_data.attributes.title}
+  </h1>
+  <!-- Container of main blurb -->
+  <div
+    class="text-primary transition-size duration-300 ease-in-out"
+    class:text-sm={$font_size_store == "small" || $font_size_store == "medium"}
+    class:text-lg={$font_size_store == "large"}
+  >
     {@html chapter_data.attributes.blurb}
   </div>
-  <img src="{PUBLIC_STRAPI_HOSTNAME_PORT}{header_hero_image_url}" alt="hero" />
-  <div>
+  <img class="mb-4" src="{PUBLIC_STRAPI_HOSTNAME_PORT}{header_hero_image_url}" alt="hero" />
+  <!-- Container of main content -->
+  <div class="transition-size duration-300 ease-in-out"
+    class:text-sm={$font_size_store == "small"}
+    class:text-base={$font_size_store == "medium"}
+    class:text-lg={$font_size_store == "large"}
+  >
     {#each content as paragraph}
       {#if paragraph.type === "regular"}
         <TextOnlyParagraph paragraph_content={paragraph.content} />
@@ -44,4 +62,3 @@
     {/each}
   </div>
 </div>
-
