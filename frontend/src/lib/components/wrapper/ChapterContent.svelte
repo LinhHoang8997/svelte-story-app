@@ -38,7 +38,7 @@
 <div>
   <!-- Main Headline -->
   <h1
-    class="font-bold text-primary transition-size duration-300 ease-in-out"
+    class="font-bold text-primary transition-size duration-300 ease-in-out text-center"
     class:text-lg={$font_size_store == "small" || $font_size_store == "medium"}
     class:text-xl={$font_size_store == "large"}
   >
