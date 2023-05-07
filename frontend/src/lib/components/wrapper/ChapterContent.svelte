@@ -8,11 +8,9 @@
   // Import functions
   import { filterParagraphData } from "$lib/functions/filterParagraphData";
 
-  // Import modules necessary for animation
-  // import { onMount, afterUpdate } from "svelte";
-
   // Import environment variables
   import { PUBLIC_STRAPI_HOSTNAME_PORT } from "$env/static/public";
+  import { onMount } from "svelte";
 
   // Get data from load function defined in +page.server.js
   export let chapter_data;
@@ -25,7 +23,16 @@
     chapter_data.attributes.chapter_header_media[0].hero_image.data.attributes
       .url;
 
-  //
+  //Function to capture user selected text - features to be added later
+  let current_selection;
+
+  onMount(() => {
+    document.addEventListener("selectionchange", () => {
+      current_selection = window.getSelection().toString();
+    });
+  });
+
+  // $: console.log("Current selection is:", current_selection)
 </script>
 
 <div>
@@ -45,9 +52,15 @@
   >
     {@html chapter_data.attributes.blurb}
   </div>
-  <img class="mb-4" src="{PUBLIC_STRAPI_HOSTNAME_PORT}{header_hero_image_url}" alt="hero" />
+  <!-- Container of Header image -->
+  <img
+    class="mb-4 border-4 border-amber-600 border-double"
+    src="{PUBLIC_STRAPI_HOSTNAME_PORT}{header_hero_image_url}"
+    alt="hero"
+  />
   <!-- Container of main content -->
-  <div class="transition-size duration-300 ease-in-out"
+  <div
+    class="transition-size duration-300 ease-in-out"
     class:text-sm={$font_size_store == "small"}
     class:text-base={$font_size_store == "medium"}
     class:text-lg={$font_size_store == "large"}

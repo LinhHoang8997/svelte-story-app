@@ -24,3 +24,11 @@
 </script>
 
 <p class="chapter_paragraph text-primary">{paragraph_content}</p>
+
+<style>
+  
+  p::selection {
+    color: white;
+    background-color: darkgoldenrod;
+  }
+</style>
