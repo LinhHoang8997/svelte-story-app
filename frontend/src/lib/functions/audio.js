@@ -1,5 +1,6 @@
 import { Howl } from "howler";
 import { audio_player_status } from "$lib/stores/howlerStores";
+import { metadata_queue } from "$lib/stores/howlerStores";
 
 let cross_fade_duration = 7000;
 let default_volume = 0.7;
@@ -13,13 +14,13 @@ export function createHowlerInstance(urls, onload) {
     onload: onload,
     onplay: function () {
       // console.log("Sound URL: ", this._src, " is playing");
-      audio_player_status.setPlaying(this._src);
+      let filename = this._src.split("/").pop();
+      audio_player_status.setPlaying(filename);
     },
     onend: function () {
       // console.log("Sound URL: ", this._src, " has ended");
       audio_player_status.setEnded();
     },
-
   });
 }
 
@@ -41,8 +42,8 @@ export function crossFadeLoop(
     // Fade out the leaving instance by decreasing volume from default volume to 0
     leaving_instance.fade(default_volume, 0, cross_fade_duration);
     console.log("Sound URL: ", leaving_instance._src, " is fading out");
-    
-    leaving_instance.once("volume", function(){
+
+    leaving_instance.once("volume", function () {
       if (leaving_instance.volume() == 0) {
         console.log("Sound URL: ", leaving_instance._src, " has stopped");
         leaving_instance.stop();
@@ -54,11 +55,6 @@ export function crossFadeLoop(
     entering_instance.play();
     entering_instance.fade(0, default_volume, cross_fade_duration);
     console.log("Sound URL: ", entering_instance._src, " is fading in");
-
-    // leaving_instance.once("fade", () => {
-    //   console.log("Sound URL: ", leaving_instance._src, " has stopped");
-    //   leaving_instance.stop();
-    // });
 
   }
 

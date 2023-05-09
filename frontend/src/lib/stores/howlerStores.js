@@ -1,13 +1,14 @@
-import { writable } from "svelte/store";
-import { derived } from "svelte/store";
+import { derived, writable } from "svelte/store";
+import { get } from "svelte/store";
 
 export const howler_queue = writable([]);
-export const test_queue = writable([]);
+export const metadata_queue = writable([]);
 
+// Create a store to keep track of the current audio player status + filename it is playing
 function createAudioPlayer () {
 
     const default_state = {
-        url: "",
+        filename: "",
         playing: false,
     }
 
@@ -15,24 +16,23 @@ function createAudioPlayer () {
 
   return {
     subscribe,
-    setPlaying: (new_url) => set({ url: new_url, playing: true }),
-    setEnded: () => set({ url: "", playing: false }),
+    setPlaying: (new_filename) => set({ filename: new_filename, playing: true }),
+    setEnded: () => set({ filename: "", playing: false }),
     reset: () => set(0),
   };
 };
-
 export const audio_player_status = createAudioPlayer();
 
-// export const howler_queue_current_playing = derived(howler_queue,
-//     ($howler_queue) => {
+export const track_current_playing_info = derived(audio_player_status,
+    ($audio_player_status) => {
+        let matched_data = null;
 
-//         let playing = false;
-//         let current_playing_instance = null;
-//         if ($howler_queue.length > 0) {
-//             console.log("Howler queue is not empty");
-//             current_playing_instance = $howler_queue[0];
-//             playing = current_playing_instance.playing();
-//             return playing;
-//         }
-//     }
-// );
+        // Check if the filename matches, then start collecting metadata
+        if ($audio_player_status.filename != "" && $audio_player_status.playing == true) {
+            let metadata = get(metadata_queue);
+            matched_data = metadata.find((track) => track.track_filename == $audio_player_status.filename);
+
+        }
+        return matched_data;
+      }
+);
