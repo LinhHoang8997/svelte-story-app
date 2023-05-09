@@ -29,11 +29,11 @@ class World {
     const cube = createCube();
     // render if the cube texture
 
-    const light = createLights();
-    const helper = new DirectionalLightHelper( light, 5 );
+    const { ambientLight, mainLight} = createLights();
+    const helper = new DirectionalLightHelper( mainLight, 5 );
 
 
-    scene.add(cube, light, helper);
+    scene.add(cube, ambientLight, mainLight, helper);
 
     // Add camera controls, which take camera and the canvas element as arguments
     const controls = createControls(camera, renderer.domElement);
