@@ -1,23 +1,26 @@
 <script>
   import { onMount } from "svelte";
-  import { createLoadObserver } from "$lib/functions/utils";
-  import { animate, stagger } from "motion";
+  // import { createLoadObserver } from "$lib/functions/utils";
+  import { animate } from "motion";
   import { fade } from "svelte/transition";
   import { graphql } from "$houdini";
+
+  // Import Interactive wrapper components
+  import InteractiveParagraph from "$lib/components/wrapper/interactive_wrappers/InteractiveParagraph.svelte";
 
   // Import audio funcitons
   import { createHowlerInstance, crossFadeLoop } from "$lib/functions/audio";
 
   // Import the howler Svelte store to control the audio queue
   import { howler_queue, metadata_queue } from "$lib/stores/howlerStores.js";
-  $: console.log(
-    "For debugging purposes, the current value of the Howler queue is",
-    $howler_queue
-  );
-  $: console.log(
-    "For debugging purposes, the current value of the test queue is (this is to get the name of sound)",
-    $metadata_queue
-  );
+  // $: console.log(
+  //   "For debugging purposes, the current value of the Howler queue is",
+  //   $howler_queue
+  // );
+  // $: console.log(
+  //   "For debugging purposes, the current value of the metadata queue is (this is to get the name of sound)",
+  //   $metadata_queue
+  // );
 
   // Import environment variables
   import { PUBLIC_STRAPI_HOSTNAME_PORT } from "$env/static/public";
@@ -154,29 +157,15 @@
     );
   }
 
-  function startTextCascade() {
-    animate(
-      ".rich_text_caption_paragraph",
-      {
-        opacity: [0, 1],
-      },
-      {
-        delay: stagger(0.2),
-        duration: 1.5,
-        easing: "ease-in-out",
-      }
-    );
-  }
-
   // Start the text loading animation when the component mounts
   onMount(() => {
     startTextLoadAnimation();
   });
 
   // Start the text cascade animation when the component mounts
-  const onload = createLoadObserver(() => {
-        console.log('loaded!!!')
-    })
+  // const onload = createLoadObserver(() => {
+  //       console.log('loaded!!!')
+  //   })
 
   // Reactive variable that controls the Lightbox functionality
   let lightbox_active = false;
@@ -290,7 +279,9 @@
       {/each}
       <div class="flex flex-col basis-1/3">
         {#each paragraph_content.rich_text_caption as paragraph}
-          <p class="rich_text_caption_paragraph text-white">{paragraph}</p>
+          <InteractiveParagraph>
+            {paragraph}
+          </InteractiveParagraph>
         {/each}
       </div>
     </div>
