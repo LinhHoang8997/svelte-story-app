@@ -9,8 +9,8 @@
         opacity: [0, 1],
       },
       {
-        delay: stagger(0.5),
-        duration: 1.5,
+        delay: stagger(1.2),
+        duration: 2,
         easing: "ease-in-out",
       }
     );

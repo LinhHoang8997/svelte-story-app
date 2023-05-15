@@ -11,6 +11,7 @@
   // Import environment variables
   import { PUBLIC_STRAPI_HOSTNAME_PORT } from "$env/static/public";
   import { onMount } from "svelte";
+  import { text } from "svelte/internal";
 
   // Get data from load function defined in +page.server.js
   export let chapter_data;
@@ -39,15 +40,17 @@
   <!-- Main Headline -->
   <h1
     class="font-bold text-primary transition-size duration-300 ease-in-out text-center"
-    class:text-lg={$font_size_store == "small" || $font_size_store == "medium"}
-    class:text-xl={$font_size_store == "large"}
+    class:text-lg={$font_size_store == "small"}
+    class:text-xl={$font_size_store == "medium"}
+    class:text-3xl={$font_size_store == "large"}
   >
     {chapter_data.attributes.title}
   </h1>
   <!-- Container of main blurb -->
   <div
     class="text-primary transition-size duration-300 ease-in-out"
-    class:text-sm={$font_size_store == "small" || $font_size_store == "medium"}
+    class:text-sm={$font_size_store == "small"}
+    class:text-base={$font_size_store == "medium"}
     class:text-lg={$font_size_store == "large"}
   >
     {@html chapter_data.attributes.blurb}
