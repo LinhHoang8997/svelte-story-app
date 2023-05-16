@@ -11,7 +11,6 @@
   // Import environment variables
   import { PUBLIC_STRAPI_HOSTNAME_PORT } from "$env/static/public";
   import { onMount } from "svelte";
-  import { text } from "svelte/internal";
 
   // Get data from load function defined in +page.server.js
   export let chapter_data;
