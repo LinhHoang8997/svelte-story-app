@@ -33,7 +33,8 @@
       "component": "multimedia.header-media"
     },
     "location_id": {
-      "type": "uid"
+      "type": "uid",
+      "targetField": "name"
     },
     "music_album": {
       "type": "relation",
