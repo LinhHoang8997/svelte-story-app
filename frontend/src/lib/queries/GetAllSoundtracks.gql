@@ -1,4 +1,4 @@
-query getAllSoundtracks @cache(policy: NetworkOnly) {
+query getAllSoundtracks {
   soundtracks
   {
 		data {
