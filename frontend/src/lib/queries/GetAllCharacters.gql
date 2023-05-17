@@ -1,0 +1,20 @@
+query getAllCharacters {
+  characters {
+    data {
+      attributes {
+        character_id
+        character_quote
+        name
+        faction
+        laconic_description
+        profile_images {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}

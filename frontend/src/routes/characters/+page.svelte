@@ -1,7 +1,13 @@
 <script>
+  // Import environment variables
+  import { PUBLIC_STRAPI_HOSTNAME_PORT } from "$env/static/public";
+
+  // Import components
   import CharacterCard from "$lib/components/wrapper/character_wrappers/CharacterCard.svelte";
 
-
+  // Get data from load function defined in +page.server.js
+  export let data;
+  $: ({ all_characters, main_characters, other_characters } = data);
 
 </script>
 
@@ -13,26 +19,27 @@
     THE GOLDEN PALANQUIN
   </h2>
   <div class="flex md:flex-row flex-col sm:items-start items-center">
-    <CharacterCard name="Mamoru" laconic_description="The laconic guard whose purpose to life is on loan from Shinju. Savior of Eastend."
-     />
-    <CharacterCard name="Raiden"/>
-    <CharacterCard name="Shinju"/>
+    {#each main_characters as main_character}
+      <CharacterCard
+        name={main_character.attributes.name}
+        laconic_description={main_character.attributes.laconic_description}
+        faction={main_character.attributes.faction}
+        first_image_profile_url={PUBLIC_STRAPI_HOSTNAME_PORT}{main_character.attributes.profile_images.data[0].attributes.url}
+      />
+    {/each}
   </div>
-
 
   <!-- OTHER CHARACTERS -->
-  <h2 class="text-accent text-xl text-center font-bold mt-4">
-    OTHERS
-  </h2>
-  <div class="flex md:flex-row items-center flex-wrap">
-    <CharacterCard name="Random" faction="other"/>
-    <CharacterCard name="Random" faction="other"/>
-    <CharacterCard name="Random" faction="other"/>
-    <CharacterCard name="Random" faction="other"/>
-    <CharacterCard name="Random" faction="other"/>
-    <CharacterCard name="Random" faction="other"/>
+  <h2 class="text-accent text-xl text-center font-bold mt-4">OTHERS</h2>
+  <div class="flex md:flex-row flex-col sm:items-start items-center">
+    {#each other_characters as other_character}
+      <CharacterCard
+        name={other_character.attributes.name}
+        laconic_description={other_character.attributes.laconic_description}
+        faction={other_character.attributes.faction}
+      />
+    {/each}
   </div>
-
 </div>
 
 <!--
