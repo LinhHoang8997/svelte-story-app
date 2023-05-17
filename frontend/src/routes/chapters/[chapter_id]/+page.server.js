@@ -1,4 +1,4 @@
-import { IndividualChapterQueryStore } from "$houdini";
+import { getIndividualChapterStore } from "$houdini";
 
 function getSlug({ params }) {
   return params.chapter_id
@@ -7,10 +7,10 @@ function getSlug({ params }) {
 
 /* @type { import('./$houdini').PageLoad } */
 export async function load(event) {
-  const IndividualChapterQuery = new IndividualChapterQueryStore();
+  const getIndividualChapter = new getIndividualChapterStore();
   const chapter_id = getSlug(event);
 
-  const result = await IndividualChapterQuery.fetch({
+  const result = await getIndividualChapter.fetch({
     event,
     variables: { chapter_id: chapter_id },
     blocking: true // This is important to make sure the page doesn't load until the query is done
