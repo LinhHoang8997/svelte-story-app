@@ -4,6 +4,7 @@
   // Import Svelte components
   import TextOnlyParagraph from "$lib/components/reader/TextOnlyParagraph.svelte";
   import InteractiveBlock from "$lib/components/reader/InteractiveBlock.svelte";
+  import InteractiveImage from "$lib/components/wrapper/interactive_wrappers/InteractiveImage.svelte";
 
   // Import functions
   import { filterParagraphData } from "$lib/functions/filterParagraphData";
@@ -54,9 +55,12 @@
   >
     {@html chapter_data.attributes.blurb}
   </div>
+  
+  <!-- Test Interactive Wrapper -->
+  <!-- <InteractiveImage /> -->
+
   <!-- Container of Header image -->
-  <img
-    class="mb-4 border-4 border-amber-600 border-double"
+  <InteractiveImage
     src="{PUBLIC_STRAPI_HOSTNAME_PORT}{header_hero_image_url}"
     alt="hero"
   />

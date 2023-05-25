@@ -14,7 +14,6 @@ const config = {
 		vitePreprocess(),
 		importAssets()
 		]
-	
 };
 
 export default config;

@@ -34,7 +34,7 @@
       <div
         class="flex text-xl p-2 border-b-2 border-double justify-center font-bold border-rose-900 text-white"
       >
-        <a href="/chapters">🕮 Chapter List</a>
+        <a href="/chapters">🕮 Latest Chapters</a>
       </div>
     </li>
     {#each chapters_data as chapter}
