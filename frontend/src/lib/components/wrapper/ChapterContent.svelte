@@ -55,9 +55,6 @@
   >
     {@html chapter_data.attributes.blurb}
   </div>
-  
-  <!-- Test Interactive Wrapper -->
-  <!-- <InteractiveImage /> -->
 
   <!-- Container of Header image -->
   <InteractiveImage

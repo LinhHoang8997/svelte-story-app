@@ -7,6 +7,7 @@
 
   // Import Interactive wrapper components
   import InteractiveParagraph from "$lib/components/wrapper/interactive_wrappers/InteractiveParagraph.svelte";
+  import InteractiveImage from "$lib/components/wrapper/interactive_wrappers/InteractiveImage.svelte";
 
   // Import audio funcitons
   import { createHowlerInstance, crossFadeLoop } from "$lib/functions/audio";
@@ -118,11 +119,7 @@
           `${PUBLIC_STRAPI_HOSTNAME_PORT}${track.trackfile_url}`
         );
 
-        console.log(
-          "Created Howler instance for",
-          track.trackfile_url
-        );
-
+        console.log("Created Howler instance for", track.trackfile_url);
 
         const metadata_object = {
           track_filename: track.trackfile_url.split("/").pop(),
@@ -253,7 +250,7 @@
   class="interactive_block_wrapper"
 >
   {#each paragraph_content.images as image}
-    <img
+    <InteractiveImage
       src="{PUBLIC_STRAPI_HOSTNAME_PORT}{image.attributes.url}"
       alt="interactive block"
     />
