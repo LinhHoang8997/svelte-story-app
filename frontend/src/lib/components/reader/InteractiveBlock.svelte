@@ -266,12 +266,12 @@
     on:keyup={() => (lightbox_active = !lightbox_active)}
   >
     <div class="lightbox-container">
-      <h3 class="text-white">{paragraph_content.title}</h3>
+      <h3 class="text-secondary text-lg font-bold ">{paragraph_content.title}</h3>
       {#each paragraph_content.images as image}
-        <img
-          class="flex basis-2/3 h-2/3 max-h-96 w-auto"
+        <InteractiveImage
           src="{PUBLIC_STRAPI_HOSTNAME_PORT}{image.attributes.url}"
           alt="interactive block"
+          type="lightbox"
         />
       {/each}
       <div class="flex flex-col basis-1/3">
@@ -302,6 +302,7 @@
     display: flex;
     flex-direction: column;
     background-color: rgba(0, 0, 0, 0.9);
+    border-radius: 0.5rem;
     padding: 2rem;
     justify-content: center;
     align-items: center;
