@@ -303,7 +303,7 @@
     flex-direction: column;
     background-color: rgba(0, 0, 0, 0.9);
     border-radius: 0.5rem;
-    padding: 2rem;
+    padding: 1rem;
     justify-content: center;
     align-items: center;
   }
