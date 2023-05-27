@@ -3,7 +3,8 @@
 
   // Import Svelte components
   import TextOnlyParagraph from "$lib/components/reader/TextOnlyParagraph.svelte";
-  import InteractiveBlockLightbox from "$lib/components/reader/InteractiveBlockLightbox.svelte";
+  import InteractiveBlockLightbox from "$lib/components/reader/interactive_blocks/InteractiveBlockLightbox.svelte";
+  import InteractiveBlockPoem from "$lib/components/reader/interactive_blocks/InteractiveBlockPoem.svelte";
   import InteractiveImage from "$lib/components/wrapper/interactive_wrappers/InteractiveImage.svelte";
 
   // Import functions
@@ -72,11 +73,11 @@
       {#if paragraph.type === "regular"}
         <TextOnlyParagraph paragraph_content={paragraph.content} />
       {:else if paragraph.type === "interactive_block"}
-          {#if paragraph.content.type === "standard_lightbox"}
-            <InteractiveBlockLightbox paragraph_content={paragraph.content} />
-          {:else if paragraph.content.type === "standard_poem"}
-            <div> Placeholder for a poem element here</div>
-          {/if}
+        {#if paragraph.content.type === "standard_lightbox"}
+          <InteractiveBlockLightbox paragraph_content={paragraph.content} />
+        {:else if paragraph.content.type === "standard_poem"}
+          <InteractiveBlockPoem paragraph_content={paragraph.content} />
+        {/if}
       {/if}
       <br />
     {/each}
