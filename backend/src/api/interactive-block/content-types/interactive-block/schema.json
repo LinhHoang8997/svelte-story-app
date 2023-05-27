@@ -53,20 +53,20 @@
       "required": true,
       "unique": true
     },
-    "type": {
-      "type": "enumeration",
-      "enum": [
-        "interactive-with-image",
-        "interactive-with-video",
-        "interactive-split-screen"
-      ],
-      "default": "interactive-with-image"
-    },
     "soundtracks": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::soundtrack.soundtrack",
       "inversedBy": "interactive_blocks"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "standard_lightbox",
+        "standard_poem",
+        "standard_cascade"
+      ],
+      "default": "standard_lightbox"
     }
   }
 }

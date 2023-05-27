@@ -72,7 +72,11 @@
       {#if paragraph.type === "regular"}
         <TextOnlyParagraph paragraph_content={paragraph.content} />
       {:else if paragraph.type === "interactive_block"}
-        <InteractiveBlock paragraph_content={paragraph.content} />
+          {#if paragraph.content.type === "standard_lightbox"}
+            <InteractiveBlock paragraph_content={paragraph.content} />
+          {:else if paragraph.content.type === "standard_poem"}
+            <div> Placeholder for a poem element here</div>
+          {/if}
       {/if}
       <br />
     {/each}

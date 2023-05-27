@@ -352,9 +352,9 @@ enum ENUM_CHARACTER_FACTION {
 }
 
 enum ENUM_INTERACTIVEBLOCK_TYPE {
-  interactive_split_screen
-  interactive_with_image
-  interactive_with_video
+  standard_cascade
+  standard_lightbox
+  standard_poem
 }
 
 enum ENUM_MUSICALBUM_TYPE {
