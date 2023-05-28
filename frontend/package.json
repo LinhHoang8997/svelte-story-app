@@ -25,6 +25,7 @@
     },
     "type": "module",
     "dependencies": {
+        "@fontsource/kaushan-script": "^5.0.1",
         "@fontsource/petrona": "^4.5.11",
         "@theatre/core": "^0.6.1",
         "@theatre/studio": "^0.6.1",

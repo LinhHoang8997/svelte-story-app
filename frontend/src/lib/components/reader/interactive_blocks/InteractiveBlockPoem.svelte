@@ -2,9 +2,15 @@
   // Import environment variables
   import { PUBLIC_STRAPI_HOSTNAME_PORT } from "$env/static/public";
 
+  // Import components
+  import InteractiveVerse from "$lib/components/wrapper/interactive_wrappers/InteractiveVerse.svelte";
+
   // Get paragraph content from the parent component
   export let paragraph_content;
   let interactive_block_id = paragraph_content.id;
+
+  // Import font
+  import '@fontsource/kaushan-script';
 
   $: console.log("Paragraph content is:", paragraph_content);
 </script>
@@ -18,12 +24,12 @@
     />
   {/each}
 
-  <div class="absolute top-8 left-12">
+  <div class="flex flex-col absolute md:bottom-8 md:right-8 bottom-1 right-3 text-right">
     {#each paragraph_content.rich_text_caption as paragraph}
-    <!-- To replace p tags with motion-enabled component -->
-      <p class="text-3xl text-black font-bold mb-4 text-shadow-lg shadow-gray-800">
-        {paragraph}
-      </p>
+        <InteractiveVerse>
+          {paragraph}
+        </InteractiveVerse>
     {/each}
   </div>
 </div>
+
