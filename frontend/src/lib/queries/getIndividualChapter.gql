@@ -1,4 +1,4 @@
-query getIndividualChapter($chapter_id: String!) {
+query GetIndividualChapter($chapter_id: String!) {
   chapters(filters: { slug: { eq: $chapter_id } }) {
     data {
       id

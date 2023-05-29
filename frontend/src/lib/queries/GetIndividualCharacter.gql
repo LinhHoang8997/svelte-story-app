@@ -1,0 +1,13 @@
+query GetIndividualCharacter($character_id: String!) {
+  characters(filters: { character_id: { eq: $character_id } }) {
+    data {
+      id
+      attributes {
+        name
+        laconic_description
+        character_quote
+        character_id
+      }
+    }
+  }
+}
