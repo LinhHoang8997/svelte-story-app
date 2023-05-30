@@ -4,7 +4,7 @@
 
   // Parse the data first
   export let data;
-  $: ({ chapter_data } = data)
+  $: ({ content, chapter_data } = data)
 
 </script>
 
@@ -13,4 +13,4 @@
   description={chapter_data.attributes.description}
 />
 
-<ChapterContent {chapter_data}/>
+<ChapterContent {chapter_data} {content}/>

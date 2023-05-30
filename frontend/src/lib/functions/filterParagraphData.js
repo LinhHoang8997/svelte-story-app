@@ -1,5 +1,8 @@
+// Import libraries that work with HTML and HTML parsing
 import { parseDocument, DomUtils } from "htmlparser2";
 import DOMPurify from "isomorphic-dompurify";
+
+// Import specifc functions from voca - text manipulation library
 import includes from 'voca/includes'
 import indexOf from 'voca/index_of'
 import slice from 'voca/slice'

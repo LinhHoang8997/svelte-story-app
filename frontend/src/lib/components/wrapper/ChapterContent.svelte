@@ -7,18 +7,16 @@
   import InteractiveBlockPoem from "$lib/components/reader/interactive_blocks/InteractiveBlockPoem.svelte";
   import InteractiveImage from "$lib/components/wrapper/interactive_wrappers/InteractiveImage.svelte";
 
-  // Import functions
-  import { filterParagraphData } from "$lib/functions/filterParagraphData";
-
   // Import environment variables
   import { PUBLIC_STRAPI_HOSTNAME_PORT } from "$env/static/public";
   import { onMount } from "svelte";
 
   // Get data from load function defined in +page.server.js
   export let chapter_data;
+  export let content;
 
   // Return data of interactive elements from special bracketed p_tags_text inside of the content returned from Strapi
-  $: content = filterParagraphData(chapter_data);
+  // $: content = filterParagraphData(chapter_data);
 
   // Get link of Header Hero image
   $: header_hero_image_url =
