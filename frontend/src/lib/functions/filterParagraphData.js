@@ -1,6 +1,11 @@
 import { parseDocument, DomUtils } from "htmlparser2";
 import DOMPurify from "isomorphic-dompurify";
 import voca from "voca";
+import includes from 'voca/includes'
+import indexOf from 'voca/index_of'
+import slice from 'voca/slice'
+import split from 'voca/split'
+import trim from 'voca/trim'
 
 function removeEmptyElements(array) {
   return array.filter(function (el) {
@@ -10,21 +15,21 @@ function removeEmptyElements(array) {
 
 function isInteractiveBlock(paragraph) {
   let text_to_check = "interactive_block";
-  return voca.includes(paragraph, text_to_check, 0);
+  return includes(paragraph, text_to_check, 0);
 }
 
 function extractIdFromInteractiveBlock(paragraph) {
   let id = null;
-  let bracket_text = voca.slice(
+  let bracket_text = slice(
     paragraph,
-    voca.indexOf(paragraph, "(") + 1,
-    voca.indexOf(paragraph, ")")
+    indexOf(paragraph, "(") + 1,
+    indexOf(paragraph, ")")
   );
 
   if (bracket_text) {
-    if (voca.includes(bracket_text, "id")) {
-      id = voca.split(bracket_text, ":")[1];
-      id = voca.trim(id);
+    if (includes(bracket_text, "id")) {
+      id = split(bracket_text, ":")[1];
+      id = trim(id);
     }
   }
 
