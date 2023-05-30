@@ -1,6 +1,5 @@
 import { parseDocument, DomUtils } from "htmlparser2";
 import DOMPurify from "isomorphic-dompurify";
-import voca from "voca";
 import includes from 'voca/includes'
 import indexOf from 'voca/index_of'
 import slice from 'voca/slice'
