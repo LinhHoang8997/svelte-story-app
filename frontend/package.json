@@ -37,6 +37,7 @@
         "htmlparser2": "^8.0.1",
         "motion": "^10.15.5",
         "svelte-preprocess-import-assets": "^0.2.6",
+        "svelte-smooth-popover": "^1.0.8",
         "three": "^0.152.2"
     }
 }
