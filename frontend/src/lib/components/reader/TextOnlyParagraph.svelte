@@ -8,7 +8,7 @@
   import { animate, stagger } from "motion";
 
   // Import string manupulation functions
-  import split from 'voca/split';
+  import split from "voca/split";
   import includes from "voca/includes";
   import trim from "voca/trim";
 
@@ -46,7 +46,7 @@
       }
     );
   }
-  
+
   onMount(() => {
     startTextLoadAnimation();
   });
@@ -75,7 +75,8 @@
           >
             <p class="text-sm">{chunk.popover_content}</p>
           </div>
-        </Popover></span>
+        </Popover></span
+      >
     {:else}
       <span class="text-primary">{chunk.text}</span>
     {/if}
