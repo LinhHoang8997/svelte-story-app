@@ -15,13 +15,12 @@
   export let chapter_data;
   export let content;
 
-  // Return data of interactive elements from special bracketed p_tags_text inside of the content returned from Strapi
-  // $: content = filterParagraphData(chapter_data);
-
-  // Get link of Header Hero image
+  // Get link of images (Header Hero Image, Emblem)
   $: header_hero_image_url =
     chapter_data.attributes.chapter_header_media[0].hero_image.data.attributes
       .url;
+
+  $: emblem_image_url = chapter_data.attributes.emblem.data.attributes.url;
 
   //Function to capture user selected text - features to be added later
   let current_selection;
@@ -36,15 +35,42 @@
 </script>
 
 <div>
+  <!-- Container of the Emblem -->
+  <div class="flex flex-col text-center align-middle my-2">
+    <img
+      class="m-auto w-14"
+      src="{PUBLIC_STRAPI_HOSTNAME_PORT}{emblem_image_url}"
+      alt="emblem"
+    />
+    <!-- <div class="flex mx-auto my-2 align-middle items-center ">
+      <img
+        class="w-2 invert-[.25]"
+        src="$lib/assets/images/icons/sparkler.png"
+        alt="sparkler"
+      />
+      <img
+        class="w-2 invert-[.25]"
+        src="$lib/assets/images/icons/sparkler.png"
+        alt="sparkler"
+      />
+      <img
+        class="w-2 invert-[.25]"
+        src="$lib/assets/images/icons/sparkler.png"
+        alt="sparkler"
+      />
+    </div> -->
+  </div>
+
   <!-- Main Headline -->
   <h1
     class="font-bold text-primary transition-size duration-300 ease-in-out text-center"
-    class:text-lg={$font_size_store == "small"}
-    class:text-xl={$font_size_store == "medium"}
+    class:text-xl={$font_size_store == "small"}
+    class:text-2xl={$font_size_store == "medium"}
     class:text-3xl={$font_size_store == "large"}
   >
     {chapter_data.attributes.title}
   </h1>
+
   <!-- Container of main blurb -->
   <div
     class="text-primary transition-size duration-300 ease-in-out"
@@ -60,6 +86,7 @@
     src="{PUBLIC_STRAPI_HOSTNAME_PORT}{header_hero_image_url}"
     alt="hero"
   />
+
   <!-- Container of main content -->
   <div
     class="transition-size duration-300 ease-in-out"

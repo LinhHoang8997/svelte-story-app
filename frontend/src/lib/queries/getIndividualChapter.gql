@@ -7,6 +7,13 @@ query GetIndividualChapter($chapter_id: String!) {
         blurb
         content
         slug
+        emblem {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
         chapter_header_media {
           id
           hero_image {
