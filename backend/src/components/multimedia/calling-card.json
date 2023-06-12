@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_multimedia_calling_cards",
+  "info": {
+    "displayName": "calling_card"
+  },
+  "options": {},
+  "attributes": {
+    "card_graphic": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "greeting": {
+      "type": "richtext"
+    },
+    "title": {
+      "type": "richtext"
+    },
+    "date_given": {
+      "type": "date"
+    }
+  }
+}

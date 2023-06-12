@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "epithets",
+  "info": {
+    "singularName": "epithet",
+    "pluralName": "epithets",
+    "displayName": "Epithet"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "epithet_id": {
+      "type": "uid",
+      "targetField": "title"
+    },
+    "tagline": {
+      "type": "text"
+    }
+  }
+}

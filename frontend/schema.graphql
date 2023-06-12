@@ -176,9 +176,11 @@ type ChapterRelationResponseCollection {
 
 type Character {
   biography: String
+  calling_card(filters: ComponentMultimediaCallingCardFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentMultimediaCallingCard]
   character_id: String
   character_quote: String
   createdAt: DateTime
+  epithets(filters: EpithetFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): EpithetRelationResponseCollection
   faction: ENUM_CHARACTER_FACTION!
   laconic_description: String
   music_album: MusicAlbumEntityResponse
@@ -205,9 +207,11 @@ type CharacterEntityResponseCollection {
 input CharacterFiltersInput {
   and: [CharacterFiltersInput]
   biography: StringFilterInput
+  calling_card: ComponentMultimediaCallingCardFiltersInput
   character_id: StringFilterInput
   character_quote: StringFilterInput
   createdAt: DateTimeFilterInput
+  epithets: EpithetFiltersInput
   faction: StringFilterInput
   id: IDFilterInput
   laconic_description: StringFilterInput
@@ -221,8 +225,10 @@ input CharacterFiltersInput {
 
 input CharacterInput {
   biography: String
+  calling_card: [ComponentMultimediaCallingCardInput]
   character_id: String
   character_quote: String
+  epithets: [ID]
   faction: ENUM_CHARACTER_FACTION
   laconic_description: String
   music_album: ID
@@ -233,6 +239,31 @@ input CharacterInput {
 
 type CharacterRelationResponseCollection {
   data: [CharacterEntity!]!
+}
+
+type ComponentMultimediaCallingCard {
+  card_graphic: UploadFileEntityResponse
+  date_given: Date
+  greeting: String
+  id: ID!
+  title: String
+}
+
+input ComponentMultimediaCallingCardFiltersInput {
+  and: [ComponentMultimediaCallingCardFiltersInput]
+  date_given: DateFilterInput
+  greeting: StringFilterInput
+  not: ComponentMultimediaCallingCardFiltersInput
+  or: [ComponentMultimediaCallingCardFiltersInput]
+  title: StringFilterInput
+}
+
+input ComponentMultimediaCallingCardInput {
+  card_graphic: ID
+  date_given: Date
+  greeting: String
+  id: ID
+  title: String
 }
 
 type ComponentMultimediaHeaderMedia {
@@ -363,6 +394,53 @@ enum ENUM_MUSICALBUM_TYPE {
   single
 }
 
+type Epithet {
+  createdAt: DateTime
+  epithet_id: String
+  publishedAt: DateTime
+  tagline: String
+  title: String
+  updatedAt: DateTime
+}
+
+type EpithetEntity {
+  attributes: Epithet
+  id: ID
+}
+
+type EpithetEntityResponse {
+  data: EpithetEntity
+}
+
+type EpithetEntityResponseCollection {
+  data: [EpithetEntity!]!
+  meta: ResponseCollectionMeta!
+}
+
+input EpithetFiltersInput {
+  and: [EpithetFiltersInput]
+  createdAt: DateTimeFilterInput
+  epithet_id: StringFilterInput
+  id: IDFilterInput
+  not: EpithetFiltersInput
+  or: [EpithetFiltersInput]
+  publishedAt: DateTimeFilterInput
+  tagline: StringFilterInput
+  title: StringFilterInput
+  updatedAt: DateTimeFilterInput
+}
+
+input EpithetInput {
+  epithet_id: String
+  publishedAt: DateTime
+  tagline: String
+  title: String
+}
+
+type EpithetRelationResponseCollection {
+  data: [EpithetEntity!]!
+}
+
 input FileInfoInput {
   alternativeText: String
   caption: String
@@ -393,7 +471,7 @@ input FloatFilterInput {
   startsWith: Float
 }
 
-union GenericMorph = Arc | Artifact | Chapter | Character | ComponentMultimediaHeaderMedia | ComponentSeoSeoInformation | I18NLocale | InteractiveBlock | Location | MusicAlbum | Soundtrack | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
+union GenericMorph = Arc | Artifact | Chapter | Character | ComponentMultimediaCallingCard | ComponentMultimediaHeaderMedia | ComponentSeoSeoInformation | Epithet | I18NLocale | InteractiveBlock | Location | MusicAlbum | Soundtrack | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
 
 type I18NLocale {
   code: String
@@ -693,6 +771,7 @@ type Mutation {
   createArtifact(data: ArtifactInput!): ArtifactEntityResponse
   createChapter(data: ChapterInput!): ChapterEntityResponse
   createCharacter(data: CharacterInput!): CharacterEntityResponse
+  createEpithet(data: EpithetInput!): EpithetEntityResponse
   createInteractiveBlock(data: InteractiveBlockInput!): InteractiveBlockEntityResponse
   createLocation(data: LocationInput!): LocationEntityResponse
   createMusicAlbum(data: MusicAlbumInput!): MusicAlbumEntityResponse
@@ -709,6 +788,7 @@ type Mutation {
   deleteArtifact(id: ID!): ArtifactEntityResponse
   deleteChapter(id: ID!): ChapterEntityResponse
   deleteCharacter(id: ID!): CharacterEntityResponse
+  deleteEpithet(id: ID!): EpithetEntityResponse
   deleteInteractiveBlock(id: ID!): InteractiveBlockEntityResponse
   deleteLocation(id: ID!): LocationEntityResponse
   deleteMusicAlbum(id: ID!): MusicAlbumEntityResponse
@@ -742,6 +822,7 @@ type Mutation {
   updateArtifact(data: ArtifactInput!, id: ID!): ArtifactEntityResponse
   updateChapter(data: ChapterInput!, id: ID!): ChapterEntityResponse
   updateCharacter(data: CharacterInput!, id: ID!): CharacterEntityResponse
+  updateEpithet(data: EpithetInput!, id: ID!): EpithetEntityResponse
   updateFileInfo(id: ID!, info: FileInfoInput): UploadFileEntityResponse!
   updateInteractiveBlock(data: InteractiveBlockInput!, id: ID!): InteractiveBlockEntityResponse
   updateLocation(data: LocationInput!, id: ID!): LocationEntityResponse
@@ -786,6 +867,8 @@ type Query {
   chapters(filters: ChapterFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ChapterEntityResponseCollection
   character(id: ID): CharacterEntityResponse
   characters(filters: CharacterFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): CharacterEntityResponseCollection
+  epithet(id: ID): EpithetEntityResponse
+  epithets(filters: EpithetFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): EpithetEntityResponseCollection
   i18NLocale(id: ID): I18NLocaleEntityResponse
   i18NLocales(filters: I18NLocaleFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): I18NLocaleEntityResponseCollection
   interactiveBlock(id: ID): InteractiveBlockEntityResponse

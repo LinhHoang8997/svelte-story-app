@@ -58,6 +58,16 @@
     },
     "character_quote": {
       "type": "string"
+    },
+    "epithets": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::epithet.epithet"
+    },
+    "calling_card": {
+      "type": "component",
+      "repeatable": true,
+      "component": "multimedia.calling-card"
     }
   }
 }
