@@ -31,7 +31,7 @@ export function crossFadeLoop(
 ) {
   // If there is no leaving instance, create new Howlwer instance for the audio file and fade it in
   function fadeIntoVoid(leaving_instance, entering_instance = null) {
-    leaving_instance.fade(default_volume, 0, cross_fade_duration);
+    leaving_instance.fade(leaving_instance.volume(), 0, cross_fade_duration);
     console.log("Sound URL: ", leaving_instance._src, " is fading out");
     leaving_instance.once("volume", function () {
       if (leaving_instance.volume() == 0) {
@@ -51,7 +51,7 @@ export function crossFadeLoop(
   // If there is a leaving instance, immediately fade out the leaving instance and fade in the entering instance
   function fadeIntoSecond(leaving_instance, entering_instance) {
     // Fade out the leaving instance by decreasing volume from default volume to 0
-    leaving_instance.fade(default_volume, 0, cross_fade_duration);
+    leaving_instance.fade(leaving_instance.volume(), 0, cross_fade_duration);
     console.log("Sound URL: ", leaving_instance._src, " is fading out");
 
     leaving_instance.once("volume", function () {
