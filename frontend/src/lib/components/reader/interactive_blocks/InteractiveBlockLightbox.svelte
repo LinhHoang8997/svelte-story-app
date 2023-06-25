@@ -182,16 +182,18 @@
     }
 
     function playInteractiveBlockSound(lightbox_active) {
-      // Create a Howler instance
-      if (lightbox_active) {
-        if ($howler_queue.length > 0) {
-          console.log("There exists a Howler instance in the queue");
+      // Check if there are any Howler instances in the queue
+      if ($howler_queue.length > 0) {
+        console.log("There exists a Howler instance in the queue");
 
-          // Check to find the first Howler instance that is playing
-          const playing_howler_instance = $howler_queue.find(
-            (howler_instance) => howler_instance.playing()
-          );
+        // Check to find the first Howler instance that is playing
+        const playing_howler_instance = $howler_queue.find((howler_instance) =>
+          howler_instance.playing()
+        );
 
+        // Check if the lightbox is just turned on - active, then play the first sound that matches the audio embedded within the Interactive Block
+        if (lightbox_active) {
+          console.log("LIGHTBOX ACTIVE");
           // Write a function to find the Howler instance in the queue that matches with the Interactive Block
           const matched_howler_instance = $howler_queue.find(
             (howler_instance) =>
@@ -214,6 +216,7 @@
                   "fade-into-second"
                 );
               }
+
               if (playing_howler_instance === matched_howler_instance) {
                 console.log("The sound is already playing. Do nothing.");
               } else {
@@ -237,6 +240,12 @@
             }
             // Start playing the sound under the 'fade-into-first' type
             return lightbox_active;
+          }
+        } else {
+          console.log("LIGHTBOX DISABLED");
+          // If there is a Howler instance currently playing, stop it
+          if (playing_howler_instance) {
+            crossFadeLoop(playing_howler_instance, null, "fade-into-void");
           }
         }
       }
@@ -262,11 +271,13 @@
   <div
     class="lightbox"
     transition:fade={{ duration: 300 }}
-    on:click={() => (lightbox_active = !lightbox_active)}
-    on:keyup={() => (lightbox_active = !lightbox_active)}
+    on:click={handleLightbox}
+    on:keyup={handleLightbox}
   >
     <div class="lightbox-container">
-      <h3 class="text-secondary text-lg font-bold ">{paragraph_content.title}</h3>
+      <h3 class="text-secondary text-lg font-bold">
+        {paragraph_content.title}
+      </h3>
       {#each paragraph_content.images as image}
         <InteractiveImage
           src="{PUBLIC_STRAPI_HOSTNAME_PORT}{image.attributes.url}"
