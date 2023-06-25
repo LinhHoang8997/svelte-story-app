@@ -30,6 +30,17 @@ export function crossFadeLoop(
   fade_type
 ) {
   // If there is no leaving instance, create new Howlwer instance for the audio file and fade it in
+  function fadeIntoVoid(leaving_instance, entering_instance = null) {
+    leaving_instance.fade(default_volume, 0, cross_fade_duration);
+    console.log("Sound URL: ", leaving_instance._src, " is fading out");
+    leaving_instance.once("volume", function () {
+      if (leaving_instance.volume() == 0) {
+        console.log("Sound URL: ", leaving_instance._src, " has stopped");
+        leaving_instance.stop();
+      }
+    });
+  }
+
   function fadeIntoFirst(leaving_instance = null, entering_instance) {
     entering_instance.seek(0);
     entering_instance.play();
@@ -86,6 +97,7 @@ export function crossFadeLoop(
     "fade-into-first": fadeIntoFirst,
     "fade-into-second": fadeIntoSecond,
     "fade-music-player": fadeMusicPlayer,
+    "fade-into-void": fadeIntoVoid,
   };
   // let entering_load_status = entering_instance.once('load', function() { return true});
   // let leaving_load_status = leaving_instance.once('load', function() { return true});
