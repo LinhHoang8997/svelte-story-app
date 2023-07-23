@@ -7,7 +7,11 @@
 
 <header class="flex flex-auto flex-col items-center">
     <h1 class='text-3xl font-bold text-primary'>Welcome to Teapot Reader</h1>
-    <p class='text-xl font-bold text-primary'>The Official place for Steel, Fire, and Velvet</p>
+    <p class='text-xl font-bolda text-primary'>The Official place for Steel, Fire, and Velvet</p>
+
+    <h2 class="text-accent"> The Adventure Thus Far ... </h2>
+    <img src="https://picsum.photos/2024/600" alt="Placeholder for Arc Banner">
+    <!-- Implement logic to track user's latest progress -->
 
     <Date dateString={"2021-09-01T15:21:39.862Z"} />
 
