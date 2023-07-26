@@ -47,8 +47,6 @@ module.exports = {
             "min-height": "2rem",
           },
 
-          //  Other custom styles for elements in this theme
-
 
         },
       },
