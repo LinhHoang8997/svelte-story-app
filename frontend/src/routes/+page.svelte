@@ -67,8 +67,24 @@
         />
       </a>
       <h2 class="text-primary text-xl font-bold">The Slums</h2>
-      <p class="text-primary text-sm">Storytime has started for the children living at the feet of the Citadel. They do not care who you are, as long as the metal guard accepts you.</p>
+      <p class="text-primary text-sm">Storytime has started for the children living at the feet of the Citadel. They do not care who you are, as long as the iron guards accept you.</p>
     </div>
+  </div>
+
+  <h2 class="text-accent">Today's calling card</h2>
+  <!-- Get calling card Component here -->
+  <div> 
+    <img
+      src="https://picsum.photos/600/300"
+      alt="Placeholder for Calling Card"
+    />
+  </div>
+
+  <h2 class="text-accent">Today's Coupon Card</h2>
+  <!-- Get coupon card Component here -->
+
+  <div class="h-36">
+       Empty space here represent the coupon card in-universe, which can be stamped to represent reading progress and discounts in the store if people read a lot
   </div>
 
 </header>
