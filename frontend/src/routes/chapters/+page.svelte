@@ -6,9 +6,9 @@
 
     // Try Houdini data
 
-    $: ({ AllChapterTitles } = data);
+    $: ({ titles_data } = data);
 
-    $: console.log($AllChapterTitles);
+    $: console.log(titles_data);
 
 </script>
 
@@ -16,10 +16,6 @@
 <Seo title="Chapter List" description="The Official place for Steel, Fire, and Velvet" />
 
 <h1 class="text-lg font-bold text-primary">All the Chapters are here</h1>
-{#if $AllChapterTitles.fetching}
-    <p>Loading</p>
-{:else}
-    {#each $AllChapterTitles.data.chapters.data as chapter}
+    {#each titles_data.data.chapters.data as chapter}
         <a class="text-accent" href="chapters/{chapter.attributes.slug}">{chapter.attributes.title}</a>
     {/each}
-{/if}
