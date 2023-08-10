@@ -1,5 +1,6 @@
 import { setSession } from '$houdini'
 import { STRAPI_GRAPHQL_API_URL } from '$env/static/private';
+import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public';
 
 /* @type { import('@sveltejs/kit').Handle } */
 export const handle = async ({ event, resolve }) => {

@@ -29,6 +29,7 @@
     "dependencies": {
         "@fontsource/kaushan-script": "^5.0.1",
         "@fontsource/petrona": "^4.5.11",
+        "@supabase/auth-helpers-sveltekit": "^0.10.2",
         "@supabase/supabase-js": "^2.32.0",
         "@theatre/core": "^0.6.1",
         "@theatre/studio": "^0.6.1",

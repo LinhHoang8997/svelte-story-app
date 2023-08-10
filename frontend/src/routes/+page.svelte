@@ -73,7 +73,7 @@
 
   <h2 class="text-accent">Today's calling card</h2>
   <!-- Get calling card Component here -->
-  <div> 
+  <div>
     <img
       src="https://picsum.photos/600/300"
       alt="Placeholder for Calling Card"
