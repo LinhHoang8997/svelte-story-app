@@ -10,18 +10,15 @@
 
   export let data;
 
-  const { APIChapterTitles } = data;
-
+  $: ({ titles_data } = data);
 </script>
 
 <div class="min-h-screen">
   <Navbar />
   <!-- Define the main section below the Navbar here -->
   <div class="flex flex-col md:flex-row">
-    {#if $APIChapterTitles.fetching}
-    <p>Loading</p>
-    {:else}
-    <Sidebar chapters_data={$APIChapterTitles.data.chapters.data}/>
+    {#if titles_data}
+      <Sidebar chapters_data={titles_data.data.chapters.data} />
     {/if}
     <Reader>
       <slot />

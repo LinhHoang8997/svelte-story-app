@@ -8,7 +8,7 @@ export default new HoudiniClient({
   fetchParams({ session }) {
     return {
       headers: {
-        Authentication: `Bearer ${session?.user.api_key}`,
+        Authentication: `Bearer ${session?.houdini_user.api_key}`,
       },
     };
   },
