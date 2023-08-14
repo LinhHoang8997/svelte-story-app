@@ -5,7 +5,6 @@
   let user_logged_in = false;
 
   let first_image_profile_url = "https://picsum.photos/1000/1000";
-
 </script>
 
 <Seo
@@ -41,7 +40,10 @@
         />
       </a>
       <h2 class="text-primary text-xl font-bold">The Teahouse</h2>
-      <p class="text-primary text-sm">The only Teahouse at the top of the Head, and the gathering place for aristocratic ladies.</p>
+      <p class="text-primary text-sm">
+        The only Teahouse at the top of the Head, and the gathering place for
+        aristocratic ladies.
+      </p>
     </div>
     <div
       class="flex-auto grow-0 border-2 border-accent rounded-sm m-6 text-center w-60"
@@ -54,7 +56,11 @@
         />
       </a>
       <h2 class="text-primary text-xl font-bold">The Pub</h2>
-      <p class="text-primary text-sm">The one place that feeds Capital's swollen belly. Her Highness, the Princess once said: "To hear mans' true thoughts, listen to their bellies"</p>
+      <p class="text-primary text-sm">
+        The one place that feeds Capital's swollen belly. Her Highness, the
+        Princess once said: "To hear mans' true thoughts, listen to their
+        bellies"
+      </p>
     </div>
     <div
       class="flex-auto grow-0 border-2 border-accent rounded-sm m-6 text-center w-60"
@@ -67,7 +73,11 @@
         />
       </a>
       <h2 class="text-primary text-xl font-bold">The Slums</h2>
-      <p class="text-primary text-sm">Storytime has started for the children living at the feet of the Citadel. They do not care who you are, as long as the iron guards accept you.</p>
+      <p class="text-primary text-sm">
+        Storytime has started for the children living at the feet of the
+        Citadel. They do not care who you are, as long as the iron guards accept
+        you.
+      </p>
     </div>
   </div>
 
@@ -83,8 +93,56 @@
   <h2 class="text-accent">Today's Coupon Card</h2>
   <!-- Get coupon card Component here -->
 
-  <div class="h-36">
-       Empty space here represent the coupon card in-universe, which can be stamped to represent reading progress and discounts in the store if people read a lot
+  <div class="h-36 p-4 gradient-border-top">
+    <p class="text-primary">Testing the border CSS elements</p>
+    <p class="text-primary">Testing the border CSS elements</p>
   </div>
 
+  <div class="h-36 p-4 gradient-border-all">
+    <p class="text-primary">Testing the border CSS elements</p>
+    <p class="text-primary">Testing the border CSS elements</p>
+  </div>
+
+  <div class="h-36">
+    Empty space here represent the coupon card in-universe, which can be stamped
+    to represent reading progress and discounts in the store if people read a
+    lot
+  </div>
 </header>
+
+<style>
+  .image-border {
+    border-image-width: 2em;
+    border-image-slice: 42;
+    border-image-repeat: round;
+    border-image-source: url("https://mdn.github.io/css-examples/tools/border-image-generator/border-image-6.svg");
+    border-style: solid;
+  }
+
+  .gradient-border-top {
+    border-block-start: 1rem solid;
+    border-image-source: linear-gradient(
+      45deg, red, blue
+    );
+    border-image-slice: 1;
+    padding-block-start: 1rem;
+    border-image-repeat: round;
+  }
+  
+  .gradient-border-all {
+    border: 0.5rem solid;
+    
+    border-image-source: linear-gradient(
+      45deg, rgba(255, 217, 0, 0.781) 50%, rgb(112, 89, 4, 0.5) 50%
+    );
+
+    /* border-image-source: radial-gradient(
+      circle at top left,
+      rgb(195, 135, 7),
+      transparent 50%
+    ); */
+    border-image-slice: 1;
+    border-image-repeat: round;
+  }
+
+</style>
