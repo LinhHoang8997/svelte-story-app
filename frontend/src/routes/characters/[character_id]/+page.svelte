@@ -1,6 +1,6 @@
 <script>
   import Seo from "$lib/components/wrapper/Seo.svelte";
-  import CharacterContent from "$lib/components/wrapper/CharacterContent.svelte";
+  import CharacterContent from "$lib/components/wrapper/character_wrappers/CharacterContent.svelte";
 
   // Import CharacterContent component
 

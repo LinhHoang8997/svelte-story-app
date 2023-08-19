@@ -85,6 +85,7 @@
   <!-- Get calling card Component here -->
   <div>
     <img
+      class=""
       src="https://picsum.photos/600/300"
       alt="Placeholder for Calling Card"
     />
@@ -93,12 +94,12 @@
   <h2 class="text-accent">Today's Coupon Card</h2>
   <!-- Get coupon card Component here -->
 
-  <div class="h-36 p-4 gradient-border-top">
+  <div class="p-4 gradient-border-top">
     <p class="text-primary">Testing the border CSS elements</p>
     <p class="text-primary">Testing the border CSS elements</p>
   </div>
 
-  <div class="h-36 p-4 gradient-border-all">
+  <div class="p-4 gradient-border-all">
     <p class="text-primary">Testing the border CSS elements</p>
     <p class="text-primary">Testing the border CSS elements</p>
   </div>
@@ -121,19 +122,18 @@
 
   .gradient-border-top {
     border-block-start: 1rem solid;
-    border-image-source: linear-gradient(
-      45deg, red, blue
-    );
+    border-image-source: linear-gradient(45deg, red, blue);
     border-image-slice: 1;
     padding-block-start: 1rem;
     border-image-repeat: round;
   }
-  
+
   .gradient-border-all {
-    border: 0.5rem solid;
-    
+    border: 0.3rem solid;
     border-image-source: linear-gradient(
-      45deg, rgba(255, 217, 0, 0.781) 50%, rgb(112, 89, 4, 0.5) 50%
+      45deg,
+      rgba(207, 106, 4, 0.714),
+      rgb(112, 89, 4, 0.5)
     );
 
     /* border-image-source: radial-gradient(
@@ -145,4 +145,11 @@
     border-image-repeat: round;
   }
 
+  .gradient-border-bottom {
+    border-block-end: 0.25rem solid;
+    border-image-source: linear-gradient(45deg, gold, brown);
+    border-image-slice: 1;
+    padding-block-end: 1rem;
+    border-image-repeat: round;
+  }
 </style>
