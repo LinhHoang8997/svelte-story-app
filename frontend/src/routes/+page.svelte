@@ -28,6 +28,9 @@
   <Date dateString={"2021-09-01T15:21:39.862Z"} />
 
   <h2 class="text-accent">Where do you want to go?</h2>
+  <div class="p-0 text-accent font-bold border-2 border-red-800 w-full text-center">
+    <a href="/map">Map of the World</a>
+  </div>
   <div class="flex md:flex-row flex-col sm:items-start items-center">
     <div
       class="flex-auto grow-0 border-2 border-accent rounded-sm m-6 text-center w-60"
