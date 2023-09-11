@@ -19,6 +19,8 @@
   </p>
   {#if user_logged_in}
     <!-- LOGGED-IN USER ONLY: Implement logic to track user's latest progress -->
+    <h1>Test for User ID: <span></span></h1>
+    <button> Stamp your coupon card</button>
     <h2 class="text-accent">The Adventure Thus Far ...</h2>
     <img
       src="https://picsum.photos/2024/600"
