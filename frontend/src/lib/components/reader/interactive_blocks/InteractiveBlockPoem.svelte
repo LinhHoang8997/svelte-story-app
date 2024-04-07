@@ -12,7 +12,7 @@
   // Import font
   import '@fontsource/kaushan-script';
 
-  $: console.log("Paragraph content is:", paragraph_content);
+  // $: console.log("Paragraph content is:", paragraph_content);
 </script>
 
 <div class="relative">

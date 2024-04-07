@@ -384,6 +384,7 @@ enum ENUM_CHARACTER_FACTION {
 
 enum ENUM_INTERACTIVEBLOCK_TYPE {
   standard_cascade
+  standard_curtain
   standard_lightbox
   standard_poem
 }

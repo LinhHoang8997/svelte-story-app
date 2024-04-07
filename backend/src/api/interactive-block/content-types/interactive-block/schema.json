@@ -64,7 +64,8 @@
       "enum": [
         "standard_lightbox",
         "standard_poem",
-        "standard_cascade"
+        "standard_cascade",
+        "standard_curtain"
       ],
       "default": "standard_lightbox"
     }

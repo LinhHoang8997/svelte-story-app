@@ -5,6 +5,7 @@
   import TextOnlyParagraph from "$lib/components/reader/TextOnlyParagraph.svelte";
   import InteractiveBlockLightbox from "$lib/components/reader/interactive_blocks/InteractiveBlockLightbox.svelte";
   import InteractiveBlockPoem from "$lib/components/reader/interactive_blocks/InteractiveBlockPoem.svelte";
+  import InteractiveBlockCurtain from "$lib/components/reader/interactive_blocks/InteractiveBlockCurtain.svelte";
   import InteractiveImage from "$lib/components/wrapper/interactive_wrappers/InteractiveImage.svelte";
 
   // Import environment variables
@@ -102,6 +103,8 @@
           <InteractiveBlockLightbox paragraph_content={paragraph.content} />
         {:else if paragraph.content.type === "standard_poem"}
           <InteractiveBlockPoem paragraph_content={paragraph.content} />
+        {:else if paragraph.content.type === "standard_curtain"}
+          <InteractiveBlockCurtain paragraph_content={paragraph.content} />
         {/if}
       {/if}
       <br />
