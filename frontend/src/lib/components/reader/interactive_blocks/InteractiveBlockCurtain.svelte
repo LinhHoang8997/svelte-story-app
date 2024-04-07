@@ -14,38 +14,41 @@
 
   // Set the default height of the curtain area
   let curtain_height = "250px";
-
 </script>
 
 <div class="relative">
   <div class="curtain" style="--curtain-height: {curtain_height}">
     <div class="curtain_wrapper">
-      <input type="checkbox" checked >
-      <div class="curtain_panel curtain_panel_left" style="--curtain-height: {curtain_height}">
-      <p>Left Curtain</p>
+      <input type="checkbox" checked />
+      <div
+        class="curtain_panel curtain_panel_left"
+        style="--curtain-height: {curtain_height}"
+      >
+        <p>Left Curtain</p>
       </div>
       {#each paragraph_content.images as image}
         <div class="hidden_item" style="--curtain-height: {curtain_height}">
-        <img
-        
-          style="--curtain-height: {curtain_height}"
-          src="{PUBLIC_STRAPI_HOSTNAME_PORT}{image.attributes.url}"
-          alt="interactive block"
-          type="standard"
-        />
-      </div>
+          <img
+            style="--curtain-height: {curtain_height}"
+            src="{PUBLIC_STRAPI_HOSTNAME_PORT}{image.attributes.url}"
+            alt="interactive block"
+            type="standard"
+          />
+        </div>
       {/each}
-      <div class="curtain_panel curtain_panel_right" style="--curtain-height: {curtain_height}">
+      <div
+        class="curtain_panel curtain_panel_right"
+        style="--curtain-height: {curtain_height}"
+      >
         <p>Right Curtain</p>
       </div>
-      <div style="clear:both;"></div>
     </div>
   </div>
 </div>
 
 <style>
   .curtain {
-    margin:0 auto;
+    margin: 0 auto;
     width: 100%;
     height: var(--curtain-height);
     overflow: hidden; /* to slide panels outside the container without them being visible/changing layout */
@@ -55,7 +58,6 @@
     display: flex;
     width: 100%;
     height: 100%;
-    
   }
 
   input[type="checkbox"] {
@@ -90,7 +92,7 @@
 
   .curtain_panel {
     display: flex;
-    background: #B50101;
+    background: #b50101;
     justify-content: center;
     align-items: center;
     width: 50%;
@@ -100,7 +102,6 @@
     z-index: 2;
     transition: all 1s ease-out; /* Animates the sliding transition */
   }
-
 
   .hidden_item {
     display: flex;
