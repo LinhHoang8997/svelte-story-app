@@ -12,9 +12,9 @@
   "dependencies": {
     "@ckeditor/ckeditor5-markdown-gfm": "^36.0.1",
     "@strapi/plugin-graphql": "^4.10.0",
-    "@strapi/plugin-i18n": "4.10.2",
-    "@strapi/plugin-users-permissions": "4.10.2",
-    "@strapi/strapi": "4.10.2",
+    "@strapi/plugin-i18n": "4.25.14",
+    "@strapi/plugin-users-permissions": "4.25.14",
+    "@strapi/strapi": "4.25.14",
     "pg": "8.8.0",
     "strapi-plugin-ckeditor5": "^2.1.1-rc.1"
   },
