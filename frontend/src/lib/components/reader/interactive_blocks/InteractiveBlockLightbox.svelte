@@ -59,12 +59,6 @@
             }
           }
         }
-        meta {
-          pagination {
-            page
-            pageSize
-          }
-        }
       }
     }
   `);

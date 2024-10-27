@@ -1,25 +1,28 @@
+"""
+Indicates exactly one field must be supplied and this field must not be `null`.
+"""
+directive @oneOf on INPUT_OBJECT
+
 type Arc {
   arc_id: String
-  chapters(filters: ChapterFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ChapterRelationResponseCollection
+  attributes: Arc! @deprecated(reason: "Use root level fields instead")
+  chapters(filters: ChapterFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Chapter]!
+  chapters_connection(filters: ChapterFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): ChapterRelationResponseCollection
   createdAt: DateTime
+  data: Arc! @deprecated(reason: "Use root level fields instead")
   description: String
+  documentId: ID!
+  id: ID! @deprecated(reason: "Use `documentId` instead")
   publishedAt: DateTime
   title: String!
   updatedAt: DateTime
 }
 
-type ArcEntity {
-  attributes: Arc
-  id: ID
-}
-
-type ArcEntityResponse {
-  data: ArcEntity
-}
-
 type ArcEntityResponseCollection {
-  data: [ArcEntity!]!
-  meta: ResponseCollectionMeta!
+  data: [Arc!]! @deprecated(reason: "Use `nodes` field instead")
+  meta: ResponseCollectionMeta! @deprecated(reason: "Use the `pageInfo` field instead")
+  nodes: [Arc!]!
+  pageInfo: Pagination!
 }
 
 input ArcFiltersInput {
@@ -28,7 +31,9 @@ input ArcFiltersInput {
   chapters: ChapterFiltersInput
   createdAt: DateTimeFilterInput
   description: StringFilterInput
-  id: IDFilterInput
+  documentId: IDFilterInput
+  locale: StringFilterInput
+  localizations: ArcFiltersInput
   not: ArcFiltersInput
   or: [ArcFiltersInput]
   publishedAt: DateTimeFilterInput
@@ -40,38 +45,38 @@ input ArcInput {
   arc_id: String
   chapters: [ID]
   description: String
+  locale: String
   publishedAt: DateTime
   title: String
 }
 
 type Artifact {
+  attributes: Artifact! @deprecated(reason: "Use root level fields instead")
   createdAt: DateTime
+  data: Artifact! @deprecated(reason: "Use root level fields instead")
   description: String
-  model_file: UploadFileEntityResponse
+  documentId: ID!
+  id: ID! @deprecated(reason: "Use `documentId` instead")
+  model_file: UploadFile
   publishedAt: DateTime
   title: String
   updatedAt: DateTime
 }
 
-type ArtifactEntity {
-  attributes: Artifact
-  id: ID
-}
-
-type ArtifactEntityResponse {
-  data: ArtifactEntity
-}
-
 type ArtifactEntityResponseCollection {
-  data: [ArtifactEntity!]!
-  meta: ResponseCollectionMeta!
+  data: [Artifact!]! @deprecated(reason: "Use `nodes` field instead")
+  meta: ResponseCollectionMeta! @deprecated(reason: "Use the `pageInfo` field instead")
+  nodes: [Artifact!]!
+  pageInfo: Pagination!
 }
 
 input ArtifactFiltersInput {
   and: [ArtifactFiltersInput]
   createdAt: DateTimeFilterInput
   description: StringFilterInput
-  id: IDFilterInput
+  documentId: IDFilterInput
+  locale: StringFilterInput
+  localizations: ArtifactFiltersInput
   not: ArtifactFiltersInput
   or: [ArtifactFiltersInput]
   publishedAt: DateTimeFilterInput
@@ -81,6 +86,7 @@ input ArtifactFiltersInput {
 
 input ArtifactInput {
   description: String
+  locale: String
   model_file: ID
   publishedAt: DateTime
   title: String
@@ -100,6 +106,7 @@ input BooleanFilterInput {
   lt: Boolean
   lte: Boolean
   ne: Boolean
+  nei: Boolean
   not: BooleanFilterInput
   notContains: Boolean
   notContainsi: Boolean
@@ -111,13 +118,18 @@ input BooleanFilterInput {
 }
 
 type Chapter {
-  arc: ArcEntityResponse
+  arc: Arc
+  attributes: Chapter! @deprecated(reason: "Use root level fields instead")
   blurb: String
   chapter_header_media(filters: ComponentMultimediaHeaderMediaFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentMultimediaHeaderMedia]
   content: String
   createdAt: DateTime
-  emblem: UploadFileEntityResponse
-  interactive_blocks(filters: InteractiveBlockFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): InteractiveBlockRelationResponseCollection
+  data: Chapter! @deprecated(reason: "Use root level fields instead")
+  documentId: ID!
+  emblem: UploadFile
+  id: ID! @deprecated(reason: "Use `documentId` instead")
+  interactive_blocks(filters: InteractiveBlockFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [InteractiveBlock]!
+  interactive_blocks_connection(filters: InteractiveBlockFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): InteractiveBlockRelationResponseCollection
   publishedAt: DateTime
   seo_information: ComponentSeoSeoInformation
   slug: String
@@ -125,18 +137,11 @@ type Chapter {
   updatedAt: DateTime
 }
 
-type ChapterEntity {
-  attributes: Chapter
-  id: ID
-}
-
-type ChapterEntityResponse {
-  data: ChapterEntity
-}
-
 type ChapterEntityResponseCollection {
-  data: [ChapterEntity!]!
-  meta: ResponseCollectionMeta!
+  data: [Chapter!]! @deprecated(reason: "Use `nodes` field instead")
+  meta: ResponseCollectionMeta! @deprecated(reason: "Use the `pageInfo` field instead")
+  nodes: [Chapter!]!
+  pageInfo: Pagination!
 }
 
 input ChapterFiltersInput {
@@ -146,8 +151,10 @@ input ChapterFiltersInput {
   chapter_header_media: ComponentMultimediaHeaderMediaFiltersInput
   content: StringFilterInput
   createdAt: DateTimeFilterInput
-  id: IDFilterInput
+  documentId: IDFilterInput
   interactive_blocks: InteractiveBlockFiltersInput
+  locale: StringFilterInput
+  localizations: ChapterFiltersInput
   not: ChapterFiltersInput
   or: [ChapterFiltersInput]
   publishedAt: DateTimeFilterInput
@@ -164,6 +171,7 @@ input ChapterInput {
   content: String
   emblem: ID
   interactive_blocks: [ID]
+  locale: String
   publishedAt: DateTime
   seo_information: ComponentSeoSeoInformationInput
   slug: String
@@ -171,37 +179,37 @@ input ChapterInput {
 }
 
 type ChapterRelationResponseCollection {
-  data: [ChapterEntity!]!
+  data: [Chapter!]! @deprecated(reason: "Use `nodes` field instead")
+  nodes: [Chapter!]!
 }
 
 type Character {
+  attributes: Character! @deprecated(reason: "Use root level fields instead")
   biography: String
   calling_card(filters: ComponentMultimediaCallingCardFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentMultimediaCallingCard]
   character_id: String
   character_quote: String
   createdAt: DateTime
-  epithets(filters: EpithetFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): EpithetRelationResponseCollection
+  data: Character! @deprecated(reason: "Use root level fields instead")
+  documentId: ID!
+  epithets(filters: EpithetFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Epithet]!
+  epithets_connection(filters: EpithetFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): EpithetRelationResponseCollection
   faction: ENUM_CHARACTER_FACTION!
+  id: ID! @deprecated(reason: "Use `documentId` instead")
   laconic_description: String
-  music_album: MusicAlbumEntityResponse
+  music_album: MusicAlbum
   name: String!
-  profile_images(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
+  profile_images(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [UploadFile]!
+  profile_images_connection(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
   publishedAt: DateTime
   updatedAt: DateTime
 }
 
-type CharacterEntity {
-  attributes: Character
-  id: ID
-}
-
-type CharacterEntityResponse {
-  data: CharacterEntity
-}
-
 type CharacterEntityResponseCollection {
-  data: [CharacterEntity!]!
-  meta: ResponseCollectionMeta!
+  data: [Character!]! @deprecated(reason: "Use `nodes` field instead")
+  meta: ResponseCollectionMeta! @deprecated(reason: "Use the `pageInfo` field instead")
+  nodes: [Character!]!
+  pageInfo: Pagination!
 }
 
 input CharacterFiltersInput {
@@ -211,10 +219,12 @@ input CharacterFiltersInput {
   character_id: StringFilterInput
   character_quote: StringFilterInput
   createdAt: DateTimeFilterInput
+  documentId: IDFilterInput
   epithets: EpithetFiltersInput
   faction: StringFilterInput
-  id: IDFilterInput
   laconic_description: StringFilterInput
+  locale: StringFilterInput
+  localizations: CharacterFiltersInput
   music_album: MusicAlbumFiltersInput
   name: StringFilterInput
   not: CharacterFiltersInput
@@ -231,6 +241,7 @@ input CharacterInput {
   epithets: [ID]
   faction: ENUM_CHARACTER_FACTION
   laconic_description: String
+  locale: String
   music_album: ID
   name: String
   profile_images: [ID]
@@ -238,11 +249,14 @@ input CharacterInput {
 }
 
 type CharacterRelationResponseCollection {
-  data: [CharacterEntity!]!
+  data: [Character!]! @deprecated(reason: "Use `nodes` field instead")
+  nodes: [Character!]!
 }
 
 type ComponentMultimediaCallingCard {
-  card_graphic: UploadFileEntityResponse
+  attributes: ComponentMultimediaCallingCard! @deprecated(reason: "Use root level fields instead")
+  card_graphic: UploadFile
+  data: ComponentMultimediaCallingCard! @deprecated(reason: "Use root level fields instead")
   date_given: Date
   greeting: String
   id: ID!
@@ -267,9 +281,12 @@ input ComponentMultimediaCallingCardInput {
 }
 
 type ComponentMultimediaHeaderMedia {
-  hero_carousel(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
-  hero_image: UploadFileEntityResponse
-  hero_video: UploadFileEntityResponse
+  attributes: ComponentMultimediaHeaderMedia! @deprecated(reason: "Use root level fields instead")
+  data: ComponentMultimediaHeaderMedia! @deprecated(reason: "Use root level fields instead")
+  hero_carousel(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [UploadFile]!
+  hero_carousel_connection(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
+  hero_image: UploadFile
+  hero_video: UploadFile
   id: ID!
 }
 
@@ -287,10 +304,12 @@ input ComponentMultimediaHeaderMediaInput {
 }
 
 type ComponentSeoSeoInformation {
+  attributes: ComponentSeoSeoInformation! @deprecated(reason: "Use root level fields instead")
+  data: ComponentSeoSeoInformation! @deprecated(reason: "Use root level fields instead")
   id: ID!
   language_code: String
   meta_description: String
-  og_image: UploadFileEntityResponse
+  og_image: UploadFile
   og_site_name: String
   page_title: String
 }
@@ -333,6 +352,7 @@ input DateFilterInput {
   lt: Date
   lte: Date
   ne: Date
+  nei: Date
   not: DateFilterInput
   notContains: Date
   notContainsi: Date
@@ -362,6 +382,7 @@ input DateTimeFilterInput {
   lt: DateTime
   lte: DateTime
   ne: DateTime
+  nei: DateTime
   not: DateTimeFilterInput
   notContains: DateTime
   notContainsi: DateTime
@@ -370,6 +391,10 @@ input DateTimeFilterInput {
   null: Boolean
   or: [DateTime]
   startsWith: DateTime
+}
+
+type DeleteMutationResponse {
+  documentId: ID!
 }
 
 enum ENUM_CHARACTER_FACTION {
@@ -396,33 +421,32 @@ enum ENUM_MUSICALBUM_TYPE {
 }
 
 type Epithet {
+  attributes: Epithet! @deprecated(reason: "Use root level fields instead")
   createdAt: DateTime
+  data: Epithet! @deprecated(reason: "Use root level fields instead")
+  documentId: ID!
   epithet_id: String
+  id: ID! @deprecated(reason: "Use `documentId` instead")
   publishedAt: DateTime
   tagline: String
   title: String
   updatedAt: DateTime
 }
 
-type EpithetEntity {
-  attributes: Epithet
-  id: ID
-}
-
-type EpithetEntityResponse {
-  data: EpithetEntity
-}
-
 type EpithetEntityResponseCollection {
-  data: [EpithetEntity!]!
-  meta: ResponseCollectionMeta!
+  data: [Epithet!]! @deprecated(reason: "Use `nodes` field instead")
+  meta: ResponseCollectionMeta! @deprecated(reason: "Use the `pageInfo` field instead")
+  nodes: [Epithet!]!
+  pageInfo: Pagination!
 }
 
 input EpithetFiltersInput {
   and: [EpithetFiltersInput]
   createdAt: DateTimeFilterInput
+  documentId: IDFilterInput
   epithet_id: StringFilterInput
-  id: IDFilterInput
+  locale: StringFilterInput
+  localizations: EpithetFiltersInput
   not: EpithetFiltersInput
   or: [EpithetFiltersInput]
   publishedAt: DateTimeFilterInput
@@ -433,13 +457,15 @@ input EpithetFiltersInput {
 
 input EpithetInput {
   epithet_id: String
+  locale: String
   publishedAt: DateTime
   tagline: String
   title: String
 }
 
 type EpithetRelationResponseCollection {
-  data: [EpithetEntity!]!
+  data: [Epithet!]! @deprecated(reason: "Use `nodes` field instead")
+  nodes: [Epithet!]!
 }
 
 input FileInfoInput {
@@ -462,6 +488,7 @@ input FloatFilterInput {
   lt: Float
   lte: Float
   ne: Float
+  nei: Float
   not: FloatFilterInput
   notContains: Float
   notContainsi: Float
@@ -472,37 +499,38 @@ input FloatFilterInput {
   startsWith: Float
 }
 
-union GenericMorph = Arc | Artifact | Chapter | Character | ComponentMultimediaCallingCard | ComponentMultimediaHeaderMedia | ComponentSeoSeoInformation | Epithet | I18NLocale | InteractiveBlock | Location | MusicAlbum | Soundtrack | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
+union GenericMorph = Arc | Artifact | Chapter | Character | ComponentMultimediaCallingCard | ComponentMultimediaHeaderMedia | ComponentSeoSeoInformation | Epithet | I18NLocale | InteractiveBlock | Location | MusicAlbum | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | Soundtrack | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
 
 type I18NLocale {
+  attributes: I18NLocale! @deprecated(reason: "Use root level fields instead")
   code: String
   createdAt: DateTime
+  data: I18NLocale! @deprecated(reason: "Use root level fields instead")
+  documentId: ID!
+  id: ID! @deprecated(reason: "Use `documentId` instead")
   name: String
+  publishedAt: DateTime
   updatedAt: DateTime
 }
 
-type I18NLocaleEntity {
-  attributes: I18NLocale
-  id: ID
-}
-
-type I18NLocaleEntityResponse {
-  data: I18NLocaleEntity
-}
-
 type I18NLocaleEntityResponseCollection {
-  data: [I18NLocaleEntity!]!
-  meta: ResponseCollectionMeta!
+  data: [I18NLocale!]! @deprecated(reason: "Use `nodes` field instead")
+  meta: ResponseCollectionMeta! @deprecated(reason: "Use the `pageInfo` field instead")
+  nodes: [I18NLocale!]!
+  pageInfo: Pagination!
 }
 
 input I18NLocaleFiltersInput {
   and: [I18NLocaleFiltersInput]
   code: StringFilterInput
   createdAt: DateTimeFilterInput
-  id: IDFilterInput
+  documentId: IDFilterInput
+  locale: StringFilterInput
+  localizations: I18NLocaleFiltersInput
   name: StringFilterInput
   not: I18NLocaleFiltersInput
   or: [I18NLocaleFiltersInput]
+  publishedAt: DateTimeFilterInput
   updatedAt: DateTimeFilterInput
 }
 
@@ -520,6 +548,7 @@ input IDFilterInput {
   lt: ID
   lte: ID
   ne: ID
+  nei: ID
   not: IDFilterInput
   notContains: ID
   notContainsi: ID
@@ -544,6 +573,7 @@ input IntFilterInput {
   lt: Int
   lte: Int
   ne: Int
+  nei: Int
   not: IntFilterInput
   notContains: Int
   notContainsi: Int
@@ -555,39 +585,42 @@ input IntFilterInput {
 }
 
 type InteractiveBlock {
-  chapters(filters: ChapterFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ChapterRelationResponseCollection
+  attributes: InteractiveBlock! @deprecated(reason: "Use root level fields instead")
+  chapters(filters: ChapterFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Chapter]!
+  chapters_connection(filters: ChapterFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): ChapterRelationResponseCollection
   createdAt: DateTime
-  images(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
+  data: InteractiveBlock! @deprecated(reason: "Use root level fields instead")
+  documentId: ID!
+  id: ID! @deprecated(reason: "Use `documentId` instead")
+  images(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [UploadFile]!
+  images_connection(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
   interactive_block_id: String!
   publishedAt: DateTime
   rich_text_caption: String
-  sounds(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
-  soundtracks(filters: SoundtrackFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): SoundtrackRelationResponseCollection
+  sounds(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [UploadFile]!
+  sounds_connection(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
+  soundtracks(filters: SoundtrackFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Soundtrack]!
+  soundtracks_connection(filters: SoundtrackFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): SoundtrackRelationResponseCollection
   title: String!
   type: ENUM_INTERACTIVEBLOCK_TYPE
   updatedAt: DateTime
 }
 
-type InteractiveBlockEntity {
-  attributes: InteractiveBlock
-  id: ID
-}
-
-type InteractiveBlockEntityResponse {
-  data: InteractiveBlockEntity
-}
-
 type InteractiveBlockEntityResponseCollection {
-  data: [InteractiveBlockEntity!]!
-  meta: ResponseCollectionMeta!
+  data: [InteractiveBlock!]! @deprecated(reason: "Use `nodes` field instead")
+  meta: ResponseCollectionMeta! @deprecated(reason: "Use the `pageInfo` field instead")
+  nodes: [InteractiveBlock!]!
+  pageInfo: Pagination!
 }
 
 input InteractiveBlockFiltersInput {
   and: [InteractiveBlockFiltersInput]
   chapters: ChapterFiltersInput
   createdAt: DateTimeFilterInput
-  id: IDFilterInput
+  documentId: IDFilterInput
   interactive_block_id: StringFilterInput
+  locale: StringFilterInput
+  localizations: InteractiveBlockFiltersInput
   not: InteractiveBlockFiltersInput
   or: [InteractiveBlockFiltersInput]
   publishedAt: DateTimeFilterInput
@@ -602,6 +635,7 @@ input InteractiveBlockInput {
   chapters: [ID]
   images: [ID]
   interactive_block_id: String
+  locale: String
   publishedAt: DateTime
   rich_text_caption: String
   sounds: [ID]
@@ -611,7 +645,8 @@ input InteractiveBlockInput {
 }
 
 type InteractiveBlockRelationResponseCollection {
-  data: [InteractiveBlockEntity!]!
+  data: [InteractiveBlock!]! @deprecated(reason: "Use `nodes` field instead")
+  nodes: [InteractiveBlock!]!
 }
 
 """
@@ -633,6 +668,7 @@ input JSONFilterInput {
   lt: JSON
   lte: JSON
   ne: JSON
+  nei: JSON
   not: JSONFilterInput
   notContains: JSON
   notContainsi: JSON
@@ -644,40 +680,39 @@ input JSONFilterInput {
 }
 
 type Location {
+  attributes: Location! @deprecated(reason: "Use root level fields instead")
   createdAt: DateTime
+  data: Location! @deprecated(reason: "Use root level fields instead")
+  documentId: ID!
   geography: String
   history: String
+  id: ID! @deprecated(reason: "Use `documentId` instead")
   laconic_description: String
   location_header_media: ComponentMultimediaHeaderMedia
   location_id: String
-  music_album: MusicAlbumEntityResponse
+  music_album: MusicAlbum
   name: String
   present_in_main_story: Boolean
   publishedAt: DateTime
   updatedAt: DateTime
 }
 
-type LocationEntity {
-  attributes: Location
-  id: ID
-}
-
-type LocationEntityResponse {
-  data: LocationEntity
-}
-
 type LocationEntityResponseCollection {
-  data: [LocationEntity!]!
-  meta: ResponseCollectionMeta!
+  data: [Location!]! @deprecated(reason: "Use `nodes` field instead")
+  meta: ResponseCollectionMeta! @deprecated(reason: "Use the `pageInfo` field instead")
+  nodes: [Location!]!
+  pageInfo: Pagination!
 }
 
 input LocationFiltersInput {
   and: [LocationFiltersInput]
   createdAt: DateTimeFilterInput
+  documentId: IDFilterInput
   geography: StringFilterInput
   history: StringFilterInput
-  id: IDFilterInput
   laconic_description: StringFilterInput
+  locale: StringFilterInput
+  localizations: LocationFiltersInput
   location_header_media: ComponentMultimediaHeaderMediaFiltersInput
   location_id: StringFilterInput
   music_album: MusicAlbumFiltersInput
@@ -693,6 +728,7 @@ input LocationInput {
   geography: String
   history: String
   laconic_description: String
+  locale: String
   location_header_media: ComponentMultimediaHeaderMediaInput
   location_id: String
   music_album: ID
@@ -702,36 +738,37 @@ input LocationInput {
 }
 
 type LocationRelationResponseCollection {
-  data: [LocationEntity!]!
+  data: [Location!]! @deprecated(reason: "Use `nodes` field instead")
+  nodes: [Location!]!
 }
 
 type MusicAlbum {
+  attributes: MusicAlbum! @deprecated(reason: "Use root level fields instead")
   blurb: String
-  characters(filters: CharacterFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): CharacterRelationResponseCollection
-  cover_image: UploadFileEntityResponse
+  characters(filters: CharacterFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Character]!
+  characters_connection(filters: CharacterFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): CharacterRelationResponseCollection
+  cover_image: UploadFile
   createdAt: DateTime
-  locations(filters: LocationFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): LocationRelationResponseCollection
+  data: MusicAlbum! @deprecated(reason: "Use root level fields instead")
+  documentId: ID!
+  id: ID! @deprecated(reason: "Use `documentId` instead")
+  locations(filters: LocationFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Location]!
+  locations_connection(filters: LocationFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): LocationRelationResponseCollection
   music_album_id: String
   name: String!
   publishedAt: DateTime
   release_date: Date
-  soundtracks(filters: SoundtrackFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): SoundtrackRelationResponseCollection
+  soundtracks(filters: SoundtrackFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Soundtrack]!
+  soundtracks_connection(filters: SoundtrackFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): SoundtrackRelationResponseCollection
   type: ENUM_MUSICALBUM_TYPE
   updatedAt: DateTime
 }
 
-type MusicAlbumEntity {
-  attributes: MusicAlbum
-  id: ID
-}
-
-type MusicAlbumEntityResponse {
-  data: MusicAlbumEntity
-}
-
 type MusicAlbumEntityResponseCollection {
-  data: [MusicAlbumEntity!]!
-  meta: ResponseCollectionMeta!
+  data: [MusicAlbum!]! @deprecated(reason: "Use `nodes` field instead")
+  meta: ResponseCollectionMeta! @deprecated(reason: "Use the `pageInfo` field instead")
+  nodes: [MusicAlbum!]!
+  pageInfo: Pagination!
 }
 
 input MusicAlbumFiltersInput {
@@ -739,7 +776,9 @@ input MusicAlbumFiltersInput {
   blurb: StringFilterInput
   characters: CharacterFiltersInput
   createdAt: DateTimeFilterInput
-  id: IDFilterInput
+  documentId: IDFilterInput
+  locale: StringFilterInput
+  localizations: MusicAlbumFiltersInput
   locations: LocationFiltersInput
   music_album_id: StringFilterInput
   name: StringFilterInput
@@ -756,6 +795,7 @@ input MusicAlbumInput {
   blurb: String
   characters: [ID]
   cover_image: ID
+  locale: String
   locations: [ID]
   music_album_id: String
   name: String
@@ -768,34 +808,35 @@ input MusicAlbumInput {
 type Mutation {
   """Change user password. Confirm with the current password."""
   changePassword(currentPassword: String!, password: String!, passwordConfirmation: String!): UsersPermissionsLoginPayload
-  createArc(data: ArcInput!): ArcEntityResponse
-  createArtifact(data: ArtifactInput!): ArtifactEntityResponse
-  createChapter(data: ChapterInput!): ChapterEntityResponse
-  createCharacter(data: CharacterInput!): CharacterEntityResponse
-  createEpithet(data: EpithetInput!): EpithetEntityResponse
-  createInteractiveBlock(data: InteractiveBlockInput!): InteractiveBlockEntityResponse
-  createLocation(data: LocationInput!): LocationEntityResponse
-  createMusicAlbum(data: MusicAlbumInput!): MusicAlbumEntityResponse
-  createSoundtrack(data: SoundtrackInput!): SoundtrackEntityResponse
-  createUploadFile(data: UploadFileInput!): UploadFileEntityResponse
-  createUploadFolder(data: UploadFolderInput!): UploadFolderEntityResponse
+  createArc(data: ArcInput!, status: PublicationStatus = PUBLISHED): Arc
+  createArtifact(data: ArtifactInput!, status: PublicationStatus = PUBLISHED): Artifact
+  createChapter(data: ChapterInput!, status: PublicationStatus = PUBLISHED): Chapter
+  createCharacter(data: CharacterInput!, status: PublicationStatus = PUBLISHED): Character
+  createEpithet(data: EpithetInput!, status: PublicationStatus = PUBLISHED): Epithet
+  createInteractiveBlock(data: InteractiveBlockInput!, status: PublicationStatus = PUBLISHED): InteractiveBlock
+  createLocation(data: LocationInput!, status: PublicationStatus = PUBLISHED): Location
+  createMusicAlbum(data: MusicAlbumInput!, status: PublicationStatus = PUBLISHED): MusicAlbum
+  createReviewWorkflowsWorkflow(data: ReviewWorkflowsWorkflowInput!, status: PublicationStatus = PUBLISHED): ReviewWorkflowsWorkflow
+  createReviewWorkflowsWorkflowStage(data: ReviewWorkflowsWorkflowStageInput!, status: PublicationStatus = PUBLISHED): ReviewWorkflowsWorkflowStage
+  createSoundtrack(data: SoundtrackInput!, status: PublicationStatus = PUBLISHED): Soundtrack
 
   """Create a new role"""
   createUsersPermissionsRole(data: UsersPermissionsRoleInput!): UsersPermissionsCreateRolePayload
 
   """Create a new user"""
   createUsersPermissionsUser(data: UsersPermissionsUserInput!): UsersPermissionsUserEntityResponse!
-  deleteArc(id: ID!): ArcEntityResponse
-  deleteArtifact(id: ID!): ArtifactEntityResponse
-  deleteChapter(id: ID!): ChapterEntityResponse
-  deleteCharacter(id: ID!): CharacterEntityResponse
-  deleteEpithet(id: ID!): EpithetEntityResponse
-  deleteInteractiveBlock(id: ID!): InteractiveBlockEntityResponse
-  deleteLocation(id: ID!): LocationEntityResponse
-  deleteMusicAlbum(id: ID!): MusicAlbumEntityResponse
-  deleteSoundtrack(id: ID!): SoundtrackEntityResponse
-  deleteUploadFile(id: ID!): UploadFileEntityResponse
-  deleteUploadFolder(id: ID!): UploadFolderEntityResponse
+  deleteArc(documentId: ID!): DeleteMutationResponse
+  deleteArtifact(documentId: ID!): DeleteMutationResponse
+  deleteChapter(documentId: ID!): DeleteMutationResponse
+  deleteCharacter(documentId: ID!): DeleteMutationResponse
+  deleteEpithet(documentId: ID!): DeleteMutationResponse
+  deleteInteractiveBlock(documentId: ID!): DeleteMutationResponse
+  deleteLocation(documentId: ID!): DeleteMutationResponse
+  deleteMusicAlbum(documentId: ID!): DeleteMutationResponse
+  deleteReviewWorkflowsWorkflow(documentId: ID!): DeleteMutationResponse
+  deleteReviewWorkflowsWorkflowStage(documentId: ID!): DeleteMutationResponse
+  deleteSoundtrack(documentId: ID!): DeleteMutationResponse
+  deleteUploadFile(id: ID!): UploadFile
 
   """Delete an existing role"""
   deleteUsersPermissionsRole(id: ID!): UsersPermissionsDeleteRolePayload
@@ -809,35 +850,32 @@ type Mutation {
   """Request a reset password token"""
   forgotPassword(email: String!): UsersPermissionsPasswordPayload
   login(input: UsersPermissionsLoginInput!): UsersPermissionsLoginPayload!
-  multipleUpload(field: String, files: [Upload]!, ref: String, refId: ID): [UploadFileEntityResponse]!
 
   """Register a user"""
   register(input: UsersPermissionsRegisterInput!): UsersPermissionsLoginPayload!
-  removeFile(id: ID!): UploadFileEntityResponse
 
   """
   Reset user password. Confirm with a code (resetToken from forgotPassword)
   """
   resetPassword(code: String!, password: String!, passwordConfirmation: String!): UsersPermissionsLoginPayload
-  updateArc(data: ArcInput!, id: ID!): ArcEntityResponse
-  updateArtifact(data: ArtifactInput!, id: ID!): ArtifactEntityResponse
-  updateChapter(data: ChapterInput!, id: ID!): ChapterEntityResponse
-  updateCharacter(data: CharacterInput!, id: ID!): CharacterEntityResponse
-  updateEpithet(data: EpithetInput!, id: ID!): EpithetEntityResponse
-  updateFileInfo(id: ID!, info: FileInfoInput): UploadFileEntityResponse!
-  updateInteractiveBlock(data: InteractiveBlockInput!, id: ID!): InteractiveBlockEntityResponse
-  updateLocation(data: LocationInput!, id: ID!): LocationEntityResponse
-  updateMusicAlbum(data: MusicAlbumInput!, id: ID!): MusicAlbumEntityResponse
-  updateSoundtrack(data: SoundtrackInput!, id: ID!): SoundtrackEntityResponse
-  updateUploadFile(data: UploadFileInput!, id: ID!): UploadFileEntityResponse
-  updateUploadFolder(data: UploadFolderInput!, id: ID!): UploadFolderEntityResponse
+  updateArc(data: ArcInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Arc
+  updateArtifact(data: ArtifactInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Artifact
+  updateChapter(data: ChapterInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Chapter
+  updateCharacter(data: CharacterInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Character
+  updateEpithet(data: EpithetInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Epithet
+  updateInteractiveBlock(data: InteractiveBlockInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): InteractiveBlock
+  updateLocation(data: LocationInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Location
+  updateMusicAlbum(data: MusicAlbumInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): MusicAlbum
+  updateReviewWorkflowsWorkflow(data: ReviewWorkflowsWorkflowInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): ReviewWorkflowsWorkflow
+  updateReviewWorkflowsWorkflowStage(data: ReviewWorkflowsWorkflowStageInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): ReviewWorkflowsWorkflowStage
+  updateSoundtrack(data: SoundtrackInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): Soundtrack
+  updateUploadFile(id: ID!, info: FileInfoInput): UploadFile!
 
   """Update an existing role"""
   updateUsersPermissionsRole(data: UsersPermissionsRoleInput!, id: ID!): UsersPermissionsUpdateRolePayload
 
   """Update an existing user"""
   updateUsersPermissionsUser(data: UsersPermissionsUserInput!, id: ID!): UsersPermissionsUserEntityResponse!
-  upload(field: String, file: Upload!, info: FileInfoInput, ref: String, refId: ID): UploadFileEntityResponse!
 }
 
 type Pagination {
@@ -854,78 +892,187 @@ input PaginationArg {
   start: Int
 }
 
-enum PublicationState {
-  LIVE
-  PREVIEW
+enum PublicationStatus {
+  DRAFT
+  PUBLISHED
 }
 
 type Query {
-  arc(id: ID): ArcEntityResponse
-  arcs(filters: ArcFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ArcEntityResponseCollection
-  artifact(id: ID): ArtifactEntityResponse
-  artifacts(filters: ArtifactFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ArtifactEntityResponseCollection
-  chapter(id: ID): ChapterEntityResponse
-  chapters(filters: ChapterFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): ChapterEntityResponseCollection
-  character(id: ID): CharacterEntityResponse
-  characters(filters: CharacterFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): CharacterEntityResponseCollection
-  epithet(id: ID): EpithetEntityResponse
-  epithets(filters: EpithetFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): EpithetEntityResponseCollection
-  i18NLocale(id: ID): I18NLocaleEntityResponse
-  i18NLocales(filters: I18NLocaleFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): I18NLocaleEntityResponseCollection
-  interactiveBlock(id: ID): InteractiveBlockEntityResponse
-  interactiveBlocks(filters: InteractiveBlockFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): InteractiveBlockEntityResponseCollection
-  location(id: ID): LocationEntityResponse
-  locations(filters: LocationFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): LocationEntityResponseCollection
+  arc(documentId: ID!, status: PublicationStatus = PUBLISHED): Arc
+  arcs(filters: ArcFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Arc]!
+  arcs_connection(filters: ArcFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): ArcEntityResponseCollection
+  artifact(documentId: ID!, status: PublicationStatus = PUBLISHED): Artifact
+  artifacts(filters: ArtifactFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Artifact]!
+  artifacts_connection(filters: ArtifactFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): ArtifactEntityResponseCollection
+  chapter(documentId: ID!, status: PublicationStatus = PUBLISHED): Chapter
+  chapters(filters: ChapterFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Chapter]!
+  chapters_connection(filters: ChapterFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): ChapterEntityResponseCollection
+  character(documentId: ID!, status: PublicationStatus = PUBLISHED): Character
+  characters(filters: CharacterFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Character]!
+  characters_connection(filters: CharacterFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): CharacterEntityResponseCollection
+  epithet(documentId: ID!, status: PublicationStatus = PUBLISHED): Epithet
+  epithets(filters: EpithetFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Epithet]!
+  epithets_connection(filters: EpithetFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): EpithetEntityResponseCollection
+  i18NLocale(documentId: ID!, status: PublicationStatus = PUBLISHED): I18NLocale
+  i18NLocales(filters: I18NLocaleFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [I18NLocale]!
+  i18NLocales_connection(filters: I18NLocaleFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): I18NLocaleEntityResponseCollection
+  interactiveBlock(documentId: ID!, status: PublicationStatus = PUBLISHED): InteractiveBlock
+  interactiveBlocks(filters: InteractiveBlockFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [InteractiveBlock]!
+  interactiveBlocks_connection(filters: InteractiveBlockFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): InteractiveBlockEntityResponseCollection
+  location(documentId: ID!, status: PublicationStatus = PUBLISHED): Location
+  locations(filters: LocationFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Location]!
+  locations_connection(filters: LocationFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): LocationEntityResponseCollection
   me: UsersPermissionsMe
-  musicAlbum(id: ID): MusicAlbumEntityResponse
-  musicAlbums(filters: MusicAlbumFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): MusicAlbumEntityResponseCollection
-  soundtrack(id: ID): SoundtrackEntityResponse
-  soundtracks(filters: SoundtrackFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): SoundtrackEntityResponseCollection
-  uploadFile(id: ID): UploadFileEntityResponse
-  uploadFiles(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileEntityResponseCollection
-  uploadFolder(id: ID): UploadFolderEntityResponse
-  uploadFolders(filters: UploadFolderFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFolderEntityResponseCollection
-  usersPermissionsRole(id: ID): UsersPermissionsRoleEntityResponse
-  usersPermissionsRoles(filters: UsersPermissionsRoleFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UsersPermissionsRoleEntityResponseCollection
-  usersPermissionsUser(id: ID): UsersPermissionsUserEntityResponse
-  usersPermissionsUsers(filters: UsersPermissionsUserFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UsersPermissionsUserEntityResponseCollection
+  musicAlbum(documentId: ID!, status: PublicationStatus = PUBLISHED): MusicAlbum
+  musicAlbums(filters: MusicAlbumFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [MusicAlbum]!
+  musicAlbums_connection(filters: MusicAlbumFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): MusicAlbumEntityResponseCollection
+  reviewWorkflowsWorkflow(documentId: ID!, status: PublicationStatus = PUBLISHED): ReviewWorkflowsWorkflow
+  reviewWorkflowsWorkflowStage(documentId: ID!, status: PublicationStatus = PUBLISHED): ReviewWorkflowsWorkflowStage
+  reviewWorkflowsWorkflowStages(filters: ReviewWorkflowsWorkflowStageFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [ReviewWorkflowsWorkflowStage]!
+  reviewWorkflowsWorkflowStages_connection(filters: ReviewWorkflowsWorkflowStageFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): ReviewWorkflowsWorkflowStageEntityResponseCollection
+  reviewWorkflowsWorkflows(filters: ReviewWorkflowsWorkflowFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [ReviewWorkflowsWorkflow]!
+  reviewWorkflowsWorkflows_connection(filters: ReviewWorkflowsWorkflowFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): ReviewWorkflowsWorkflowEntityResponseCollection
+  soundtrack(documentId: ID!, status: PublicationStatus = PUBLISHED): Soundtrack
+  soundtracks(filters: SoundtrackFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Soundtrack]!
+  soundtracks_connection(filters: SoundtrackFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): SoundtrackEntityResponseCollection
+  uploadFile(documentId: ID!, status: PublicationStatus = PUBLISHED): UploadFile
+  uploadFiles(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [UploadFile]!
+  uploadFiles_connection(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): UploadFileEntityResponseCollection
+  usersPermissionsRole(documentId: ID!, status: PublicationStatus = PUBLISHED): UsersPermissionsRole
+  usersPermissionsRoles(filters: UsersPermissionsRoleFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [UsersPermissionsRole]!
+  usersPermissionsRoles_connection(filters: UsersPermissionsRoleFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): UsersPermissionsRoleEntityResponseCollection
+  usersPermissionsUser(documentId: ID!, status: PublicationStatus = PUBLISHED): UsersPermissionsUser
+  usersPermissionsUsers(filters: UsersPermissionsUserFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [UsersPermissionsUser]!
+  usersPermissionsUsers_connection(filters: UsersPermissionsUserFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): UsersPermissionsUserEntityResponseCollection
 }
 
 type ResponseCollectionMeta {
   pagination: Pagination!
 }
 
-type Soundtrack {
+type ReviewWorkflowsWorkflow {
+  attributes: ReviewWorkflowsWorkflow! @deprecated(reason: "Use root level fields instead")
+  contentTypes: JSON!
   createdAt: DateTime
-  description: String
-  interactive_blocks(filters: InteractiveBlockFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): InteractiveBlockRelationResponseCollection
+  data: ReviewWorkflowsWorkflow! @deprecated(reason: "Use root level fields instead")
+  documentId: ID!
+  id: ID! @deprecated(reason: "Use `documentId` instead")
+  name: String!
   publishedAt: DateTime
-  soundtrack_id: String
-  title: String
-  track_file: UploadFileEntityResponse
+  stages(filters: ReviewWorkflowsWorkflowStageFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ReviewWorkflowsWorkflowStage]!
+  stages_connection(filters: ReviewWorkflowsWorkflowStageFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): ReviewWorkflowsWorkflowStageRelationResponseCollection
   updatedAt: DateTime
 }
 
-type SoundtrackEntity {
-  attributes: Soundtrack
-  id: ID
+type ReviewWorkflowsWorkflowEntityResponseCollection {
+  data: [ReviewWorkflowsWorkflow!]! @deprecated(reason: "Use `nodes` field instead")
+  meta: ResponseCollectionMeta! @deprecated(reason: "Use the `pageInfo` field instead")
+  nodes: [ReviewWorkflowsWorkflow!]!
+  pageInfo: Pagination!
 }
 
-type SoundtrackEntityResponse {
-  data: SoundtrackEntity
+input ReviewWorkflowsWorkflowFiltersInput {
+  and: [ReviewWorkflowsWorkflowFiltersInput]
+  contentTypes: JSONFilterInput
+  createdAt: DateTimeFilterInput
+  documentId: IDFilterInput
+  locale: StringFilterInput
+  localizations: ReviewWorkflowsWorkflowFiltersInput
+  name: StringFilterInput
+  not: ReviewWorkflowsWorkflowFiltersInput
+  or: [ReviewWorkflowsWorkflowFiltersInput]
+  publishedAt: DateTimeFilterInput
+  stages: ReviewWorkflowsWorkflowStageFiltersInput
+  updatedAt: DateTimeFilterInput
+}
+
+input ReviewWorkflowsWorkflowInput {
+  contentTypes: JSON
+  locale: String
+  name: String
+  publishedAt: DateTime
+  stages: [ID]
+}
+
+type ReviewWorkflowsWorkflowStage {
+  attributes: ReviewWorkflowsWorkflowStage! @deprecated(reason: "Use root level fields instead")
+  color: String
+  createdAt: DateTime
+  data: ReviewWorkflowsWorkflowStage! @deprecated(reason: "Use root level fields instead")
+  documentId: ID!
+  id: ID! @deprecated(reason: "Use `documentId` instead")
+  name: String
+  publishedAt: DateTime
+  updatedAt: DateTime
+  workflow: ReviewWorkflowsWorkflow
+}
+
+type ReviewWorkflowsWorkflowStageEntityResponseCollection {
+  data: [ReviewWorkflowsWorkflowStage!]! @deprecated(reason: "Use `nodes` field instead")
+  meta: ResponseCollectionMeta! @deprecated(reason: "Use the `pageInfo` field instead")
+  nodes: [ReviewWorkflowsWorkflowStage!]!
+  pageInfo: Pagination!
+}
+
+input ReviewWorkflowsWorkflowStageFiltersInput {
+  and: [ReviewWorkflowsWorkflowStageFiltersInput]
+  color: StringFilterInput
+  createdAt: DateTimeFilterInput
+  documentId: IDFilterInput
+  locale: StringFilterInput
+  localizations: ReviewWorkflowsWorkflowStageFiltersInput
+  name: StringFilterInput
+  not: ReviewWorkflowsWorkflowStageFiltersInput
+  or: [ReviewWorkflowsWorkflowStageFiltersInput]
+  publishedAt: DateTimeFilterInput
+  updatedAt: DateTimeFilterInput
+  workflow: ReviewWorkflowsWorkflowFiltersInput
+}
+
+input ReviewWorkflowsWorkflowStageInput {
+  color: String
+  locale: String
+  name: String
+  publishedAt: DateTime
+  workflow: ID
+}
+
+type ReviewWorkflowsWorkflowStageRelationResponseCollection {
+  data: [ReviewWorkflowsWorkflowStage!]! @deprecated(reason: "Use `nodes` field instead")
+  nodes: [ReviewWorkflowsWorkflowStage!]!
+}
+
+type Soundtrack {
+  attributes: Soundtrack! @deprecated(reason: "Use root level fields instead")
+  createdAt: DateTime
+  data: Soundtrack! @deprecated(reason: "Use root level fields instead")
+  description: String
+  documentId: ID!
+  id: ID! @deprecated(reason: "Use `documentId` instead")
+  interactive_blocks(filters: InteractiveBlockFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [InteractiveBlock]!
+  interactive_blocks_connection(filters: InteractiveBlockFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): InteractiveBlockRelationResponseCollection
+  publishedAt: DateTime
+  soundtrack_id: String
+  title: String
+  track_file: UploadFile
+  updatedAt: DateTime
 }
 
 type SoundtrackEntityResponseCollection {
-  data: [SoundtrackEntity!]!
-  meta: ResponseCollectionMeta!
+  data: [Soundtrack!]! @deprecated(reason: "Use `nodes` field instead")
+  meta: ResponseCollectionMeta! @deprecated(reason: "Use the `pageInfo` field instead")
+  nodes: [Soundtrack!]!
+  pageInfo: Pagination!
 }
 
 input SoundtrackFiltersInput {
   and: [SoundtrackFiltersInput]
   createdAt: DateTimeFilterInput
   description: StringFilterInput
-  id: IDFilterInput
+  documentId: IDFilterInput
   interactive_blocks: InteractiveBlockFiltersInput
+  locale: StringFilterInput
+  localizations: SoundtrackFiltersInput
   not: SoundtrackFiltersInput
   or: [SoundtrackFiltersInput]
   publishedAt: DateTimeFilterInput
@@ -937,6 +1084,7 @@ input SoundtrackFiltersInput {
 input SoundtrackInput {
   description: String
   interactive_blocks: [ID]
+  locale: String
   publishedAt: DateTime
   soundtrack_id: String
   title: String
@@ -944,7 +1092,8 @@ input SoundtrackInput {
 }
 
 type SoundtrackRelationResponseCollection {
-  data: [SoundtrackEntity!]!
+  data: [Soundtrack!]! @deprecated(reason: "Use `nodes` field instead")
+  nodes: [Soundtrack!]!
 }
 
 input StringFilterInput {
@@ -961,6 +1110,7 @@ input StringFilterInput {
   lt: String
   lte: String
   ne: String
+  nei: String
   not: StringFilterInput
   notContains: String
   notContainsi: String
@@ -971,22 +1121,24 @@ input StringFilterInput {
   startsWith: String
 }
 
-"""The `Upload` scalar type represents a file upload."""
-scalar Upload
-
 type UploadFile {
   alternativeText: String
+  attributes: UploadFile! @deprecated(reason: "Use root level fields instead")
   caption: String
   createdAt: DateTime
+  data: UploadFile! @deprecated(reason: "Use root level fields instead")
+  documentId: ID!
   ext: String
   formats: JSON
   hash: String!
   height: Int
+  id: ID! @deprecated(reason: "Use `documentId` instead")
   mime: String!
   name: String!
   previewUrl: String
   provider: String!
   provider_metadata: JSON
+  publishedAt: DateTime
   related: [GenericMorph]
   size: Float!
   updatedAt: DateTime
@@ -994,18 +1146,11 @@ type UploadFile {
   width: Int
 }
 
-type UploadFileEntity {
-  attributes: UploadFile
-  id: ID
-}
-
-type UploadFileEntityResponse {
-  data: UploadFileEntity
-}
-
 type UploadFileEntityResponseCollection {
-  data: [UploadFileEntity!]!
-  meta: ResponseCollectionMeta!
+  data: [UploadFile!]! @deprecated(reason: "Use `nodes` field instead")
+  meta: ResponseCollectionMeta! @deprecated(reason: "Use the `pageInfo` field instead")
+  nodes: [UploadFile!]!
+  pageInfo: Pagination!
 }
 
 input UploadFileFiltersInput {
@@ -1013,13 +1158,14 @@ input UploadFileFiltersInput {
   and: [UploadFileFiltersInput]
   caption: StringFilterInput
   createdAt: DateTimeFilterInput
+  documentId: IDFilterInput
   ext: StringFilterInput
-  folder: UploadFolderFiltersInput
   folderPath: StringFilterInput
   formats: JSONFilterInput
   hash: StringFilterInput
   height: IntFilterInput
-  id: IDFilterInput
+  locale: StringFilterInput
+  localizations: UploadFileFiltersInput
   mime: StringFilterInput
   name: StringFilterInput
   not: UploadFileFiltersInput
@@ -1027,86 +1173,16 @@ input UploadFileFiltersInput {
   previewUrl: StringFilterInput
   provider: StringFilterInput
   provider_metadata: JSONFilterInput
+  publishedAt: DateTimeFilterInput
   size: FloatFilterInput
   updatedAt: DateTimeFilterInput
   url: StringFilterInput
   width: IntFilterInput
 }
 
-input UploadFileInput {
-  alternativeText: String
-  caption: String
-  ext: String
-  folder: ID
-  folderPath: String
-  formats: JSON
-  hash: String
-  height: Int
-  mime: String
-  name: String
-  previewUrl: String
-  provider: String
-  provider_metadata: JSON
-  size: Float
-  url: String
-  width: Int
-}
-
 type UploadFileRelationResponseCollection {
-  data: [UploadFileEntity!]!
-}
-
-type UploadFolder {
-  children(filters: UploadFolderFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFolderRelationResponseCollection
-  createdAt: DateTime
-  files(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
-  name: String!
-  parent: UploadFolderEntityResponse
-  path: String!
-  pathId: Int!
-  updatedAt: DateTime
-}
-
-type UploadFolderEntity {
-  attributes: UploadFolder
-  id: ID
-}
-
-type UploadFolderEntityResponse {
-  data: UploadFolderEntity
-}
-
-type UploadFolderEntityResponseCollection {
-  data: [UploadFolderEntity!]!
-  meta: ResponseCollectionMeta!
-}
-
-input UploadFolderFiltersInput {
-  and: [UploadFolderFiltersInput]
-  children: UploadFolderFiltersInput
-  createdAt: DateTimeFilterInput
-  files: UploadFileFiltersInput
-  id: IDFilterInput
-  name: StringFilterInput
-  not: UploadFolderFiltersInput
-  or: [UploadFolderFiltersInput]
-  parent: UploadFolderFiltersInput
-  path: StringFilterInput
-  pathId: IntFilterInput
-  updatedAt: DateTimeFilterInput
-}
-
-input UploadFolderInput {
-  children: [ID]
-  files: [ID]
-  name: String
-  parent: ID
-  path: String
-  pathId: Int
-}
-
-type UploadFolderRelationResponseCollection {
-  data: [UploadFolderEntity!]!
+  data: [UploadFile!]! @deprecated(reason: "Use `nodes` field instead")
+  nodes: [UploadFile!]!
 }
 
 type UsersPermissionsCreateRolePayload {
@@ -1150,29 +1226,33 @@ type UsersPermissionsPasswordPayload {
 
 type UsersPermissionsPermission {
   action: String!
+  attributes: UsersPermissionsPermission! @deprecated(reason: "Use root level fields instead")
   createdAt: DateTime
-  role: UsersPermissionsRoleEntityResponse
+  data: UsersPermissionsPermission! @deprecated(reason: "Use root level fields instead")
+  documentId: ID!
+  id: ID! @deprecated(reason: "Use `documentId` instead")
+  publishedAt: DateTime
+  role: UsersPermissionsRole
   updatedAt: DateTime
-}
-
-type UsersPermissionsPermissionEntity {
-  attributes: UsersPermissionsPermission
-  id: ID
 }
 
 input UsersPermissionsPermissionFiltersInput {
   action: StringFilterInput
   and: [UsersPermissionsPermissionFiltersInput]
   createdAt: DateTimeFilterInput
-  id: IDFilterInput
+  documentId: IDFilterInput
+  locale: StringFilterInput
+  localizations: UsersPermissionsPermissionFiltersInput
   not: UsersPermissionsPermissionFiltersInput
   or: [UsersPermissionsPermissionFiltersInput]
+  publishedAt: DateTimeFilterInput
   role: UsersPermissionsRoleFiltersInput
   updatedAt: DateTimeFilterInput
 }
 
 type UsersPermissionsPermissionRelationResponseCollection {
-  data: [UsersPermissionsPermissionEntity!]!
+  data: [UsersPermissionsPermission!]! @deprecated(reason: "Use `nodes` field instead")
+  nodes: [UsersPermissionsPermission!]!
 }
 
 input UsersPermissionsRegisterInput {
@@ -1182,38 +1262,41 @@ input UsersPermissionsRegisterInput {
 }
 
 type UsersPermissionsRole {
+  attributes: UsersPermissionsRole! @deprecated(reason: "Use root level fields instead")
   createdAt: DateTime
+  data: UsersPermissionsRole! @deprecated(reason: "Use root level fields instead")
   description: String
+  documentId: ID!
+  id: ID! @deprecated(reason: "Use `documentId` instead")
   name: String!
-  permissions(filters: UsersPermissionsPermissionFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UsersPermissionsPermissionRelationResponseCollection
+  permissions(filters: UsersPermissionsPermissionFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [UsersPermissionsPermission]!
+  permissions_connection(filters: UsersPermissionsPermissionFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UsersPermissionsPermissionRelationResponseCollection
+  publishedAt: DateTime
   type: String
   updatedAt: DateTime
-  users(filters: UsersPermissionsUserFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UsersPermissionsUserRelationResponseCollection
-}
-
-type UsersPermissionsRoleEntity {
-  attributes: UsersPermissionsRole
-  id: ID
-}
-
-type UsersPermissionsRoleEntityResponse {
-  data: UsersPermissionsRoleEntity
+  users(filters: UsersPermissionsUserFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [UsersPermissionsUser]!
+  users_connection(filters: UsersPermissionsUserFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UsersPermissionsUserRelationResponseCollection
 }
 
 type UsersPermissionsRoleEntityResponseCollection {
-  data: [UsersPermissionsRoleEntity!]!
-  meta: ResponseCollectionMeta!
+  data: [UsersPermissionsRole!]! @deprecated(reason: "Use `nodes` field instead")
+  meta: ResponseCollectionMeta! @deprecated(reason: "Use the `pageInfo` field instead")
+  nodes: [UsersPermissionsRole!]!
+  pageInfo: Pagination!
 }
 
 input UsersPermissionsRoleFiltersInput {
   and: [UsersPermissionsRoleFiltersInput]
   createdAt: DateTimeFilterInput
   description: StringFilterInput
-  id: IDFilterInput
+  documentId: IDFilterInput
+  locale: StringFilterInput
+  localizations: UsersPermissionsRoleFiltersInput
   name: StringFilterInput
   not: UsersPermissionsRoleFiltersInput
   or: [UsersPermissionsRoleFiltersInput]
   permissions: UsersPermissionsPermissionFiltersInput
+  publishedAt: DateTimeFilterInput
   type: StringFilterInput
   updatedAt: DateTimeFilterInput
   users: UsersPermissionsUserFiltersInput
@@ -1221,8 +1304,10 @@ input UsersPermissionsRoleFiltersInput {
 
 input UsersPermissionsRoleInput {
   description: String
+  locale: String
   name: String
   permissions: [ID]
+  publishedAt: DateTime
   type: String
   users: [ID]
 }
@@ -1232,28 +1317,30 @@ type UsersPermissionsUpdateRolePayload {
 }
 
 type UsersPermissionsUser {
+  attributes: UsersPermissionsUser! @deprecated(reason: "Use root level fields instead")
   blocked: Boolean
   confirmed: Boolean
   createdAt: DateTime
+  data: UsersPermissionsUser! @deprecated(reason: "Use root level fields instead")
+  documentId: ID!
   email: String!
+  id: ID! @deprecated(reason: "Use `documentId` instead")
   provider: String
-  role: UsersPermissionsRoleEntityResponse
+  publishedAt: DateTime
+  role: UsersPermissionsRole
   updatedAt: DateTime
   username: String!
 }
 
-type UsersPermissionsUserEntity {
-  attributes: UsersPermissionsUser
-  id: ID
-}
-
 type UsersPermissionsUserEntityResponse {
-  data: UsersPermissionsUserEntity
+  data: UsersPermissionsUser
 }
 
 type UsersPermissionsUserEntityResponseCollection {
-  data: [UsersPermissionsUserEntity!]!
-  meta: ResponseCollectionMeta!
+  data: [UsersPermissionsUser!]! @deprecated(reason: "Use `nodes` field instead")
+  meta: ResponseCollectionMeta! @deprecated(reason: "Use the `pageInfo` field instead")
+  nodes: [UsersPermissionsUser!]!
+  pageInfo: Pagination!
 }
 
 input UsersPermissionsUserFiltersInput {
@@ -1262,12 +1349,15 @@ input UsersPermissionsUserFiltersInput {
   confirmationToken: StringFilterInput
   confirmed: BooleanFilterInput
   createdAt: DateTimeFilterInput
+  documentId: IDFilterInput
   email: StringFilterInput
-  id: IDFilterInput
+  locale: StringFilterInput
+  localizations: UsersPermissionsUserFiltersInput
   not: UsersPermissionsUserFiltersInput
   or: [UsersPermissionsUserFiltersInput]
   password: StringFilterInput
   provider: StringFilterInput
+  publishedAt: DateTimeFilterInput
   resetPasswordToken: StringFilterInput
   role: UsersPermissionsRoleFiltersInput
   updatedAt: DateTimeFilterInput
@@ -1279,13 +1369,16 @@ input UsersPermissionsUserInput {
   confirmationToken: String
   confirmed: Boolean
   email: String
+  locale: String
   password: String
   provider: String
+  publishedAt: DateTime
   resetPasswordToken: String
   role: ID
   username: String
 }
 
 type UsersPermissionsUserRelationResponseCollection {
-  data: [UsersPermissionsUserEntity!]!
+  data: [UsersPermissionsUser!]! @deprecated(reason: "Use `nodes` field instead")
+  nodes: [UsersPermissionsUser!]!
 }

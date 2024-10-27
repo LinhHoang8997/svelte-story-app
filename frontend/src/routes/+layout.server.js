@@ -9,7 +9,8 @@ export const load = async ({ locals: { getSession } }) => {
   });
 
   if (result.data) {
-    console.log("> Character data loaded successfully from Strapi");
+    console.log("> Chapter data loaded successfully from Strapi");
+    console.log("We have the following chapters: ", result.data);
   }
 
     return {

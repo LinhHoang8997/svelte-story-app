@@ -10,11 +10,12 @@
 
   import { invalidate } from '$app/navigation'
 	import { onMount } from 'svelte'
-	
+
   export let data;
 
   // Extract the data from the Houdini query response first - Content first
   $: ({ titles_data } = data);
+  $: console.log("Data within: " + titles_data.data.chapters);
 
   // Extract the data from the Supabase session - Auth and User second
 	let { supabase, session } = data
@@ -30,7 +31,6 @@
 		return () => data.subscription.unsubscribe()
 	})
 
-
 </script>
 
 <div class="min-h-screen">
@@ -38,7 +38,7 @@
   <!-- Define the main section below the Navbar here -->
   <div class="flex flex-col md:flex-row">
     {#if titles_data}
-      <Sidebar chapters_data={titles_data.data.chapters.data} />
+      <Sidebar chapters_data={titles_data.data.chapters} />
     {/if}
     <Reader>
       <slot />

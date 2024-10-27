@@ -7,13 +7,5 @@ query getAllChapterTitles {
         slug
       }
     }
-    meta {
-      pagination {
-        page
-        pageSize
-        total
-        pageCount
-      }
-    }
   }
 }

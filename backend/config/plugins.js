@@ -1,5 +1,7 @@
 module.exports = ({ env }) => ({
-    // ckeditor5: {
-    //     enabled: true,
-    // }
+    graphql: {
+      config: {
+        v4CompatibilityMode: true,
+      }
+    }
   });
