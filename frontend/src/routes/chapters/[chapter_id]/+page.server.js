@@ -24,9 +24,11 @@ export async function load(event) {
   }
 
   // Clean up Strapi GraphQL r result.data.chaptersesult to a single chapter data
-  const processed_result = result.data.chapters[0].data;
+  const processed_result = result.data.chapters[0];
   if (!processed_result) {
     console.log("> Chapter data is empty");
+  } else {
+    console.log("> Chapter data is not empty: ", processed_result);
   }
 
   // Isolate the text content out for further processing

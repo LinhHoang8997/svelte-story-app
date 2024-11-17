@@ -30,7 +30,7 @@
         <div class="hidden_item" style="--curtain-height: {curtain_height}">
           <img
             style="--curtain-height: {curtain_height}"
-            src="{PUBLIC_STRAPI_HOSTNAME_PORT}{image.attributes.url}"
+            src="{PUBLIC_STRAPI_HOSTNAME_PORT}{image.url}"
             alt="interactive block"
             type="standard"
           />

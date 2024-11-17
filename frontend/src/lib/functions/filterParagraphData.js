@@ -40,16 +40,17 @@ function extractIdFromInteractiveBlock(paragraph) {
 
 function extractInteractiveBlockContentbyId(id, chapter_data) {
   // Get all the interactive blocks from the chapter data as an array
-  let interactive_blocks = chapter_data.attributes.interactive_blocks.data;
+  let interactive_blocks = chapter_data.interactive_blocks;
   let matched_interactive_block = interactive_blocks.find(
     (interactive_block) =>
-      interactive_block.attributes.interactive_block_id === id
+      interactive_block.interactive_block_id === id
   );
 
-  // console.log("matched_interactive_block", matched_interactive_block)
+  console.log("Found interactive block with id", id);
+  console.log("matched_interactive_block", matched_interactive_block)
 
   // Sanitize, Parse, and Split rich text caption into paragraphs
-  let rich_text_caption = matched_interactive_block.attributes.rich_text_caption;
+  let rich_text_caption = matched_interactive_block.rich_text_caption;
   let purified_rich_text_caption = DOMPurify.sanitize(rich_text_caption);
   let parsed_html_rich_text_caption = parseDocument(purified_rich_text_caption);
   let only_p_tags_rich_text_caption = DomUtils.getElementsByTagName(
@@ -65,9 +66,9 @@ function extractInteractiveBlockContentbyId(id, chapter_data) {
 
   let interactive_block_content = {
     id: id,
-    title: matched_interactive_block.attributes.title,
-    type: matched_interactive_block.attributes.type,
-    images: matched_interactive_block.attributes.images.data,
+    title: matched_interactive_block.title,
+    type: matched_interactive_block.type,
+    images: matched_interactive_block.images,
     rich_text_caption: p_tags_text_rich_text_caption_cleaned,
   };
 
@@ -76,7 +77,7 @@ function extractInteractiveBlockContentbyId(id, chapter_data) {
 
 export function filterParagraphData(chapter_data) {
   let purified_chapter_content = DOMPurify.sanitize(
-    chapter_data.attributes.content
+    chapter_data.content
   );
   let parsed_html_chapter_content = parseDocument(purified_chapter_content);
 

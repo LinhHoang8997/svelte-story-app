@@ -18,7 +18,7 @@
 <div class="relative">
   {#each paragraph_content.images as image}
     <img
-      src="{PUBLIC_STRAPI_HOSTNAME_PORT}{image.attributes.url}"
+      src="{PUBLIC_STRAPI_HOSTNAME_PORT}{image.url}"
       alt="interactive block"
       type="standard"
     />

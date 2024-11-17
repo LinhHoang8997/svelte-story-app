@@ -18,10 +18,9 @@
 
   // Get link of images (Header Hero Image, Emblem)
   $: header_hero_image_url =
-    chapter_data.attributes.chapter_header_media[0].hero_image.data.attributes
-      .url;
+    chapter_data.chapter_header_media[0].hero_image.url;
 
-  $: emblem_image_url = chapter_data.attributes.emblem.data.attributes.url;
+  $: emblem_image_url = chapter_data.emblem.url;
 
   //Function to capture user selected text - features to be added later
   let current_selection;
@@ -69,7 +68,7 @@
     class:text-2xl={$font_size_store == "medium"}
     class:text-3xl={$font_size_store == "large"}
   >
-    {chapter_data.attributes.title}
+    {chapter_data.title}
   </h1>
 
   <!-- Container of main blurb -->
@@ -79,7 +78,7 @@
     class:text-base={$font_size_store == "medium"}
     class:text-lg={$font_size_store == "large"}
   >
-    {@html chapter_data.attributes.blurb}
+    {@html chapter_data.blurb}
   </div>
 
   <!-- Container of Header image -->

@@ -13,8 +13,8 @@
 </script>
 
 <Seo
-  title = {chapter_data.attributes.title}
-  description={chapter_data.attributes.description}
+  title = {chapter_data.title}
+  description={chapter_data.description}
 />
 
 <ChapterContent {chapter_data} {content}/>

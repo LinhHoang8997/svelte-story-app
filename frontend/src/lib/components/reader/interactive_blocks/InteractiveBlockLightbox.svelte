@@ -254,7 +254,7 @@
 >
   {#each paragraph_content.images as image}
     <InteractiveImage
-      src="{PUBLIC_STRAPI_HOSTNAME_PORT}{image.attributes.url}"
+      src="{PUBLIC_STRAPI_HOSTNAME_PORT}{image.url}"
       alt="interactive block"
     />
   {/each}
@@ -274,7 +274,7 @@
       </h3>
       {#each paragraph_content.images as image}
         <InteractiveImage
-          src="{PUBLIC_STRAPI_HOSTNAME_PORT}{image.attributes.url}"
+          src="{PUBLIC_STRAPI_HOSTNAME_PORT}{image.url}"
           alt="interactive block"
           type="lightbox"
         />

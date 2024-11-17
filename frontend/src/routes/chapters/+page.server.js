@@ -9,7 +9,7 @@ export const load = async (event) => {
   });
 
   if (result.data) {
-    console.log("> Character data loaded successfully from Strapi");
+    console.log("> All Chaps data loaded successfully from Strapi");
   }
 
     return {
