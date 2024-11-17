@@ -36,27 +36,11 @@
   };
   const soundtrack_store = graphql(`
     query SoundtracksBlockQuery($id: String!) @load {
-      interactiveBlocks(
-        filters: { interactive_block_id: { eq: $id } }
-        pagination: { page: 1, pageSize: 20 }
-      ) {
-        data {
-          attributes {
-            soundtracks {
-              data {
-                attributes {
-                  soundtrack_id
-                  title
-                  track_file {
-                    data {
-                      attributes {
-                        url
-                      }
-                    }
-                  }
-                }
-              }
-            }
+      interactiveBlocks(filters: { interactive_block_id: { eq: $id } }) {
+        soundtracks {
+          soundtrack_id
+          track_file {
+            url
           }
         }
       }
@@ -73,19 +57,18 @@
       interactive_block_id
     );
     if ($soundtrack_store.data) {
-      // Get the soundtracks from the store
+      // Get the soundtracks from the Houdini query - which put data in a Svelte store
       let soundtracks_from_response =
-        $soundtrack_store.data.interactiveBlocks.data[0].attributes.soundtracks
-          .data;
+        $soundtrack_store.data.interactiveBlocks[0].soundtracks;
 
       if (soundtracks_from_response.length > 0) {
         console.log("The soundtrack store has data");
         soundtracks = soundtracks_from_response.map((soundtrack) => {
           return {
-            id: soundtrack.attributes.soundtrack_id,
-            title: soundtrack.attributes.title,
-            description: soundtrack.attributes.description,
-            trackfile_url: soundtrack.attributes.track_file.data.attributes.url,
+            id: soundtrack.soundtrack_id,
+            title: soundtrack.title,
+            description: soundtrack.description,
+            trackfile_url: soundtrack.track_file.url,
           };
         });
       } else {
