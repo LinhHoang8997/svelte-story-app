@@ -3,11 +3,11 @@ import { parseDocument, DomUtils } from "htmlparser2";
 import DOMPurify from "isomorphic-dompurify";
 
 // Import specifc functions from voca - text manipulation library
-import includes from 'voca/includes'
-import indexOf from 'voca/index_of'
-import slice from 'voca/slice'
-import split from 'voca/split'
-import trim from 'voca/trim'
+import includes from "voca/includes";
+import indexOf from "voca/index_of";
+import slice from "voca/slice";
+import split from "voca/split";
+import trim from "voca/trim";
 
 function removeEmptyElements(array) {
   return array.filter(function (el) {
@@ -42,17 +42,13 @@ function extractInteractiveBlockContentbyId(id, chapter_data) {
   // Get all the interactive blocks from the chapter data as an array
   let interactive_blocks = chapter_data.interactive_blocks;
   let matched_interactive_block = interactive_blocks.find(
-    (interactive_block) =>
-      interactive_block.interactive_block_id === id
+    (interactive_block) => interactive_block.interactive_block_id === id
   );
 
-  console.log("Found interactive block with id", id);
-  console.log("matched_interactive_block", matched_interactive_block)
-
   // Sanitize, Parse, and Split rich text caption into paragraphs
-  let rich_text_caption = matched_interactive_block.rich_text_caption;
-  let purified_rich_text_caption = DOMPurify.sanitize(rich_text_caption);
-  let parsed_html_rich_text_caption = parseDocument(purified_rich_text_caption);
+  let parsed_html_rich_text_caption = DOMPurify.sanitize(
+    matched_interactive_block.rich_text_caption
+  );
   let only_p_tags_rich_text_caption = DomUtils.getElementsByTagName(
     "p",
     parsed_html_rich_text_caption,
@@ -62,7 +58,9 @@ function extractInteractiveBlockContentbyId(id, chapter_data) {
     (p_tag) => DomUtils.textContent(p_tag)
   );
 
-  let p_tags_text_rich_text_caption_cleaned = removeEmptyElements(p_tags_text_rich_text_caption);
+  let p_tags_text_rich_text_caption_cleaned = removeEmptyElements(
+    p_tags_text_rich_text_caption
+  );
 
   let interactive_block_content = {
     id: id,
@@ -76,9 +74,7 @@ function extractInteractiveBlockContentbyId(id, chapter_data) {
 }
 
 export function filterParagraphData(chapter_data) {
-  let purified_chapter_content = DOMPurify.sanitize(
-    chapter_data.content
-  );
+  let purified_chapter_content = DOMPurify.sanitize(chapter_data.content);
   let parsed_html_chapter_content = parseDocument(purified_chapter_content);
 
   let only_p_tags = DomUtils.getElementsByTagName(
