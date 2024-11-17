@@ -6,6 +6,10 @@
   export let data;
   $: ({ content, chapter_data } = data)
 
+  $: console.log(content);
+
+  $: console.log(chapter_data);
+
 </script>
 
 <Seo

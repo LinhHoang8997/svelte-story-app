@@ -17,7 +17,7 @@ export async function load(event) {
   });
 
   if (result.data) {
-    console.log("> Chapter data loaded successfully from Strapi");
+    console.log("> Characters loaded successfully from Strapi", result.data);
   }
 
   // Clean up Strapi GraphQL result to a single chapter data

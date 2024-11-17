@@ -15,7 +15,6 @@
 
   // Extract the data from the Houdini query response first - Content first
   $: ({ titles_data } = data);
-  $: console.log("Data within: " + titles_data.data.chapters);
 
   // Extract the data from the Supabase session - Auth and User second
 	let { supabase, session } = data

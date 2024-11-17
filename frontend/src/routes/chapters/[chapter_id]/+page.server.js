@@ -11,6 +11,7 @@ function getSlug({ params }) {
 export async function load(event) {
   const GetIndividualChapter = new GetIndividualChapterStore();
   const chapter_id = getSlug(event);
+  console.log(chapter_id);
 
   const result = await GetIndividualChapter.fetch({
     event,
@@ -19,13 +20,16 @@ export async function load(event) {
   });
 
   if (result.data) {
-    console.log("> Chapter data loaded successfully from Strapi");
+    console.log("> Indv. chapter data loaded successfully from Strapi");
   }
 
-  // Clean up Strapi GraphQL result to a single chapter data
-  const processed_result = result.data.chapters.data[0];
+  // Clean up Strapi GraphQL r result.data.chaptersesult to a single chapter data
+  const processed_result = result.data.chapters[0].data;
+  if (!processed_result) {
+    console.log("> Chapter data is empty");
+  }
 
-  // Isolate the text content out for furhter processing
+  // Isolate the text content out for further processing
   const content = filterParagraphData(processed_result);
 
   return {
