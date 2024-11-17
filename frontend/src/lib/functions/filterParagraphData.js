@@ -46,8 +46,8 @@ function extractInteractiveBlockContentbyId(id, chapter_data) {
   );
 
   // Sanitize, Parse, and Split rich text caption into paragraphs
-  let parsed_html_rich_text_caption = DOMPurify.sanitize(
-    matched_interactive_block.rich_text_caption
+  let parsed_html_rich_text_caption = parseDocument(
+    DOMPurify.sanitize(matched_interactive_block.rich_text_caption)
   );
   let only_p_tags_rich_text_caption = DomUtils.getElementsByTagName(
     "p",

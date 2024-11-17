@@ -1,17 +1,26 @@
+# query getAllSoundtracks {
+#   soundtracks
+#   {
+# 		data {
+#       attributes
+#       {
+#         soundtrack_id
+#         track_file {
+#           data {
+#             attributes
+#             {url}
+#           }
+#         }
+#       }
+#     }
+#   }
+# }
+
 query getAllSoundtracks {
-  soundtracks
-  {
-		data {
-      attributes
-      {
-        soundtrack_id
-        track_file {
-          data {
-            attributes
-            {url}
-          }
-        }
-      }
+  soundtracks {
+    soundtrack_id
+    track_file {
+      url
     }
   }
 }
