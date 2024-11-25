@@ -16,9 +16,9 @@
 >
   <main class="flex flex-col w-full items-center scroll-smooth p-6 md:p-4">
     {#if home}
-      {@render children?.()}
+      <slot/>
     {:else}
-      {@render children?.()}
+      <slot/>
       <a href="/" class="text-2xl text-center text-black mb-6">Return to Home</a
       >
     {/if}
