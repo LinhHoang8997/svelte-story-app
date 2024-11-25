@@ -12,12 +12,13 @@
   import includes from "voca/includes";
   import trim from "voca/trim";
 
-  export let paragraph_content;
+  // Set this component to receive a paragraph content prop
+  let { paragraph_content } = $props();
 
   // Split the paragraph content into an array of strings, then check for special content marked by [[ ]] blocks
-  $: split_text = split(paragraph_content, /\[\[|\]\]/g); // Second argument is the RegEx to identify [[ ]]
+  let split_text = $derived(split(paragraph_content, /\[\[|\]\]/g)); // Second argument is the RegEx to identify [[ ]]
 
-  $: processed_chunks = split_text.map((chunk) => {
+  let processed_chunks = $derived(split_text.map((chunk) => {
     if (includes(chunk, ":popover:")) {
       const popover_subject = trim(split(chunk, ":popover:")[0]);
       const popover_content = trim(split(chunk, ":popover:")[1]);
@@ -31,7 +32,7 @@
         text: chunk,
       };
     }
-  });
+  }));
 
   function startTextLoadAnimation() {
     animate(

@@ -1,7 +1,14 @@
 <script>
   import { page } from "$app/stores";
-  $: current_page_path = $page.route.id;
-  $: home = current_page_path === "/" || current_page_path === "/index.html";
+  /**
+   * @typedef {Object} Props
+   * @property {import('svelte').Snippet} [children]
+   */
+
+  /** @type {Props} */
+  let { children } = $props();
+  let current_page_path = $derived($page.route.id);
+  let home = $derived(current_page_path === "/" || current_page_path === "/index.html");
 </script>
 
 <section
@@ -9,9 +16,9 @@
 >
   <main class="flex flex-col w-full items-center scroll-smooth p-6 md:p-4">
     {#if home}
-      <slot />
+      {@render children?.()}
     {:else}
-      <slot />
+      {@render children?.()}
       <a href="/" class="text-2xl text-center text-black mb-6">Return to Home</a
       >
     {/if}
